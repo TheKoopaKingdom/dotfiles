@@ -171,16 +171,6 @@ setup()
   done
 
   ##################################################################################################
-  ### Stage 6: Import GPG data from the private documents.
-  ##################################################################################################
-  info "Stage 6: Importing GnuPG data from the private documents."
-
-  # GPG should be initialized before making the symlinks so that it can make the config dir if it
-  # hasn't been ran already.
-  gpg -q --import "$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/GnuPG/Private Key.key"
-  gpg -q --import-ownertrust "$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/GnuPG/Owner Trust.txt"
-
-  ##################################################################################################
   ### Stage 7: Link directories from the private documents to other paths in the system.
   ##################################################################################################
   info "Stage 7: Making symbolic links."
@@ -243,9 +233,18 @@ setup()
   done
 
   ##################################################################################################
-  ### Stage 8: Install all of the packages in the list, ignoring comments.
+  ### Stage 8: Import GPG data from the private documents.
   ##################################################################################################
-  info "Stage 8: Installing packages from the list."
+  info "Stage 8: Importing GnuPG data from the private documents."
+
+
+  gpg --import "$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/GnuPG/Private Key.key"
+  gpg --import-ownertrust "$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/GnuPG/Owner Trust.txt"
+
+  ##################################################################################################
+  ### Stage 9: Install all of the packages in the list, ignoring comments.
+  ##################################################################################################
+  info "Stage 9: Installing packages from the list."
 
   # For libc++.
   gpg --recv-key 8F0871F202119294 > /dev/null
