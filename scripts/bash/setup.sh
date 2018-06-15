@@ -191,8 +191,8 @@ setup()
       # Link downloads from external to home folder.
       ["$HOME/Music"]="$HOME/External/Music"
 
-      # Link GnuPGP Public keyring from private docs to home folder.
-      ["$HOME/.gnupg/pubring.kbx"]="$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/GnuPG/Public Keyring.kbx"
+      # Link GPG configuration file from dotfiles to home folder.
+      ["$HOME/.gnupg/gpg.conf"]="$DOTFILES/config/gpg.conf"
       # Link SSH files from private docs to home folder.
       ["$HOME/.ssh"]="$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/SSH"
       # Link dotfiles config from private docs to dotfiles.
