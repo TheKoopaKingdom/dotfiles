@@ -11,46 +11,48 @@ export DEBUG=false
 
 # Only define these once per source.
 NORMAL="$(tput sgr0)"
-readonly NORMAL
-BLACK=$(tput setaf 0)
-readonly BLACK
-RED=$(tput setaf 1)
-readonly RED
+BOLD=$(tput bold)
+WHITE="$(tput setaf 7)"
 GREEN=$(tput setaf 2)
-readonly GREEN
-YELLOW=$(tput setaf 3)
-readonly YELLOW
-BLUE="$(tput setaf 4)"
-readonly BLUE
-MAGENTA=$(tput setaf 5)
-readonly MAGENTA
 CYAN=$(tput setaf 6)
-readonly CYAN
-WHITE=$(tput setaf 7)
-readonly WHITE
-REVERSE=$(tput smso)
-readonly REVERSE
-UNDERLINE=$(tput smul)
-readonly UNDERLINE
+BLUE="$(tput setaf 4)"
+RED=$(tput setaf 1)
 
 ####################################################################################################
-### Path Constants
+### Printing Utilities
 ####################################################################################################
-readonly PRIVATE_DOCUMENTS_LOCAL_DIRECTORY="$HOME/Documents/Private"
 
-debug()
+info_section()
 {
-  if $DEBUG; then
-    printf "[${BLUE}Debug${NORMAL}] %s\n" "$*"
-  fi
+  printf "[${WHITE}Section${NORMAL}] ${BOLD}%s${NORMAL}\n" "$*"
 }
 
 info()
 {
-  printf "[${GREEN}Info${NORMAL} ] %s\n" "$*"
+  printf "[${GREEN}Info${NORMAL}   ] %s\n" "$*"
+}
+
+config()
+{
+  QUESTION=$1
+  VARIABLE_NAME=$2
+
+  read -rp "[${CYAN}Config${NORMAL} ] $QUESTION" PROMPT
+  if [[ $PROMPT = "y" ]]; then
+    export "$VARIABLE_NAME"=true
+  else
+    export "$VARIABLE_NAME"=false
+  fi
+}
+
+debug()
+{
+  if [[ $DEBUG = true ]]; then
+    printf "[${BLUE}Debug${NORMAL}  ] %s\n" "$*"
+  fi
 }
 
 error()
 {
-  printf "[${RED}Error${NORMAL}] %s\n" "$*"
+  printf "[${RED}Error${NORMAL}  ] %s\n" "$*"
 }
