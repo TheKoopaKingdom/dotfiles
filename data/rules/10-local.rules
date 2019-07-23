@@ -1,4 +1,0 @@
-# Match the addition of a device node for the first partition of the Wii/3DS/Wii U SD card, and add a MEGA syncronization.
-ACTION=="add" ATTR{partition}=="1", SUBSYSTEMS=="mmc", DRIVERS=="mmcblk", ATTRS{serial}=="0x9c98e557", SYMLINK+="sd", RUN+="/opt/sd-card-trigger"
-# Match the removal of the same device node, and remove the MEGA syncronization.
-# ACTION=="remove" ATTR{partition}=="1", SUBSYSTEMS=="mmc", DRIVERS=="mmcblk", ATTRS{serial}=="0x9c98e557", RUN+="/usr/bin/mega-sync -d /run/media/kyle/SD\ CARD"

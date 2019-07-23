@@ -1,6 +1,0 @@
-[Unit]
-Description=Add a MEGA sync for the SD card.
-
-[Service]
-Type=simple
-ExecStart=/opt/add_sd_card_sync
