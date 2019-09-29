@@ -1,0 +1,25 @@
+# Block Devices
+
+# [All] Don't update access times, for performance, and don't interpret character or block special devices, for security.
+# [1] Don't allow direct binary execution, for security.
+# [2] Mount with user permissions, for usability, allow services that don't depend on device to start, for usability, and don't hang if device not present, for usability.
+
+# UEFI System Partition (ESP) on the SSD.
+# See [1].
+PARTUUID=9a51e733-b972-4b2f-9e57-b9f16022673c /boot               vfat  defaults,noatime,nodev,noexec                                                                                     0 2
+
+# Linux root partition on the SSD.
+PARTUUID=91fb9373-d9b2-4e6d-a376-0388afe85bf0 /                   ext4  defaults,noatime,nodev                                                                                            0 1
+
+# Shared document partition on the other SSD.
+# See [2].
+PARTUUID=14ef1c12-bb79-4ed7-358b-97b9321b97ed /home/kyle/Terrace  ntfs  defaults,noatime,nodev,umask=0022,uid=1000,gid=1000,noauto,x-systemd.automount,nofail,x-systemd.device-timeout=1  0 2
+
+# Storage partition on the HDD.
+# See [2].
+PARTUUID=c4c30dc0-e0cd-4a66-a04a-5238b01c7824 /home/kyle/Library  ntfs  defaults,noatime,nodev,umask=0022,uid=1000,gid=1000,noauto,x-systemd.automount,nofail,x-systemd.device-timeout=1  0 2
+
+# Swap Devices
+
+# Swap partition on the SSD.
+/swapfile none  swap  defaults  0 0
