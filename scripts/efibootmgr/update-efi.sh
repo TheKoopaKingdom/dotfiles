@@ -2,8 +2,6 @@
 
 set -e
 
-# TODO: fetch latest from https://github.com/tianocore/edk2/releases?
-
 # Escapes a string for usage in a sed pattern. Sed expression copied from 
 # https://stackoverflow.com/a/2705678.
 # Arguments:
