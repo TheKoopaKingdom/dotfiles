@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# shellcheck source=../scripts/bash/setup.sh
+source "${BASH_SOURCE%/*}/../scripts/bash/setup.sh"
+time setup_user "$@"
+echo "Don't forget about the setup script. Have a wonderful day!"

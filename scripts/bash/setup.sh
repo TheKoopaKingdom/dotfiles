@@ -1,257 +1,283 @@
 #!/bin/bash
 
-# Dependencies:
-#  - "scripts/bash/common.sh"
+# This file does things that can harm the system if done incorrectly, so exit upon error.
+set -e
 
-# Manually installs an AUR package, if it is not already present.
+# shellcheck source=../bash/common.sh
+source "$COMET_OBSERVATORY/scripts/bash/common.sh"
+# shellcheck source=../bash/file-utils.sh
+source "$COMET_OBSERVATORY/scripts/bash/file-utils.sh"
+# shellcheck source=../bash/configure-system-utils.sh
+source "$COMET_OBSERVATORY/scripts/bash/configure-system-utils.sh"
+# shellcheck source=../bash/configure-user-utils.sh
+source "$COMET_OBSERVATORY/scripts/bash/configure-user-utils.sh"
+
+# Prints a header.
 # Arguments:
-#  - The name of the package.
-install_aur_package()
+#   - The name of the script.
+# Outputs:
+#   - The Luma ASCII art, and repository info.
+print_header()
 {
-  NAME=$1
-  info "Installing AUR package $NAME. Checking if package is already installed."
+  local -r SCRIPT=$1
 
-  if ! pacman -Qi "$NAME" > /dev/null; then
-    info "Package not found, installing."
+  # The comet observatory variable has not yet been checked.
+  if [[ $DEBUG != true && -d $COMET_OBSERVATORY ]]; then
+    cat "$COMET_OBSERVATORY/data/luma.txt" || true
+  fi
+  info "Comet Observatory System $SCRIPT Script"
+  info "https://gitlab.com/CodingKoopa/comet-observatory"
+  debug "Running in debug mode."
+}
 
-    PACKAGE_BUILD_DIR="$LOCAL_AUR_DIR/$NAME"
-    # Make sure there's no pacaur dir becuase, if there is, Git will throw a fit.
-    rm -rf "$PACKAGE_BUILD_DIR"
-    # Clone the AUR package Git repository.
-    git clone -q "https://aur.archlinux.org/$NAME.git" "$PACKAGE_BUILD_DIR"
-    # Skip the PGP check becasue we have not yet established our PGP keyring.
-    cd "$PACKAGE_BUILD_DIR" && makepkg -cis --skippgpcheck
-  else
-    info "Package found, skipping."
+# Exports certain constant variables.
+# Globals Exported:
+#   - INSTALL_HOME: Location of the home directory of the current install user.
+#   - COMET_OBSERVATORY: Location of this Comet Observatory repository.
+#   - SYNCED_DOCUMENTS_DIR: Location of the synced documents directory of the current install user.
+#   - SYNCED_GTK3_DIR: Location of the GTK 3.0 configuration directory of the current install user.
+#   - ABS_DIR: Location of the Arch Build System directory.
+#   - AUR_DIR: Location of the Arch User Repository directory.
+#   - GPG_DIR: Location of the GnuPG home directory of the current install user.
+#   - SSH_DIR: Location of the SSH home directory of the current install user.
+#   - PACMAN_ARGS: List of Pacman arguments useful for scripts.
+# Arguments:
+#   - The user that is being installed for, and owns the Comet Observatory.
+export_constants()
+{
+  INSTALL_HOME=$(eval echo "~$INSTALL_USER")
+  readonly INSTALL_HOME
+  export INSTALL_HOME
+
+  export COMET_OBSERVATORY="$INSTALL_HOME/Documents/Projects/Bash/comet-observatory"
+  if [[ ! -d $COMET_OBSERVATORY ]]; then
+    error "Comet Observatory directory \"$COMET_OBSERVATORY\" not found."
+    exit 1
+  fi
+
+  export SYNCED_DOCUMENTS_DIR="$INSTALL_HOME/Documents"
+  export SYNCED_GTK3_DIR="$SYNCED_DOCUMENTS_DIR/Program Configurations/GTK 3.0"
+  export ABS_DIR="$INSTALL_HOME/Documents/ABS"
+  export AUR_DIR="$INSTALL_HOME/Documents/AUR"
+  export GPG_DIR="$INSTALL_HOME/.gnupg"
+  export SSH_DIR="$INSTALL_HOME/.ssh"
+
+  export PACMAN_ARGS=(-q --noconfirm --needed --noprogressbar)
+}
+
+# Enters the script directory, and sets up a trap to return.
+# Arguments:
+#   - The name of the script.
+enter_script_dir()
+{
+  # Enter the script directory so that we can use relative paths.
+  pushd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null
+  trap popd ERR
+}
+
+# Checks the user running the script.
+# Globals Read:
+#   - DRY_RUN: See setup().
+# Arguments:
+#   - Whether to require root or to require non root.
+check-user()
+{
+  local -r REQUIRE_ROOT=$1
+
+  if [[ $DRY_RUN = false ]]; then
+    if [[ $EUID -eq 0 ]]; then
+      if [[ $REQUIRE_ROOT = false ]]; then
+        error "This script cannot be run as root."
+        exit 1
+      fi
+    else
+      if [[ $REQUIRE_ROOT = true ]]; then
+        error "This script must be run as root."
+        exit 1
+      fi
+    fi
   fi
 }
 
-# Links one file to another and resolves conflicts.
-# Arguments:
-#  - The destination.
-#  - The name.
-ln_()
-{
-  TARGET=$1
-  NAME=$2
-  if [ -L "$NAME" ]; then
-    info "Symbolic link $NAME exists, skipping."
-    return
-  elif [ -f "$NAME" ] || [ -d "$NAME" ]; then
-    NAME_OLD="$NAME.old"
-    info "File or directory to be linked $NAME exists, moving to $NAME_OLD."
-    mv "$NAME" "$NAME_OLD"
-  fi
-
-  PARENT_DIRECTORY=$(dirname "$NAME")
-  # Make sure the target's parent directory exists.
-  if ! [ -d "$PARENT_DIRECTORY" ]; then
-    info "Making parent directory $PARENT_DIRECTORY."
-    mkdir -p "$PARENT_DIRECTORY"
-  fi
-
-  ln -s "$TARGET" "$NAME"
-}
-
-# Sets up a new system.
+# Sets up the system components of the system.
+# Globals Read:
+#   - COMET_OBSERVATORY: See export_constants().
+#   - PACMAN_ARGS: See export_constants().
+#   - SYNCED_GTK_DIR: See export_constants().
+# Globals Exported:
+#   - DRY_RUN: Whether to actually perform actions.
+#   - INSTALL_USER: The user that is being installed for, and owns the Comet Observatory.
+# Outputs:
+#   - Installation progress.
+# Returns:
+#   - 1 if the user couldn't be found.
 setup()
 {
-  ##################################################################################################
-  ### Stage 1: Make a directory structure to work off of.
-  ##################################################################################################
-  info "Stage 1: Making directory structure."
+  print_header "System Setup"
 
-  # Arch Build System directory. Technically, AUR packages are not part of the ABS, but this is an
-  # easy way of organizing.
-  LOCAL_AUR_DIR="$HOME/Documents/ABS/aur"
+  # Customize the setup.
+  info_section "Initializing Setup"
 
-  declare -a NEW_PATHS=(
-      "$HOME/Uploads"
-      "$HOME/Documents/Private"
-      "$LOCAL_AUR_DIR"
-      "$HOME/.gnupg"
-  )
-
-  for LOCAL_PATH in "${NEW_PATHS[@]}"; do
-    debug "Making new path $LOCAL_PATH."
-    mkdir -p "$LOCAL_PATH"
-  done
-
-  # The GPG home directory needs special permissions.
-  chmod 700 "$HOME/.gnupg"
-
-  ##################################################################################################
-  ### Stage 2: Tweak the Pacman configuration.
-  ##################################################################################################
-  info "Stage 2: Installing Pacman configuration."
-
-  # TODO: update this comment
-  # Pacman's configuration is only writeable by root, and the configuration that would be stored in
-  # the MEGA private documents isn't accessable yet, so we manually write the config ourselves.
-  # TODO: enable multilib repo
-  info "Linking dotfiles Pacman configuration to system path. Checking if system path is a symlink."
-  if [[ -L /etc/pacman.conf ]]; then
-    info "System path is a symlink, skipping."
-  else
-    info "System path is not a symlink, linking."
-
-    sudo mv /etc/pacman.conf /etc/pacman.conf.old
-    sudo ln -sf "$DOTFILES/config/pacman.conf" /etc/pacman.conf
-
-    info "Syncing package database."
-    # Refresh everything.
-    sudo pacman -Syu > /dev/null
+  info "Configuring setup."
+  # Dry runs should print messages when action is about to be taken, but must not execute the
+  # actions. All functions called here should have dry run support implemented within the function,
+  # for consistency.
+  config_bool "Is this a dry run? (y/n)?" DRY_RUN "$1"
+  config_str "What user owns the Comet Observatory?" INSTALL_USER "$2" 
+  if ! id "$INSTALL_USER" >/dev/null 2>&1; then
+    error "User \"$INSTALL_USER\" doesn't exist."
+    exit 1
   fi
 
-  ##################################################################################################
-  ### Stage 3: Install pacaur from the AUR.
-  ##################################################################################################
-  info "Stage 3: Installing pacaur."
+  info "Entering script directory."
+  enter_script_dir
 
-  PACMAN_ARGS=(-q --noconfirm --needed --noprogressbar)
+  info "Checking permissions."
+  check-user true
 
-  mkdir -p "$LOCAL_AUR_DIR"
+  info "Setting constants."
+  export_constants
 
-  info "Installing development packages and Git."
-  # Install the development packages, and Git.
-  sudo pacman -S "${PACMAN_ARGS[@]}" base-devel git > /dev/null
+  # Kernel & Hardware
+  info_section "Setting Up Kernel & Hardware"
 
-  # ( install_aur_package cower )
-  # ( install_aur_package pacaur )
+  info "Configuring initial ramdisk."
+  configure_initial_ramdisk
 
-  ##################################################################################################
-  ### Stage 4: Sign into MEGA to sync the private documents.
-  ##################################################################################################
-  info "Stage 4: Signing into MEGA."
-
-  info "Installing MegaCMD and MegaSync."
-  sudo pacman -S "${PACMAN_ARGS[@]}" megacmd megasync > /dev/null
-
-  info "Checking if signed into MEGA."
-  mega-login > /dev/null
-  if [[ $? -eq 202 ]]; then
-    info "Already signed into MEGA. Skipping."
-  else
-    info "Not signed into MEGA, signing in."
-    while true; do
-      read -rp "Enter your MEGA username: " USERNAME
-      read -rsp "Enter your password: " PASSWORD
-      mega-login "$USERNAME" "$PASSWORD"
-      # MEGA returns 0 regardless of whether the login was successful or not.
-      read -rp "Are you sure? Enter y to continue: " CHOICE
-      if [[ $CHOICE = 'y' ]]; then
-        break
-      fi
-    done
+  info "Making initial ramdisks."
+  if [[ $DRY_RUN = false ]]; then    
+    mkinitcpio -P
   fi
 
-  ##################################################################################################
-  ### Stage 5: Create MEGA syncs to home folder subdirectories.
-  ##################################################################################################
-  info "Stage 5: Syncing local folders to MEGA."
+  info "Configuring kernel attributes."
+  configure_kernel_attributes
 
-  declare -A SYNCED_PATHS=(
-      ["$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY"]="/Private Documents"
-      ["$HOME/Music"]="/Music"
-      ["$HOME/Videos"]="/Videos"
-      ["$HOME/Pictures"]="/Pictures"
-      ["$HOME/Documents/Timers"]="/Timers"
-      ["$HOME/Documents/Models"]="/Models"
-      ["$HOME/Uploads"]="/Uploads"
-      ["$HOME/External/"]="/Uploads"
-      ["$HOME/Uploads"]="/Uploads"
-  )
+  info "Configuring kernel modules."
+  configure_kernel_modules
 
-  for LOCAL_PATH in "${!SYNCED_PATHS[@]}"; do
-    debug "Local path $LOCAL_PATH gets synced to remote path ${SYNCED_PATHS[$LOCAL_PATH]}."
-    mkdir -p "$LOCAL_PATH"
-    if ! $DEBUG; then
-      mega-sync "$LOCAL_PATH" "${SYNCED_PATHS[$LOCAL_PATH]}"
-    fi
-  done
+  info "Configuring filesystems."
+  safe_cp ../../config/fstab /etc/fstab
 
-  ##################################################################################################
-  ### Stage 7: Link directories from the private documents to other paths in the system.
-  ##################################################################################################
-  info "Stage 7: Making symbolic links."
+  info "Creating swap memory."
+  create_swap
 
-  declare -A LINKED_PATHS=(
-      # Link downloads from external to home folder.
-      ["$HOME/Downloads"]="$HOME/External/Downloads"
-      # Link downloads from external to home folder.
-      ["$HOME/Music"]="$HOME/External/Music"
+  # System Services
+  info_section "Setting Up System Services"
 
-      # Link GPG configuration file from dotfiles to home folder.
-      ["$HOME/.gnupg/gpg.conf"]="$DOTFILES/config/gpg.conf"
-      # Link SSH files from private docs to home folder.
-      ["$HOME/.ssh"]="$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/SSH"
-      # Link dotfiles config from private docs to dotfiles.
-      ["$DOTFILES/scripts/bash/config.sh"]=\
-"$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/Dotfiles Configuration.sh"
-      # Link Citra configuration from private docs to home folder. This is private because it stores
-      # recent files, including full paths.
-      ["$HOME/.config/citra-emu"]="$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/Configuration/citra-emu"
-      # Link Dolphin configuration from private docs to home folder. This is private for the same
-      # reason.
-      ["$HOME/.config/dolphin-emu"]="$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/Configuration/dolphin-emu"
-      # Link Citra data from private docs to home folder.
-      ["$HOME/.local/share/citra-emu"]="$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/Data/citra-emu"
-      # Link Dolphin data from private docs to home folder.
-      ["$HOME/.local/share/dolphin-emu"]="$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/Data/dolphin-emu"
-      # Link Git configuration from private docs to home folder. This is private because it contains
-      # user-specific info like email.
-      ["$HOME/.gitconfig"]="$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/Git Configuration"
-      # Link KeePassX configuration from private docs to home folder. This is private for the same
-      # reason.
-      ["$HOME/.config/keepassx"]="$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/Configuration/keepassx"
-      # Link Llanfair configuration from private docs to home folder. This is private because, I kid
-      # you not, the configuration CFG files are special binary formats. Why.
-      ["$HOME/.config/llanfair"]="$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/Configuration/llanfair"
-      # Link OBS Studio configuration from private docs to home folder. This is private because it's
-      # somewhat sensitive info.
-      ["$HOME/.config/obs-studio"]="$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/Configuration/obs-studio"
-      # Link QT configuration from private docs to home folder. I honestly don't have much of a
-      # reason to keep this private, it's just this is so big I don't even know if it has sensitive
-      # info.
-      ["$HOME/.config/QtProject"]="$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/Configuration/QtProject"
-      # Link Clementine configuration from private docs to home folder. Only link the configuration,
-      # because other files in the directory are subject to change.
-      ["$HOME/.config/Clementine/Clementine.conf"]=\
-"$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/Configuration/Clementine.conf"
+  info "Configuring system systemd services."
+  configure_system_units
 
-      # Link The Simpsons: Hit & Run data from private docs to home folder.
-      ["$HOME/.local/share/lucas-simpsons-hit-and-run-mod-launcher"]=\
-"$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/Data/Lucas' Simpsons Hit & Run Mod Launcher"
+  info "Enabling system systemd services."
+  enable_system_units
 
-      # Link icons from dotfiles to home folder.
-      ["$HOME/.icons"]="$DOTFILES/data/icons"
-  )
+  info "Configuring udev."
+  configure_udev_rules
 
-  for LOCAL_PATH in "${!LINKED_PATHS[@]}"; do
-    debug "Local path $LOCAL_PATH gets linked to path ${LINKED_PATHS[$LOCAL_PATH]}."
-    ln_ "${LINKED_PATHS[${LOCAL_PATH}]}" "$LOCAL_PATH"
-  done
+  # System Tools
+  info_section "Setting Up System Programs"
 
-  ##################################################################################################
-  ### Stage 8: Import GPG data from the private documents.
-  ##################################################################################################
-  info "Stage 8: Importing GnuPG data from the private documents."
+  info "Configuring pacman."
+  configure_pacman
+
+  info_section "Setting Up System Packages"
+
+  info "Syncing packages."
+  if [[ $DRY_RUN = false ]]; then    
+    pacman -Syu "${PACMAN_ARGS[@]}"
+  fi
+
+  info "Installing new packages."
+  grep -v "^#" "$COMET_OBSERVATORY/data/packages.txt" | pikaur -S "${PACMAN_ARGS[@]}"
+
+  info_section "Setting up root GTK."
+  # Apply the GTK configuration to root, to make applications like Gparted look nice.
+  safe_ln "$SYNCED_GTK3_DIR" /root/.config/gtk-3.0
+  
+  popd > /dev/null
+
+  info "Setup complete!"
+}
 
 
-  gpg -q --import "$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/GnuPG/Private Key.key"
-  gpg -q --import-ownertrust "$PRIVATE_DOCUMENTS_LOCAL_DIRECTORY/GnuPG/Owner Trust.txt"
+# Sets up the user components of the system. Strictly only user commands that cannot be ran as 
+# root.
+# Globals Read:
+#   - INSTALL_HOME: See export_constants().
+#   - COMET_OBSERVATORY: See export_constants().
+#   - SYNCED_DOCUMENTS_DIR: See export_constants().
+#   - SYNCED_GTK_DIR: See export_constants().
+#   - ABS_DIR: See export_constants().
+#   - AUR_DIR: See export_constants().
+#   - GPG_DIR: See export_constants().
+#   - SSH_DIR: See export_constants().
+# Globals Exported:
+#   - DRY_RUN: See setup().
+#   - INSTALL_USER: See setup().
+#   - SYNCED_DOCUMENTS: Whether documents have been synced.
+# Outputs:
+#   - Installation progress messages.
+# Returns:
+#   - 1 if the user couldn't be found.
+setup_user()
+{
+  print_header "User Setup"
 
-  ##################################################################################################
-  ### Stage 9: Install all of the packages in the list, ignoring comments.
-  ##################################################################################################
-  info "Stage 9: Installing packages from the list."
+  # Customize the setup.
+  info_section "Initializing Setup"
 
-  # For libc++.
-  # gpg --recv-key 8F0871F202119294 > /dev/null
-  # pacaur -S "${PACMAN_ARGS[@]}" \
-  #     "$(sed 's/#.*$//g;/^\s*$/d' "$HOME/Documents/Private/Package List.txt")"
+  info "Configuring setup."
+  # See above.
+  config_bool "Is this a dry run? (y/n)?" DRY_RUN "$1"
+  local -r INSTALL_USER=$(whoami)
+  if ! id "$INSTALL_USER" >/dev/null 2>&1; then
+    error "User \"$INSTALL_USER\" doesn't exist."
+    exit 1
+  fi
+  config_bool "Have private documents been synced yet? (y/n)?" SYNCED_DOCUMENTS "$2"
 
-  # sudo ln -fs "$DOTFILES/bin/add_sd_card_sync.sh" /opt/add_sd_card_sync
-  # TODO: fill out more of the service.
-  # sudo ln -fs "$DOTFILES/data/services/add-sd-card-sync.service" /etc/systemd/system/
+  info "Entering script directory."
+  enter_script_dir
+
+  info "Checking permissions."
+  check-user false
+
+  info "Setting constants."
+  export_constants
+
+  # File Structure
+  info_section "Setting Up File Structure"
+
+  info "Creating new directories."
+  create_directories
+
+  info "Linking directories."
+  link_directories
+
+  # User Services
+  info_section "Setting Up User Services"
+
+  info "Configuring user systemd services."
+  configure_user_units
+
+  info "Enabling user systemd services."
+  enable_user_units
+
+  # User Services
+  info_section "Setting Up User Programs"
+
+  info "Configuring PAM."
+  safe_cp ../../config/pam-environment.env "$INSTALL_HOME/.pam_environment"
+
+  info "Configuring MPV."
+  safe_cp ../../config/mpv.conf "$INSTALL_HOME/.config/mpv/mpv.conf"
+
+  info "Configuring GPG."
+  configure_gpg
+
+  info_section "Setting Up Pikaur"
+  install_pikaur
+
+  popd > /dev/null
+
+  info "Setup complete!"
 }
