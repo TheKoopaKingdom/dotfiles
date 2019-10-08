@@ -81,6 +81,10 @@ function launch-qemu() {
 
   # Block Device Options
 
+  # Add a filesystem device
+  qemu_opts+=" -virtfs local,path=/home/kyle/Library/Virtualization/Share,mount_tag=share,\
+security_model=none"
+
   # USB Options
 
   # Display Options

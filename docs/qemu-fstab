@@ -1,0 +1,10 @@
+# This is a filesystem table that I ripped from my Debian 10 QEMU installation. The main thing of
+# interest is the shared folder.
+
+# Debian root parition on the disk image.
+UUID=91109490-7714-4510-b695-3b4a24f648d1 /                 ext4    errors=remount-ro                                           0 1
+# Swap partition on the disk image.
+UUID=a9501a38-5326-46ef-b427-3b811581df27 none              swap    sw                                                          0 0
+# Shared directory on the 9p "share" tag. Don't halt the boot if not present, so that the VM can be
+# started without the Plan 9 folder sharing being properly setup on the host.
+share                                     /home/koopa/Share 9p      noauto,x-systemd.automount,nofail,x-systemd.mount-timeout=1 0 0
