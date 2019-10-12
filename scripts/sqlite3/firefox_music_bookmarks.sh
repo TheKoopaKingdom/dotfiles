@@ -5,42 +5,60 @@ source "$COMET_OBSERVATORY/scripts/bash/common.sh"
 # shellcheck source=../bash/config.sh
 source "$COMET_OBSERVATORY/scripts/bash/config.sh"
 
-FIREFOX_PLACES_DATABASE="$FIREFOX_USER_DIRECTORY"/places.sqlite
+readonly FIREFOX_PLACES_DATABASE="$FIREFOX_USER_DIRECTORY"/places.sqlite
 
-# Gets the ID of a Firefox folder named 'Music".
-get_music_folder_id()
+# Gets the ID of a Firefox folder.
+# Arguments:
+#   - The name of the folder.
+# Outputs:
+#   - The ID of the folder, which can be used to further index the database.
+get_firefox_folder_id()
 {
+  local -r FOLDER_NAME=$1
+
   # Grab the ID of the first first music folder.
   # Disable ShellCheck error for echoing commands because here it's necessary, to return the value.
   # shellcheck disable=SC2005
-  echo "$(sqlite3 "$FIREFOX_PLACES_DATABASE" "SELECT id FROM 'moz_bookmarks' WHERE title='Music' \
+  echo "$(sqlite3 "$FIREFOX_PLACES_DATABASE" "SELECT id FROM 'moz_bookmarks' WHERE title='$FOLDER_NAME' \
   AND type=2 LIMIT 0,1")"
 }
 
-# Removes a bookmark from a URL.
+# Concatenates all bookmarks in the a folder of the Firefox places SQLite database.
 # Arguments:
-#  - The URL to be removed.
-remove_bookmark()
+#   - The name of the folder.
+# Outputs:
+#   - The list of bookmark URLs in the folder, delimited with spaces.
+get_bookmark_urls()
 {
-  info "Removing bookmark \"$1\"."
-  URL_ID=$(sqlite3 "$FIREFOX_PLACES_DATABASE" "SELECT id FROM 'moz_places' WHERE url='$1'")
-  MUSIC_ID=$(get_music_folder_id)
-  debug "URL ID: $URL_ID. Music folder ID: $MUSIC_ID"
-  sqlite3 "$FIREFOX_PLACES_DATABASE" "DELETE FROM 'moz_bookmarks' WHERE fk=$URL_ID AND parent='$MUSIC_ID'"
-}
+  local -r FOLDER_NAME=$1
 
-# Concatenates all bookmarks in the 'Music' folder of the Firefox places SQLite database.
-get_music_list()
-{
-  MUSIC_ID=$(get_music_folder_id)
+  local -r MUSIC_ID=$(get_firefox_folder_id "$FOLDER_NAME")
   # Get a list of the URL IDs in the music folder.
-  URL_IDS=$(sqlite3 "$FIREFOX_PLACES_DATABASE" "SELECT fk FROM 'moz_bookmarks' WHERE parent=$MUSIC_ID")
-  LIST=""
+  local -r URL_IDS=$(sqlite3 "$FIREFOX_PLACES_DATABASE" "SELECT fk FROM 'moz_bookmarks' WHERE parent=$MUSIC_ID")
+  local -a list=""
   for URL_ID in $URL_IDS; do
     # Lookup the URL from the current ID, and append it to the list.
-    LIST+=$(sqlite3 "$FIREFOX_PLACES_DATABASE" "SELECT url FROM 'moz_places' WHERE id=$URL_ID")
+    list+=$(sqlite3 "$FIREFOX_PLACES_DATABASE" "SELECT url FROM 'moz_places' WHERE id=$URL_ID")
     # Append a space to the list.
-    LIST+=" "
+    list+=" "
   done
-  echo "$LIST"
+  echo "$list"
+}
+
+# Removes a bookmark in a folder, from a URL.
+# Arguments:
+#   - The folder containing the URL.
+#   - The URL to be removed.
+# Outputs:
+#   - Bookmark removal progress.
+remove_firefox_bookmark()
+{
+  local -r FOLDER=$1
+  local -r URL=$2
+
+  info "Removing bookmark \"$URL\"."
+  local -r URL_ID=$(sqlite3 "$FIREFOX_PLACES_DATABASE" "SELECT id FROM 'moz_places' WHERE url='$URL'")
+  local -r MUSIC_ID=$(get_firefox_folder_id "$FOLDER")
+  debug "URL ID: $URL_ID. Music folder ID: $MUSIC_ID"
+  sqlite3 "$FIREFOX_PLACES_DATABASE" "DELETE FROM 'moz_bookmarks' WHERE fk=$URL_ID AND parent='$MUSIC_ID'"
 }
