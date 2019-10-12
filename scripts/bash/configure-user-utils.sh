@@ -56,8 +56,6 @@ link_directories()
     ["$COMET_OBSERVATORY/scripts/bash/bash-profile.sh"]="$INSTALL_HOME/.bash_profile"
     # Link Bash RC file from CO to home directory.
     ["$COMET_OBSERVATORY/scripts/bash/bash-rc.sh"]="$INSTALL_HOME/.bashrc"
-    # Link X profile from CO to home directory.
-    ["$COMET_OBSERVATORY/scripts/x/x-profile.sh"]="$INSTALL_HOME/.xprofile"
     # Link X RC file from CO to home directory.
     ["$COMET_OBSERVATORY/scripts/x/x-rc.sh"]="$INSTALL_HOME/.xinitrc"
     # Link CO configuration from documents to CO.
