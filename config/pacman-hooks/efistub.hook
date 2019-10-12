@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = File
+Target = boot/vmlinuz*
+
+[Action]
+Description = Updating UEFI boot entries.
+Exec = /home/kyle/Documents/Projects/Bash/comet-observatory/bin/update-efi
+When = PostTransaction
