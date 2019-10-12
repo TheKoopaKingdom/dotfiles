@@ -198,7 +198,6 @@ setup()
   info "Setup complete!"
 }
 
-
 # Sets up the user components of the system. Strictly only user commands that cannot be ran as 
 # root.
 # Globals Read:

@@ -254,7 +254,7 @@ configure_user_units()
 #   - Installation progress.
 enable_user_units()
 {
-  UNITS=(
+  local -ra UNITS=(
     # Enable the SSH agent.
     "ssh-agent.service"
   )

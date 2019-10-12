@@ -82,19 +82,19 @@ config_bool()
 #   - The configuration prompt.
 config_str()
 {
-  QUESTION=$1
-  VARIABLE_NAME=$2
-  ANSWER=$3
+  local -r QUESTION=$1
+  local -r VARIABLE_NAME=$2
+  local answer=$3
 
   MESSAGE="[${CYAN}Config${NORMAL} ] $QUESTION"
 
-  if [[ -n "$ANSWER" ]]; then
-    printf "%s %s\n" "$MESSAGE" "$ANSWER"
+  if [[ -n "$answer" ]]; then
+    printf "%s %s\n" "$MESSAGE" "$answer"
   else
-    read -rp "$MESSAGE " ANSWER
+    read -rp "$MESSAGE " answer
   fi
   
-  export "$VARIABLE_NAME"="$ANSWER"
+  export "$VARIABLE_NAME"="$answer"
 }
 
 # Prints a debug message.
