@@ -189,7 +189,7 @@ setup()
   info "Installing new packages."
   grep -v "^#" "$COMET_OBSERVATORY/data/packages.txt" | pikaur -S "${PACMAN_ARGS[@]}"
 
-  info_section "Setting up root GTK."
+  info "Setting up root GTK."
   # Apply the GTK configuration to root, to make applications like Gparted look nice.
   safe_ln "$SYNCED_GTK3_DIR" /root/.config/gtk-3.0
   
