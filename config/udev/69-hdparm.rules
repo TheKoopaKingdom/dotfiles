@@ -1,0 +1,2 @@
+# Disable power saving features for HDD devices, for performance.
+ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", RUN+="/usr/bin/hdparm -B 255 /dev/%k"
