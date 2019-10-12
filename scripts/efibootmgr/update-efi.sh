@@ -39,9 +39,9 @@ find_bootnum()
 #   The bootnum of the boot entry.
 update_entry()
 {
-  LABEL=$1
-  LOADER=$2
-  CMDLINE=$3
+  local -r LABEL=$1
+  local -r LOADER=$2
+  local -r CMDLINE=$3
 
   # It's necessary to delete the existing entry and replace it, because efibootmgr doesn't support
   # editing an existing entry: https://github.com/rhboot/efibootmgr/issues/49.
@@ -90,9 +90,9 @@ vt.global_cursor_default=0"
 
   function _update_entry
   {
-    VMLINUZ_PATH=/vmlinuz-linux${2}
-    INITRD_STR=initrd=initramfs-linux${2}.img
-    FALLBACK_INITRD_STR=initrd=initramfs-linux${2}.img
+    local -r VMLINUZ_PATH=/vmlinuz-linux${2}
+    local -r INITRD_STR=initrd=initramfs-linux${2}.img
+    local -r FALLBACK_INITRD_STR=initrd=initramfs-linux${2}.img
 
     case $TYPE in
       *debug*)
@@ -116,7 +116,7 @@ $CMDLINE_RESCUE_STR"
     esac
   }
 
-  VMLINUZ_TKG_PATH="$(find /boot -mindepth 1 -maxdepth 1 -type f -name 'vmlinuz-linux-tkg*' -print -quit)"
+  local -r VMLINUZ_TKG_PATH="$(find /boot -mindepth 1 -maxdepth 1 -type f -name 'vmlinuz-linux-tkg*' -print -quit)"
   _update_entry "Arch Linux (TkG)" "${VMLINUZ_TKG_PATH#/boot/vmlinuz-linux}"
   _update_entry "Arch Linux (Vanilla)"
 
