@@ -3,28 +3,20 @@
 # Color Variables
 
 NORMAL=$(tput sgr0)
-readonly NORMAL
 export NORMAL
 BOLD=$(tput bold)
-readonly BOLD
 export BOLD
 WHITE=$(tput setaf 7)
-readonly WHITE
 export WHITE
 GREEN=$(tput setaf 2)
-readonly GREEN
 export GREEN
 CYAN=$(tput setaf 6)
-readonly CYAN
 export CYAN
 BLUE=$(tput setaf 4)
-readonly BLUE
 export BLUE
 MAGENTA=$(tput setaf 5)
-readonly MAGENTA
 export MAGENTA
 RED=$(tput setaf 1)
-readonly NORMAL
 export NORMAL
 
 # Printing Utilities
