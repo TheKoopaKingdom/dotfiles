@@ -64,13 +64,14 @@ function update-efi()
   local -r ROOT="PARTUUID=91fb9373-d9b2-4e6d-a376-0388afe85bf0"
   local -r MICROCODE="amd-ucode.img"
 
+  # Set the initial ramdisk to the microcode, for functionality. This is set separately because it
+  # has to come before the kernel initrd.
+  local -r MICROCODE_INITRD_STR="initrd=\\$MICROCODE"
   local -ra CMDLINE_ARRAY=(
     # Enable r/w on the file system, for functionality.
     "rw"
     # Set the root filesystem, for functionality.
     "root=$ROOT"
-    # Set the initial ramdisk to the microcode, for functionality.
-    "initrd=\\$MICROCODE"
     # Disable the watch dog, optimize for performance, and disable staggered spinup, for
     # performance.
     "nowatchdog workqueue.power_efficient=0 libahci.ignore_sss=1"
@@ -92,27 +93,29 @@ printk.devkmsg=on"
   function _update_entry
   {
     local -r VMLINUZ_PATH=/vmlinuz-linux${2}
-    local -r INITRD_STR=initrd=initramfs-linux${2}.img
-    local -r FALLBACK_INITRD_STR=initrd=initramfs-linux${2}.img
+    local -r KERNEL_INITRD_STR=initrd=initramfs-linux${2}.img
+    local -r FALLBACK_KERNEL_INITRD_STR=initrd=initramfs-linux${2}.img
 
     case $TYPE in
       *debug*)
         echo "Updating $1 debug UEFI boot entry ($VMLINUZ_PATH)."
-        update_entry "$1 (Debug)" "$VMLINUZ_PATH" "$INITRD_STR $CMDLINE_STR $CMDLINE_DEBUG_STR"
+        update_entry "$1 (Debug)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR \
+$CMDLINE_STR $CMDLINE_DEBUG_STR"
         ;;
       *rescue-fallback*)
         echo "Updating $1 fallback rescue UEFI boot entry ($VMLINUZ_PATH)."
-        update_entry "$1 (Fallback Rescue)" "$VMLINUZ_PATH" "$FALLBACK_INITRD_STR $CMDLINE_STR \
-$CMDLINE_DEBUG_STR $CMDLINE_RESCUE_STR"
+        update_entry "$1 (Fallback Rescue)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR \
+$FALLBACK_KERNEL_INITRD_STR $CMDLINE_STR $CMDLINE_DEBUG_STR $CMDLINE_RESCUE_STR"
         ;;
       *rescue*)
         echo "Updating $1 rescue UEFI boot entry ($VMLINUZ_PATH)."
-        update_entry "$1 (Rescue)" "$VMLINUZ_PATH" "$INITRD_STR $CMDLINE_STR $CMDLINE_DEBUG_STR \
-$CMDLINE_RESCUE_STR"
+        update_entry "$1 (Rescue)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR \
+$CMDLINE_STR $CMDLINE_DEBUG_STR $CMDLINE_RESCUE_STR"
         ;;
       *)
         echo "Updating $1 quiet UEFI boot entry ($VMLINUZ_PATH)."
-        update_entry "$1 (Silent)" "$VMLINUZ_PATH" "$INITRD_STR $CMDLINE_STR $CMDLINE_SILENT_STR"
+        update_entry "$1 (Silent)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR \
+$CMDLINE_STR $CMDLINE_SILENT_STR"
         ;;
     esac
   }
