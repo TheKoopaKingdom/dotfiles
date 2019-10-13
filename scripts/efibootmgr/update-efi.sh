@@ -78,10 +78,10 @@ function update-efi()
     "nvidia-drm.modeset=1"
   )
   local -r CMDLINE_STR="${CMDLINE_ARRAY[*]}"
-  # Restrict kernel logging to errors, restrict systemd initramfs logging, and hide the cursor, for
-  # less verbosity.
-  local -ra CMDLINE_SILENT_STR="quiet loglevel=3 udev.log_priority=3 rd.systemd.show_status=auto \
-vt.global_cursor_default=0"
+  # Restrict kernel logging to errors, restrict systemd logging, restrict systemd initramfs logging,
+  # and hide the cursor, for less verbosity.
+  local -ra CMDLINE_SILENT_STR="quiet loglevel=3 rd.udev.log_priority=3 udev.log_priority=3 \
+rd.systemd.show_status=auto vt.global_cursor_default=0"
   # Enable kernel debugging, ignore the kernel log level, allocate a larger log buffer,
   # and keep early logs, for more verbosity.
   local -ra CMDLINE_DEBUG_STR="debug ignore_loglevel log_buf_len=16M earlyprintk=efi,keep"
