@@ -264,6 +264,11 @@ setup_user()
   # User Services
   info_section "Setting Up User Programs"
 
+  info "Silencing login message."
+  if [[ $DRY_RUN = false ]]; then
+    touch ~/.hushlogin
+  fi
+
   info "Configuring PAM."
   safe_cp ../../config/pam-environment.env "$INSTALL_HOME/.pam_environment"
 
