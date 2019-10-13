@@ -67,7 +67,8 @@ create_swap()
 #   - Copy feedback.
 configure_system_units()
 {
-  safe_cp ../../config/getty-autologin.conf /etc/systemd/system/getty@tty1.service.d/override.conf
+  safe_cp ../../config/systemd-overrides/getty-autologin.conf \
+/etc/systemd/system/getty@tty1.service.d/override.conf
   safe_cp ../../config/httpd.conf /etc/httpd/conf/httpd.conf
   safe_cp ../../config/journald.conf /etc/systemd/journald.conf
 }
