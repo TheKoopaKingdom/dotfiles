@@ -233,14 +233,14 @@ Testing/"]="$SYNCED_DOCUMENTS_DIR/Program Data/Lucas' Simpsons Hit & Run Mod Lau
   fi
 }
 
-# Configures user systemd services.
+# Configures user systemd units.
 # Globals Read:
 #   - DRY_RUN: See setup().
 # Outputs;
 #   - Copy feedback.
 configure_user_units()
 {
-  for SERVICE in ../../config/systemd-services/*.service; do
+  for SERVICE in ../../config/systemd-user-units/*.service; do
     safe_cp "$SERVICE" "$INSTALL_HOME/.config/systemd/user/$(basename "$SERVICE")"
   done
 }
