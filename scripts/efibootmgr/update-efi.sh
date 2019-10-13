@@ -83,8 +83,9 @@ function update-efi()
   local -ra CMDLINE_SILENT_STR="quiet loglevel=3 rd.udev.log_priority=3 udev.log_priority=3 \
 rd.systemd.show_status=auto vt.global_cursor_default=0"
   # Enable kernel debugging, ignore the kernel log level, allocate a larger log buffer,
-  # and keep early logs, for more verbosity.
-  local -ra CMDLINE_DEBUG_STR="debug ignore_loglevel log_buf_len=16M earlyprintk=efi,keep"
+  # keep early logs, and print kernel messages, for more verbosity.
+  local -ra CMDLINE_DEBUG_STR="debug ignore_loglevel log_buf_len=16M earlyprintk=efi,keep \
+printk.devkmsg=on"
   # Enable rescue mode, for emergencies.
   local -ra CMDLINE_RESCUE_STR="rescue"
 
