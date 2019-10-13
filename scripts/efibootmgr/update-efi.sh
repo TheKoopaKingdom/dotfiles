@@ -80,7 +80,7 @@ function update-efi()
   )
   local -r CMDLINE_STR="${CMDLINE_ARRAY[*]}"
   # Restrict kernel logging to errors, restrict systemd logging, restrict systemd initramfs logging,
-  # and hide the cursor, for less verbosity.
+  # supress more initramfs successful messages, and hide the cursor, for less verbosity.
   local -ra CMDLINE_SILENT_STR="quiet loglevel=3 rd.udev.log_priority=3 udev.log_priority=3 \
 rd.systemd.show_status=auto vt.global_cursor_default=0"
   # Enable kernel debugging, ignore the kernel log level, allocate a larger log buffer,
