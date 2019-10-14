@@ -17,6 +17,8 @@ xset s off
 # Use the XDG portal for GTK applications. This allows for things like Firefox (GTK) using KDE file
 # dialogs.
 export GTK_USE_PORTAL=1
+# Use Ksshaskpass for SSH askpass needs.
+export SSH_ASKPASS='/usr/bin/ksshaskpass'
 
 # Start KDE Plasma.
 exec startkde
