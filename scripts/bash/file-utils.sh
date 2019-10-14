@@ -46,7 +46,7 @@ function safe_ln()
     fi
     local -r LINK_NAME_PARENT_DIRECTORY=$(dirname "$LINK_NAME")
     # Make sure the link name's parent directory exists.
-    if ! [ -d "$" ]; then
+    if ! [ -d "$LINK_NAME_PARENT_DIRECTORY" ]; then
       info "Making link name parent directory $LINK_NAME_PARENT_DIRECTORY."
       if [[ $DRY_RUN = false ]]; then
         mkdir -p "$LINK_NAME_PARENT_DIRECTORY"
