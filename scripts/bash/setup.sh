@@ -161,15 +161,6 @@ setup()
   info "Creating swap memory."
   create_swap
 
-  # System Services
-  info_section "Setting Up System Services"
-
-  info "Configuring system systemd services."
-  configure_system_units
-
-  info "Enabling system systemd services."
-  enable_system_units
-
   info "Configuring udev."
   configure_udev_rules
 
@@ -193,6 +184,15 @@ setup()
   # Apply the GTK configuration to root, to make applications like Gparted look nice.
   safe_ln "$SYNCED_GTK3_DIR" /root/.config/gtk-3.0
   
+  # System Services
+  info_section "Setting Up System Services"
+
+  info "Configuring system systemd services."
+  configure_system_units
+
+  info "Enabling system systemd services."
+  enable_system_units
+
   popd > /dev/null
 
   info "Setup complete!"
