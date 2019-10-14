@@ -133,8 +133,6 @@ dropbox
 
 # Resources
 
-# Hack font.
-ttf-hack
 
 # Other Tools
 
