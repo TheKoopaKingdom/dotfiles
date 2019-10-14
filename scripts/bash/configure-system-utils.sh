@@ -73,7 +73,9 @@ configure_system_units()
   for UNIT in "${!UNIT_OVERRIDES[@]}"; do
     local -r DESTINATION=/etc/systemd/system/"$UNIT".d/override.conf
     safe_cp ../../config/systemd-overrides/"${UNIT_OVERRIDES[${UNIT}]}" "$DESTINATION"
-    chmod -x "$DESTINATION"
+    if [[ $DRY_RUN = false ]]; then
+      chmod -x "$DESTINATION"
+    fi
   done
 
   safe_cp ../../config/httpd.conf /etc/httpd/conf/httpd.conf
