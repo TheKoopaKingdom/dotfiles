@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export COMET_OBSERVATORY=/home/kyle/Documents/Projects/Bash/comet-observatory
+
 # shellcheck source=../scripts/bash/setup.sh
 source "${BASH_SOURCE%/*}/../scripts/bash/setup.sh"
 time setup_user "$@"
