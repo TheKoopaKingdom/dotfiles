@@ -276,7 +276,7 @@ enable_user_units()
 #   - DRY_RUN: See setup().
 configure_gpg()
 {
-  if [[ $DRY_RUN = false && $SYNCED_DOCUMENTS ]]; then
+  if [[ $DRY_RUN = false && $SYNCED_DOCUMENTS = true ]]; then
     info "Importing GnuPG data from the private documents."
     gpg -q --import "$SYNCED_DOCUMENTS_DIR/Passwords & 2FA/GnuPG/Private Key.key"
     gpg -q --import-ownertrust "$SYNCED_DOCUMENTS_DIR/Passwords & 2FA/GnuPG/Owner Trust.txt"
