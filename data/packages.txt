@@ -140,6 +140,8 @@ ttf-hack
 
 # Other Tools
 
+# xmousepasteblock, for preventing accidental mouse button press pastes.
+xmousepasteblock-git
 # xdotool, for automation.
 xdotool
 # xkill, for forcibly killing programs.
