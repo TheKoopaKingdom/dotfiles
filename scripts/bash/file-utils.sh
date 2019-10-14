@@ -54,7 +54,7 @@ function safe_ln()
     fi
     if [ -f "$LINK_NAME" ] || [ -d "$LINK_NAME" ]; then
       local -r LINK_NAME_OLD="$LINK_NAME.old"
-      info "File or directory to be linked $NAME exists, moving to $LINK_NAME_OLD."
+      info "File or directory to be linked $LINK_NAME exists, moving to $LINK_NAME_OLD."
       if [[ $DRY_RUN = false ]]; then
         mv "$LINK_NAME" "$LINK_NAME_OLD"
       fi
