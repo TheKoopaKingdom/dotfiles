@@ -1,0 +1,125 @@
+[
+  /////////////////////////////////////////////////////////////////////////////////////////////////
+  /// Workbench
+  /////////////////////////////////////////////////////////////////////////////////////////////////
+  // Disable editor picker bindings because opening tabs by how recently they were used can be
+  // considered to be undesired behavior.
+  {
+    "key": "ctrl+tab",
+    "command": "-workbench.action.openNextRecentlyUsedEditorInGroup"
+  },
+  {
+    "key": "ctrl+tab",
+    "command": "-workbench.action.quickOpenNavigateNextInEditorPicker",
+    "when": "inEditorsPicker && inQuickOpen"
+  },
+  {
+    "key": "ctrl+shift+tab",
+    "command": "-workbench.action.openPreviousRecentlyUsedEditorInGroup"
+  },
+  {
+    "key": "ctrl+shift+tab",
+    "command": "-workbench.action.quickOpenNavigatePreviousInEditorPicker",
+    "when": "inEditorsPicker && inQuickOpen"
+  },
+  // Remap editor switching bindings to be consistent with tab switching on the rest of the system.
+  {
+    "key": "ctrl+pagedown",
+    "command": "-workbench.action.nextEditor"
+  },
+  {
+    "key": "ctrl+tab",
+    "command": "workbench.action.nextEditor"
+  },
+  {
+    "key": "ctrl+pageup",
+    "command": "-workbench.action.previousEditor"
+  },
+  {
+    "key": "ctrl+shift+tab",
+    "command": "workbench.action.previousEditor"
+  },
+  // Disable recent file picker bindings.
+  {
+    "key": "ctrl+r",
+    "command": "-workbench.action.openRecent"
+  },
+  // Remap debug mode start binding to be easier to use.
+  {
+    "key": "f5",
+    "command": "-workbench.action.debug.start",
+    "when": "!inDebugMode"
+  },
+  {
+    "key": "ctrl+r",
+    "command": "workbench.action.debug.start",
+    "when": "!inDebugMode"
+  },
+  // Remap debug mode restart bindings to be consistent with the new debug binding.
+  {
+    "key": "ctrl+shift+f5",
+    "command": "-workbench.action.debug.restart",
+    "when": "inDebugMode"
+  },
+  {
+    "key": "ctrl+shift+r",
+    "command": "workbench.action.debug.restart",
+    "when": "inDebugMode"
+  },
+  // Remap debug mode exit bindings because there's no exact alternative with the new CMake debug
+  // binding.
+  {
+    "key": "shift+f5",
+    "command": "-workbench.action.debug.stop",
+    "when": "inDebugMode"
+  },
+  {
+    "key": "escape escape",
+    "command": "workbench.action.debug.stop",
+    "when": "inDebugMode"
+  },
+  /////////////////////////////////////////////////////////////////////////////////////////////////
+  /// Git
+  /////////////////////////////////////////////////////////////////////////////////////////////////
+  // Disable save as binding.
+  {
+    "key": "ctrl+shift+s",
+    "command": "-workbench.action.files.saveAs"
+  },
+  // Map stage binding.
+  {
+    "key": "ctrl+shift+s",
+    "command": "git.stageSelectedRanges"
+  },
+  /////////////////////////////////////////////////////////////////////////////////////////////////
+  /// CMake Tools
+  /////////////////////////////////////////////////////////////////////////////////////////////////
+  // Disable task build binding.
+  {
+    "key": "ctrl+shift+b",
+    "command": "-workbench.action.tasks.build"
+  },
+  // Remap CMake configure binding.
+  {
+    "key": "shift+f7",
+    "command": "-cmake.buildWithTarget"
+  },
+  {
+    "key": "ctrl+shift+b",
+    "command": "cmake.outline.configure"
+  },
+  // Disable sidebar visibility binding.
+  {
+    "key": "ctrl+b",
+    "command": "-workbench.action.toggleSidebarVisibility"
+  },
+  // Remap CMake build binding.
+  {
+    "key": "f7",
+    "command": "-cmake.build"
+  },
+  {
+    "key": "ctrl+b",
+    "command": "cmake.build"
+  }
+]

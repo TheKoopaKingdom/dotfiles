@@ -186,18 +186,16 @@ Testing/"]="$SYNCED_DOCUMENTS_DIR/Program Data/Lucas' Simpsons Hit & Run Mod Lau
 
     # Programming
 
-    # Link VSCode extensions from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/VSCode/Extensions/"]=\
-"$INSTALL_HOME/.vscode-oss/extensions"
-    # Link VSCode snippets from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/VSCode/Snippets/"]=\
-"$INSTALL_HOME/.config/Code - OSS/User/snippets"
-    # Link VSCode keybindings from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/VSCode/Keybindings.json"]=\
+    # Link VSCode keybindings from CO to user configuration.
+    ["$COMET_OBSERVATORY/config/vs-code/Keybindings.json"]=\
 "$INSTALL_HOME/.config/Code - OSS/User/keybindings.json"
     # Link VSCode settings from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/VSCode/Settings.json"]=\
+    ["$COMET_OBSERVATORY/config/vs-code/Settings.json"]=\
 "$INSTALL_HOME/.config/Code - OSS/User/settings.json"
+    # Link VSCode snippets from documents to user configuration.
+    ["$COMET_OBSERVATORY/config/vs-code/Snippets/"]="$INSTALL_HOME/.config/Code - OSS/User/snippets"
+    # Link VSCode extensions from documents to user configuration.
+    ["$SYNCED_DOCUMENTS_DIR/Program Data/VSCode/Extensions/"]="$INSTALL_HOME/.vscode-oss/extensions"
   )
 
   for TARGET in "${!LINKED_PATHS[@]}"; do

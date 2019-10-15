@@ -1,0 +1,62 @@
+{
+  // Disable all telemetry.
+  "telemetry.enableCrashReporter": false,
+  "telemetry.enableTelemetry": false,
+  // Set the zoom level of the window.
+  "window.zoomLevel": -1,
+  // Restore all windows.
+  "window.restoreWindows": "all",
+  // If there aren't previous windows to open, create a new file.
+  "workbench.startupEditor": "newUntitledFile",
+  // Use the Solarized Dark theme.
+  "workbench.colorTheme": "Solarized Dark",
+  // Indent the workbench tree more.
+  "workbench.tree.indent": 20,
+  // Don't confirm explorer deletes.
+  "explorer.confirmDelete": false,
+  // Wrap words at the viewport limit.
+  "editor.wordWrap": "on",
+  // Display a vertical ruler at 100 characters.
+  "editor.renderIndentGuides": true,
+  "editor.rulers": [
+    100
+  ],
+  // Make each tab represent 2 spaces.
+  "editor.tabSize": 2,
+  // Never autoclose quotes, because they get in the way more than they help.
+  "editor.autoClosingQuotes": "never",
+  // Use Fira 
+  "editor.fontFamily": "'Fira Code', 'Noto Sans Mono'",
+  "editor.fontLigatures": true,
+  // Periodically fetch remote Git repos.
+  "git.autofetch": true,
+  // Don't confirm before synchronizing Git repositories.
+  "git.confirmSync": false,
+  // Don't ignore whitespace when viewing diffs, because they will sneak by otherwise.
+  "diffEditor.ignoreTrimWhitespace": false,
+  // Set the console font.
+  "debug.console.fontFamily": "Noto Mono",
+  // Open the explorer after debugging.
+  "debug.openExplorerOnEnd": true,
+  // Format when saving.
+  "editor.formatOnSave": true,
+  // When formatting YAML, allow a max of 100 characters per line.
+  "yaml.format.printWidth": 100,
+  // Automatically fix ESLint issues.
+  "eslint.autoFixOnSave": true,
+  // Set the Shellcheck executable to the wrapper, to allow customization of parameters.
+  "shellcheck.executablePath": "/home/kyle/Documents/Projects/Bash/comet-observatory/bin/shellcheck-alt",
+  // Default to the C++17 standard when formatting.
+  "C_Cpp.default.cppStandard": "c++17",
+  // Default to the C11 standardn when formatting.
+  "C_Cpp.default.cStandard": "c11",
+  // Default to the LLVM coding style when formatting.
+  "C_Cpp.clang_format_fallbackStyle": "LLVM",
+  // Set the JDK home.
+  "java.home": "/home/kyle/frc2019/jdk",
+  // Configure Cmake on open. Before setting this, SSH should be setup in a way that this won't
+  // annoyingly prompt for a password when opening a project.
+  "cmake.configureOnOpen": true,
+  // Build in the "Build" directory for consistency with upper camel case projects.
+  "cmake.buildDirectory": "${workspaceRoot}/Build"
+}
