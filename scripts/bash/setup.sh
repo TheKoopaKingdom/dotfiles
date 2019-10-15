@@ -62,7 +62,7 @@ export_constants()
   export GPG_DIR="$INSTALL_HOME/.gnupg"
   export SSH_DIR="$INSTALL_HOME/.ssh"
 
-  export PACMAN_ARGS=(-q --noconfirm --needed --noprogressbar)
+  export PACMAN_ARGS=(--noconfirm --needed --noprogressbar)
 }
 
 # Enters the script directory, and sets up a trap to return.
