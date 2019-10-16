@@ -135,6 +135,8 @@ dropbox
 
 # Noto fonts, for most applications.
 noto-fonts
+# Liberation fonts, for websites.
+ttf-liberation
 # Chinese/Japanese/Korean Noto fonts, for foreign text in applications.
 noto-fonts-cjk
 # Emoji Noto fonts, for emoji in applications.
@@ -321,7 +323,6 @@ okteta
 # lib32-vulkan-icd-loader
 # libappindicator-gtk3
 # python2-notify
-# ttf-liberation
 # alsa-utils
 # lib32-curl
 # arm-none-eabi-gcc
