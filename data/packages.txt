@@ -322,7 +322,6 @@ okteta
 # libappindicator-gtk3
 # python2-notify
 # ttf-liberation
-# ttf-symbola
 # alsa-utils
 # lib32-curl
 # arm-none-eabi-gcc
