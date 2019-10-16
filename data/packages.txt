@@ -188,6 +188,8 @@ kde-cdemu-manager-kf5
 kdeconnect
 # OpenSSH, for connecting to other computers.
 openssh
+# SSHFS, for connecting to remote filesystems, particularly via KDEConenct.
+sshfs
 # QEMU, for virtualization.
 qemu
 # virt-viewer, for viewing virtual machines.
