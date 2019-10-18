@@ -273,14 +273,8 @@ setup_user()
 
   info "Silencing login message."
   if [[ $DRY_RUN = false ]]; then
-    touch ~/.hushlogin
+    touch "$INSTALL_HOME"/.hushlogin
   fi
-
-  info "Configuring PAM."
-  safe_cp ../../config/pam-environment.env "$INSTALL_HOME/.pam_environment"
-
-  info "Configuring MPV."
-  safe_cp ../../config/mpv.conf "$INSTALL_HOME/.config/mpv/mpv.conf"
 
   info "Configuring GPG."
   configure_gpg
