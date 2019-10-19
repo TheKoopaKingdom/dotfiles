@@ -40,26 +40,38 @@ function safe_ln()
     verbose "$LINK_NAME is already updated."
   else
     local -r TARGET_PARENT_DIRECTORY=$(dirname "$TARGET")
-    # Make sure the target's parent directory exists.
+    # Handle conflicts with nonexistent target parent directories. This is a pretty unlikely
+    # scenario, but possible if the path will later be populated with files.
     if ! [ -d "$TARGET_PARENT_DIRECTORY" ]; then
       info "Making target parent directory $TARGET_PARENT_DIRECTORY."
       if [[ $DRY_RUN = false ]]; then
         mkdir -p "$TARGET_PARENT_DIRECTORY"
       fi
     fi
-    local -r LINK_NAME_PARENT_DIRECTORY=$(dirname "$LINK_NAME")
-    # Make sure the link name's parent directory exists.
-    if ! [ -d "$LINK_NAME_PARENT_DIRECTORY" ]; then
+    
+    # Handle conflicts with preexisting files or directories.
+    if [ -f "$LINK_NAME" ] || [ -d "$LINK_NAME" ]; then
+      local -r COMMON_STR="Path $LINK_NAME exists"
+      if [[ -L "$LINK_NAME" ]]; then
+        info "$COMMON_STR, is a link. Overwriting."
+      else
+        local -r LINK_NAME_OLD="$LINK_NAME.old"
+        info ", isn't a link. Moving to $LINK_NAME_OLD."
+        if [[ $DRY_RUN = false ]]; then
+          mv "$LINK_NAME" "$LINK_NAME_OLD"
+        fi
+      fi
+      
+    # Handle conflcits with nonexistent link name parent directories.
+    else
+      local -r LINK_NAME_PARENT_DIRECTORY=$(dirname "$LINK_NAME")
       info "Making link name parent directory $LINK_NAME_PARENT_DIRECTORY."
+      if [[ -L "$LINK_NAME_PARENT_DIRECTORY" ]]; then
+        info "Parent directory $LINK_NAME_PARENT_DIRECTORY is a link, overwriting."
+        rm "$LINK_NAME_PARENT_DIRECTORY"
+      fi
       if [[ $DRY_RUN = false ]]; then
         mkdir -p "$LINK_NAME_PARENT_DIRECTORY"
-      fi
-    fi
-    if [ -f "$LINK_NAME" ] || [ -d "$LINK_NAME" ]; then
-      local -r LINK_NAME_OLD="$LINK_NAME.old"
-      info "File or directory to be linked $LINK_NAME exists, moving to $LINK_NAME_OLD."
-      if [[ $DRY_RUN = false ]]; then
-        mv "$LINK_NAME" "$LINK_NAME_OLD"
       fi
     fi
 
