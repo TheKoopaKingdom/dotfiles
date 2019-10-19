@@ -10,17 +10,11 @@ set -e
 # https://stackoverflow.com/a/2705678.
 # Arguments:
 #   - The string to escape. If omitted it's read from stdin
-#   - The seperator char. Defaults to /
 # Outputs:
 #   The escaped string.
 sed_escape_pattern()
 {
-  if [[ $# -ge 1 ]]; then
-    # shellcheck disable=SC1003
-    printf '%s\n' "$1" | sed 's/[]\\'"${2:-/}"'$*.^[]/\\&/g'
-  else
-    sed 's/[]\\/$*.^[]/\\&/g'
-  fi
+  sed 's/[]\\/$*.^[]/\\&/g'
 }
 
 # Finds the bootnum from the name of a boot entry.
