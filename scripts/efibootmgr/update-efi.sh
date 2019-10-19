@@ -6,17 +6,6 @@
 
 set -e
 
-# Escapes a string for usage in a sed pattern. Sed expression copied from 
-# https://stackoverflow.com/a/2705678.
-# Arguments:
-#   - The string to escape. If omitted it's read from stdin
-# Outputs:
-#   The escaped string.
-sed_escape_pattern()
-{
-  sed 's/[]\\/$*.^[]/\\&/g'
-}
-
 # Finds the bootnum from the name of a boot entry.
 # Arguments:
 #   - The name of the boot entry to find.
@@ -24,6 +13,17 @@ sed_escape_pattern()
 #   The bootnums of the found boot entries, or nothing if none is found.
 find_bootnum()
 {
+  # Escapes a string for usage in a sed pattern. Sed expression copied from 
+  # https://stackoverflow.com/a/2705678.
+  # Arguments:
+  #   - The string to escape.
+  # Outputs:
+  #   The escaped string.
+  sed_escape_pattern()
+  {
+    sed 's/[]\\/$*.^[]/\\&/g'
+  }
+
   efibootmgr | sed -n 's/^Boot\([0-9A-Fa-f]\{4\}\)\*\? '"$(sed_escape_pattern "$1")"'$/\1/p'
 }
 
