@@ -21,7 +21,12 @@ function find_bootnum()
   #   The escaped string.
   function sed_escape_pattern()
   {
-    sed 's/[]\\/$*.^[]/\\&/g'
+    if [[ $# -ge 1 ]]; then
+      # shellcheck disable=SC1003
+      printf '%s\n' "$1" | sed 's/[]\\'"${2:-/}"'$*.^[]/\\&/g'
+    else
+      sed 's/[]\\/$*.^[]/\\&/g'
+    fi
   }
 
   efibootmgr | sed -n 's/^Boot\([0-9A-Fa-f]\{4\}\)\*\? '"$(sed_escape_pattern "$1")"'$/\1/p'
@@ -43,15 +48,14 @@ function remove_entry_if_existing()
   fi
 }
 
-# Updates a boot entry with new parameters. Empty parameters are handled like unset. See
-# efibootmgr(8) for parameter defaults.
+# Adds a UEFI boot entry. Empty parameters are handled like unset.
 # Arguments:
 #   - The label of the boot entry.
 #   - The loader for the boot entry.
 #   - Command line arguments for the loader.
 # Outputs:
 #   The bootnum of the boot entry.
-function update_entry()
+function add_entry()
 {
   local -r LABEL=$1
   local -r LOADER=$2
@@ -68,7 +72,7 @@ function update_entry()
 #   The type of entries to generate, out of "quiet", "debug", "rescue", and "fallback-rescue".
 # Outputs:
 #   Changes being made to EFI boot entries.
-function update-efi()
+function update_efi()
 {
   local -r TYPE=$1  
 
@@ -101,7 +105,13 @@ printk.devkmsg=on"
   # Enable rescue mode, for emergencies.
   local -ra CMDLINE_RESCUE_STR="rescue"
 
-  function _update_entry
+  # Decides what configuration to use, and adds a UEFI boot entry acoordingly using add-entry().
+  # Arguments:
+  #   - The name of the kernel.
+  #   - The vmlinux suffix, if applicable.
+  # Outputs:
+  #   Entry addition progress.
+  function add_entry_decide_configuration
   {
     local -r VMLINUZ_PATH=/vmlinuz-linux${2}
     local -r KERNEL_INITRD_STR=initrd=initramfs-linux${2}.img
@@ -110,22 +120,22 @@ printk.devkmsg=on"
     case $TYPE in
       *debug*)
         echo "Updating $1 debug UEFI boot entry ($VMLINUZ_PATH)."
-        update_entry "$1 (Debug)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR \
+        add_entry "$1 (Debug)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR \
 $CMDLINE_STR $CMDLINE_DEBUG_STR"
         ;;
       *rescue-fallback*)
         echo "Updating $1 fallback rescue UEFI boot entry ($VMLINUZ_PATH)."
-        update_entry "$1 (Fallback Rescue)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR \
+        add_entry "$1 (Fallback Rescue)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR \
 $FALLBACK_KERNEL_INITRD_STR $CMDLINE_STR $CMDLINE_DEBUG_STR $CMDLINE_RESCUE_STR"
         ;;
       *rescue*)
         echo "Updating $1 rescue UEFI boot entry ($VMLINUZ_PATH)."
-        update_entry "$1 (Rescue)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR \
+        add_entry "$1 (Rescue)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR \
 $CMDLINE_STR $CMDLINE_DEBUG_STR $CMDLINE_RESCUE_STR"
         ;;
       *)
         echo "Updating $1 quiet UEFI boot entry ($VMLINUZ_PATH)."
-        update_entry "$1 (Silent)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR \
+        add_entry "$1 (Silent)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR \
 $CMDLINE_STR $CMDLINE_SILENT_STR"
         ;;
     esac
@@ -155,7 +165,7 @@ $CMDLINE_STR $CMDLINE_SILENT_STR"
 
   echo "Adding new boot entries."
   for KERNEL in "${!KERNELS[@]}"; do
-    _update_entry "Arch Linux ($KERNEL)" "${KERNELS[${KERNEL}]}"
+    add_entry_decide_configuration "Arch Linux ($KERNEL)" "${KERNELS[${KERNEL}]}"
   done
 
   local -r DEFAULT_ENTRY_NUM=$(find_bootnum "Arch Linux (TkG) (Silent)")

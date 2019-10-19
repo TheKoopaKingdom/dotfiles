@@ -11,4 +11,4 @@ fi
 
 # shellcheck source=../scripts/efibootmgr/update_efi.sh
 source "${BASH_SOURCE%/*}/../scripts/efibootmgr/update_efi.sh"
-update-efi "$@"
+update_efi "$@"
