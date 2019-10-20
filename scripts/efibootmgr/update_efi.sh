@@ -94,14 +94,14 @@ function update_efi()
     "nvidia-drm.modeset=1"
   )
   local -r CMDLINE_STR="${CMDLINE_ARRAY[*]}"
-  # Restrict kernel logging to errors, restrict systemd logging, restrict systemd initramfs logging,
-  # supress more initramfs successful messages, and hide the cursor, for less verbosity.
-  local -ra CMDLINE_SILENT_STR="quiet loglevel=3 rd.udev.log_priority=3 udev.log_priority=3 \
-rd.systemd.show_status=auto vt.global_cursor_default=0"
-  # Enable kernel debugging, ignore the kernel log level, enable systemd debugging, allocate a
-  # larger log buffer, keep early logs, and print kernel messages, for more verbosity.
-  local -ra CMDLINE_DEBUG_STR="debug ignore_loglevel systemd.log_level=debug log_buf_len=16M \
-earlyprintk=efi,keep printk.devkmsg=on"
+  # Set the kernel logging level to errors, set the initrd systemd logging level to errors,
+  # and hide the cursor, for less verbosity.
+  local -ra CMDLINE_SILENT_STR="quiet rd.udev.log_priority=3 vt.global_cursor_default=0"
+  # Print early EFI kernel messages, allocate a larger kernel message buffer, ignore the kernel
+  # logging level, allocate a larger log buffer, set the systemd log level to debug, write systemd
+  # logs to the kernel log buffer, and allow unlimited logging from userspace, for more verbosity.
+  local -ra CMDLINE_DEBUG_STR="earlyprintk=efi,keep log_buf_len=16M ignore_loglevel \
+systemd.log_level=debug systemd.log_target=kmsg printk.devkmsg=on"
   # Enable rescue mode, for emergencies.
   local -ra CMDLINE_RESCUE_STR="rescue"
 
