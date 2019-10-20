@@ -21,7 +21,7 @@ export BLUE
 MAGENTA=$(tput setaf 5)
 export MAGENTA
 RED=$(tput setaf 1)
-export NORMAL
+export RED
 
 # Printing Utilities
 
