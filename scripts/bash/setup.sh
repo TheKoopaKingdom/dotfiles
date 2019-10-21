@@ -157,9 +157,6 @@ function setup()
 
   info "Installing new packages."
   grep -v "^#" "$COMET_OBSERVATORY/data/packages.txt" | xargs pikaur -S "${PACMAN_ARGS[@]}"
-  # Pikaur being used in this particular way results in the terminal being left in a state where
-  # the charaters are invisible.
-  reset -w
 
   # Kernel & Hardware
   info_section "Setting Up Kernel & Hardware"
