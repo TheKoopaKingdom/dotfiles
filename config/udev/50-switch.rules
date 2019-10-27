@@ -1,0 +1,1 @@
+ACTION=="add", SUBSYSTEMS=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="0955", MODE="0664", OWNER="kyle"
