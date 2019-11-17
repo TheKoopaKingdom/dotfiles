@@ -44,7 +44,10 @@ function r
 #   - The path to the "ENV" file.
 function export-env
 {
-  export "$(grep -v '^#' "$1" | xargs)"
+  set -o allexport
+  # shellcheck disable=1090
+  source "$1"
+  set +o allexport
 }
 
 # Executes "ls", with color on.
