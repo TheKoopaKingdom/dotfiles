@@ -340,6 +340,8 @@ nvidia-dkms
 nvidia-utils
 # Nvidia utilities, for more GPU support in 32-bit programs.
 lib32-nvidia-utils
+# Nvidia settings, for configuring the GPU.
+nvidia-settings
 # Nvidia OpenCL implementation, for GPU processing with SVP.
 opencl-nvidia-tkg
 # Etcher, for flashing drives.
