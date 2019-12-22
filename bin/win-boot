@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Copyright 2019 Comet Observatory
+# Licensed under GPLv3.
+# Refer to License.txt file included.
+
+if [[ $EUID -ne 0 ]]; then
+  echo "This script must be run as root."
+  exit 1
+fi
+
+# shellcheck source=../scripts/efibootmgr/update_efi.sh
+source "${BASH_SOURCE%/*}/../scripts/efibootmgr/update_efi.sh"
+
+set -e
+declare WINDOWS_ENTRY_NUM
+WINDOWS_ENTRY_NUM="$(find_bootnum "Windows Boot Manager")"
+if [[ -n $WINDOWS_ENTRY_NUM ]]; then
+  echo "Setting Windows Boot Manager as the next boot."
+  efibootmgr -q -n "$WINDOWS_ENTRY_NUM"
+fi

@@ -47,6 +47,9 @@ The [UEFI updater](bin/update-efi) updates the [UEFI](https://uefi.org/) boot en
 
 ![UEFI Updater Screenshot](docs/update-efi.png)
 
+### Windows Reboot
+[`win-boot`](bin/win-boot) sets the UEFI next boot to the Windows Boot Manager.
+
 ### Music Downloader
 These scripts are currently undergoing changes.
 
