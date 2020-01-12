@@ -13,7 +13,10 @@
 export COMET_OBSERVATORY=$HOME/Documents/Projects/Bash/comet-observatory
 
 # Set the PATHt to prioritize ccache, and deprioritize local binaries and secondary toolchains.
-export PATH=/usr/lib/ccache/bin/:$PATH:$COMET_OBSERVATORY/bin:/home/kyle/frc2019/roborio/bin
+export PATH=/usr/lib/ccache/bin/\
+:$PATH:$COMET_OBSERVATORY/bin:\
+$HOME/Android/Sdk/platform-tools:\
+$HOME/frc2019/roborio/bin
 
 # Set the editor to nano.
 export EDITOR=nano
