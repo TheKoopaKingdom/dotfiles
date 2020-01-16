@@ -68,7 +68,7 @@
   // Default to the LLVM coding style when formatting.
   "C_Cpp.clang_format_fallbackStyle": "LLVM",
   // Set the JDK home.
-  "java.home": "/home/kyle/frc2019/jdk",
+  "java.home": "/home/kyle/wpilib/2020/jdk/",
   // Configure Cmake on open. Before setting this, SSH should be setup in a way that this won't
   // annoyingly prompt for a password when opening a project.
   "cmake.configureOnOpen": true,
