@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Copyright 2019 Comet Observatory
+# Licensed under GPLv3.
+# Refer to License.txt file included.
+
+export COMET_OBSERVATORY=/home/kyle/Documents/Projects/Bash/comet-observatory
+
+# shellcheck source=../scripts/bash/setup.sh
+source "${BASH_SOURCE%/*}/../scripts/bash/setup.sh"
+time update "$@"
+echo "Have a wonderful day!"

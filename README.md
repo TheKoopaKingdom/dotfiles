@@ -37,6 +37,9 @@ setup-user n y
 ```
 - Log levels. Although these are supported throughout the Comet Observatory, they are particularly relevant here. Enabling more logging can be done by setting `DEBUG` or `VERBOSE` to true. These two options are two different levels; however, contrary to traditional logging systems, setting `DEBUG` does not automatically set `VERBOSE`, and vice versa.
 
+### System Update Script
+The [system update script](bin/update) is a utility that updates the system, and regenerates the initial ramdisk.
+
 ### QEMU Reeves
 [QEMU Reeves](bin/qemu-reeves) is a launcher for [QEMU](https://www.qemu.org/), tuned for Debian 10. It supports switching between images, video drivers and interfaces, and directly invokes QEMU. The only part of the `libvirt` stack used is the Remote Viewer, for when SPICE is used.
 

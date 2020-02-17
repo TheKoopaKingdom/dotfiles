@@ -283,3 +283,15 @@ function setup_user()
 
   info "Setup complete!"
 }
+
+# Updates the system.
+# Outputs:
+#   - Update progress messages.
+function update()
+{
+  print_header "System Update"
+  pikaur -Syu --devel --noconfirm
+  # This shouldn't be necessary in theory, but I have had things break many times because of it
+  # having not been run.
+  mkinitcpio -P
+}
