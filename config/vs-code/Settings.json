@@ -14,6 +14,8 @@
   "workbench.colorTheme": "Solarized Dark",
   // Indent the workbench tree more.
   "workbench.tree.indent": 20,
+  // Don't scroll to files when they are opened.
+  "explorer.autoReveal": false,
   // Don't confirm explorer deletes.
   "explorer.confirmDelete": false,
   // Wrap words at the viewport limit.
