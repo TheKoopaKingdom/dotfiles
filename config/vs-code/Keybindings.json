@@ -106,7 +106,6 @@
   {
     "key": "f5",
     "command": "-workbench.action.debug.start",
-    "when": "!inDebugMode"
   },
   {
     "key": "ctrl+r",
@@ -115,12 +114,10 @@
   // Remap debug mode exit bindings.
   {
     "key": "shift+f5",
-    "command": "-workbench.action.debug.stop",
-    // "when": "inDebugMode"
+    "command": "-workbench.action.debug.stop"
   },
   {
     "key": "escape escape",
-    "command": "macros.stopDebuggingAndKillTerminal",
-    // "when": "inDebugMode"
+    "command": "macros.stopDebuggingAndKillTerminal"
   }
 ]
