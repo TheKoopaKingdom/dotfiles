@@ -357,6 +357,8 @@ pixymon-git
 
 # pikaur, for managing AUR packages.
 pikaur
+# libappimage, for previewing AppImage applications.
+libappimage
 
 # Resources
 
