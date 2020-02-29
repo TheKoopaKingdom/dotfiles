@@ -156,7 +156,8 @@ function setup()
   fi
 
   info "Installing new packages."
-  grep -v "^#" "$COMET_OBSERVATORY/data/packages.txt" | xargs pikaur -S "${PACMAN_ARGS[@]}"
+  # Initially run pikaur as the user, to utilize the pikaur cache in their home directory.
+  grep -v "^#" "$COMET_OBSERVATORY/data/packages.txt" | sudo -u "$INSTALL_USER" xargs pikaur -S "${PACMAN_ARGS[@]}"
 
   # Kernel & Hardware
   info_section "Setting Up Kernel & Hardware"
