@@ -365,11 +365,6 @@ libappimage
 # Microsoft fonts, for making spicy impact font memes.
 ttf-ms-fonts
 
-# Other Tools
-
-# Fancy Wine build, for running Windows programs with style.
-wine-tkg-staging-fsync-vkd3d-faudio-opt-git
-
 # Media
 
 # mpv Git, for playing video and audio with Vapoursynth support.
