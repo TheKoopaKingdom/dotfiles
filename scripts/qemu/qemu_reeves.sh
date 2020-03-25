@@ -110,8 +110,8 @@ function launch_qemu() {
   if [[ -n $INSTALLER_IMG ]]; then
     qemu_opts+=" -boot order=d"
   fi
-  # Allow the VM 2GB of RAM.
-  qemu_opts+=" -m 2G"
+  # Allow the VM 3GB of RAM.
+  qemu_opts+=" -m 3G"
   # For QXL, add QXL paravirtual graphics card, for performance. Doing this from here allows us to
   # allocate more video memory, for supporting multiple heads if needed.
   qemu_opts+=${QXL+" -device qxl-vga,vgamem_mb=32"}
