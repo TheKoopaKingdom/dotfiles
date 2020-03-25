@@ -14,7 +14,7 @@
 
 ## Usage
 Although functional on my own system, this repository isn't intended to be used in its entirety as-is. If using a script or configuration setup from this directory, the following should be taken into account:
-- The entry points for everything are located in [`bin`](bin). As a result, all of the Bash scripts in [`bin`](bin) should be considered as libraries that export functionality that can be used by other scripts.
+- The entry points for everything are located in [`bin`](bin). As a result, all of the Bash scripts in [`scripts`](scripts) should be considered as libraries that export functionality that can be used by other scripts.
 - The scripts are generally modular. For libraries sourced at the top of a script, they should be copied over, or their functionality re-implemented.
 - The `COMET_OBSERVATORY` variable, expected to be pointed to this repository, should be changed or accounted for if necessary.
 - All scripts are GPL 3.0 licensed.
