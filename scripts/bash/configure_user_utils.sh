@@ -69,6 +69,8 @@ function link_directories()
     ["$COMET_OBSERVATORY/scripts/bash/bash_rc.sh"]="$INSTALL_HOME/.bashrc"
     # Link X RC file from CO to home directory.
     ["$COMET_OBSERVATORY/scripts/x/x_rc.sh"]="$INSTALL_HOME/.xinitrc"
+    # Link X Compose file from CO to home directory.
+    ["$COMET_OBSERVATORY/config/compose-keys.conf"]="$INSTALL_HOME/.XCompose"
     # Link CO configuration from documents to CO.
     ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Dotfiles Configuration.sh"]=\
 "$COMET_OBSERVATORY/scripts/bash/config.sh"
