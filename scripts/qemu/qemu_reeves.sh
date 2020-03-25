@@ -105,8 +105,6 @@ function launch_qemu() {
   else
     qemu_opts+=" -cpu host"
   fi
-  # Allow 4 CPU cores.
-  qemu_opts+=" -smp 4"
   if [[ -n $INSTALLER_IMG ]]; then
     qemu_opts+=" -boot order=d"
   fi
