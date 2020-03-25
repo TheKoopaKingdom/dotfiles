@@ -6,4 +6,4 @@
 
 # shellcheck source=../scripts/qemu/qemu_reeves.sh
 source "${BASH_SOURCE%/*}/../scripts/qemu/qemu_reeves.sh"
-qemu-reeves "$@"
+qemu_reeves "$@"

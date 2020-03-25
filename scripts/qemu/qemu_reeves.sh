@@ -10,9 +10,7 @@ source "$COMET_OBSERVATORY/scripts/bash/common.sh"
 # Launches a QEMU image with the best options.
 # Arguments:
 #   - The name of the image to launch.
-#   - (Optional) The video driver to use, out of "qxl", "virtio", and "std". Default "std".
-#   - (Optional) The viewer to use, out of "spice", "qemu-sdl", and "qemu-gtk". Default "qemu-gtk".
-function launch-qemu() {
+function launch_qemu() {
   # Use arguments.
   local -r QEMU_IMG="$1"
   local -r QEMU_VIDEO_DRIVER="$2"
@@ -150,7 +148,7 @@ mount_tag=share,security_model=none"
 #   - (Optional) Viewer to use, out of "spice", "qemu-stl", and "qemu-gtk". Default "spice".
 # Outputs:
 #   Output of QEMU.
-function qemu-reeves()
+function qemu_reeves()
 {
   local -r IMAGE_NAME="$1"
   local -r VIDEO_DRIVER=${2-virtio}
