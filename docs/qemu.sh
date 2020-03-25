@@ -17,7 +17,7 @@ qemu-system-x86_64 -machine pc,accel=kvm -cpu host -m 512M debian-9.9.0-amd64-xf
 # complains about the format for it not being specified. I'm not really sure how I would
 # specify the installer though.
 
-# This is the final command I ended up with for running th einstaller.
+# This is the final command I ended up with for running the installer.
 qemu-system-x86_64 -machine pc,accel=kvm -cpu host -boot d -m 2G -hda debian-base.img -cdrom debian-9.9.0-amd64-xfce-CD-1.iso --enable-kvm
 
 # This command creates a disk to record changes made to the base. The potential use for this would
