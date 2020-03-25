@@ -105,9 +105,6 @@ function launch_qemu() {
   else
     qemu_opts+=" -cpu host"
   fi
-  if [[ -n $INSTALLER_IMG ]]; then
-    qemu_opts+=" -boot order=d"
-  fi
   # Allow the VM 3GB of RAM.
   qemu_opts+=" -m 3G"
   # For QXL, add QXL paravirtual graphics card, for performance. Doing this from here allows us to
