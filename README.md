@@ -3,10 +3,12 @@
 - The [Arch Linux](https://www.archlinux.org/) host, `comet-observatory`, is named after the Comet Observatory itself.
 - The [Windows 10](https://www.microsoft.com/en-us/windows) host, `COMETOBSERVATORY`, is also named after the Comet Observatory itself.
 - The [Debian](https://www.debian.org/) [Virtual Machine](https://en.wikipedia.org/wiki/Virtual_machine), `polari`, is named after [Polari](https://www.mariowiki.com/Polari).
+- The Windows 10 VM, `gearmo`, is named after [Gearmo](https://www.mariowiki.com/Gearmo).
 - The [EFI System Partition](https://wiki.archlinux.org/index.php/EFI_system_partition), `Beacon`, is named after the [Beacon](https://www.mariowiki.com/Beacon).
 - The [Microsoft Reserved Partition](https://en.wikipedia.org/wiki/Microsoft_Reserved_Partition), `Hungry Luma`, is named after the [Hungry Lumas](https://www.mariowiki.com/Hungry_Luma).
 - The Arch and Windows [Operating System](https://en.wikipedia.org/wiki/Operating_system) partitions, respectively `Arch Engine Room` and `Windows Engine Room`, are named after the [Engine Room](https://www.mariowiki.com/Engine_Room).
 - The shared document partition is named after the [Terrace](https://www.mariowiki.com/Terrace_(Super_Mario_Galaxy)).
+- The game partition is named after the [Fountain](https://www.mariowiki.com/Fountain).
 - The storage partition is named after the [Library](https://www.mariowiki.com/Library_(Super_Mario_Galaxy)).
 - The phone (connected via [KDE Connect](https://community.kde.org/KDEConnect)) is named after the [Gateway Galaxy](https://www.mariowiki.com/Gateway_Galaxy) (also see the [Gate](https://www.mariowiki.com/Gate_(Super_Mario_Galaxy))).
 
@@ -41,9 +43,10 @@ setup-user n y
 The [system update script](bin/update) is a utility that updates the system, and regenerates the initial ramdisk.
 
 ### QEMU Reeves
-[QEMU Reeves](bin/qemu-reeves) is a launcher for [QEMU](https://www.qemu.org/), tuned for Debian 10. It supports switching between images, video drivers and interfaces, and directly invokes QEMU. The only part of the `libvirt` stack used is the Remote Viewer, for when SPICE is used.
+[QEMU Reeves](bin/qemu-reeves) is a launcher for [QEMU](https://www.qemu.org/), tuned for Debian 10 and Windows 10. It supports switching between images, video drivers and interfaces, and directly invokes QEMU. It also has modes for creating disk images, and running installers. The only part of the `libvirt` stack used is the Remote Viewer, for when SPICE is used.
 
-![QEMU Reeves Screenshot](docs/qemu-reeves.png)
+![QEMU Reeves Screenshot](docs/qemu-reeves-deb.png)
+![QEMU Reeves Screenshot](docs/qemu-reeves-win.png)
 
 ### UEFI Updater
 The [UEFI updater](bin/update-efi) updates the [UEFI](https://uefi.org/) boot entries for a system using [EFISTUB](https://wiki.archlinux.org/index.php/EFISTUB) booting. It adds an entry for the vanilla kernel, and [Tk-Glitch's kernel](https://github.com/Tk-Glitch/PKGBUILDS). The [kernel parameters](https://wiki.archlinux.org/index.php/kernel_parameters) used depend on the preset used, defaulting to a [silent boot](https://wiki.archlinux.org/index.php/Silent_boot) configuration. Presets can be specified via a parameter to the script: `silent` (default), `debug`, `rescue-fallback`, and `rescue`. Finally, it sets the TkG kernel as the default.
