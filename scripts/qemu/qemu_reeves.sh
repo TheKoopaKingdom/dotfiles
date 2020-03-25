@@ -101,6 +101,8 @@ function launch_qemu() {
 
   # Block Device Options
 
+  # Use the OVMF binary as the bios file.
+  qemu_opts+=" -bios /usr/share/ovmf/x64/OVMF.fd"
   # Add a virtual filesystem for a directory shared with the host.
   qemu_opts+=" -virtfs local,path=${QR_SHARE-/home/kyle/Library/Virtualization/Share},\
 mount_tag=share,security_model=none"
@@ -211,5 +213,9 @@ function qemu_reeves()
     else
       zenity --error --text "Image not found."
     fi
+  fi
+  elif [[ "$ACTION" = "uefi" ]]; then
+    info "Booting into Tianocore UEFI."
+    launch_qemu none "$VIDEO_DRIVER" "$VIEWER"
   fi
 }
