@@ -350,6 +350,10 @@ opencl-nvidia-tkg
 etcher-bin
 # Antimicro, for remapping inputs.
 antimicro
+# Nintendo Switch udev rules, for not requiring root for access.
+nx-udev
+# Nintendo Switch USB loader, for installing game backups.
+ns-usbloader
 # GfxTablet, for using an Android tablet as a drawing tablet.
 gfxtablet-git
 # PixyMon, for PixyCam support.
