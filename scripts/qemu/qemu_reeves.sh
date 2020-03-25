@@ -101,6 +101,10 @@ function launch_qemu() {
 
   # Block Device Options
 
+  if [[ $MAIN_IMG != "none" ]]; then
+    # Use the disk image as vda, through virtio.
+    qemu_opts+=" -drive file=$MAIN_IMG,if=virtio,index=0,media=disk"
+  fi
   # Use the OVMF binary as the bios file.
   qemu_opts+=" -bios /usr/share/ovmf/x64/OVMF.fd"
   # Add a virtual filesystem for a directory shared with the host.
@@ -158,7 +162,7 @@ mount_tag=share,security_model=none"
   info "QEMU Reeves starting up with options \"$qemu_opts\"."
   # Start the new system.
   # shellcheck disable=SC2086
-  "$QEMU_EXE" $qemu_opts "$QEMU_IMG"
+  "$QEMU_EXE" $qemu_opts
 }
 
 # Calls launch-qemu(), prompting the user with a dialog to select a QEMU image if needed.
