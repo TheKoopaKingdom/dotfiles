@@ -30,9 +30,15 @@ Launches QEMU with an image. Please see the source of this script for possible o
 #   - (Optional) An image to mount to the CD drive.
 function launch_qemu() {
   # Use arguments.
-  local -r QEMU_IMG="$1"
+  local -r MAIN_IMG="$1"
   local -r QEMU_VIDEO_DRIVER="$2"
   local -r QEMU_VIEWER="$3"
+  if [[ -n $4 ]]; then
+    local -r INSTALLER_IMG="$4"
+  fi
+  if [[ -n $4 ]]; then
+    local -r DRIVER_IMG="$5"
+  fi
 
   # Define constants.
   local -r QEMU_EXE="qemu-system-x86_64"
@@ -72,6 +78,12 @@ function launch_qemu() {
       local -r VIEWER_STR="QEMU-GTK"
       ;;
   esac
+  if [[ -n $INSTALLER_IMG ]]; then
+    info "Using installer image \"$INSTALLER_IMG\"."
+  fi
+  if [[ -n $DRIVER_IMG ]]; then
+    info "Using driver image \"$DRIVER_IMG\"."
+  fi
 
   # Standard Options
   # Emulate a PC with KVM acceleration. KVM is the best hypervisor currently, requiring the least 
@@ -84,6 +96,9 @@ function launch_qemu() {
   qemu_opts+=" -cpu host"
   # Allow 4 CPU cores.
   qemu_opts+=" -smp 4"
+  if [[ -n $INSTALLER_IMG ]]; then
+    qemu_opts+=" -boot order=d"
+  fi
   # Allow the VM 2GB of RAM.
   qemu_opts+=" -m 2G"
   # For QXL, add QXL paravirtual graphics card, for performance. Doing this from here allows us to
@@ -105,6 +120,10 @@ function launch_qemu() {
     # Use the disk image as vda, through virtio.
     qemu_opts+=" -drive file=$MAIN_IMG,if=virtio,index=0,media=disk"
   fi
+  # Use an installer ISO as a CD-ROM image, if specified.
+  qemu_opts+=${INSTALLER_IMG+" -drive file=$INSTALLER_IMG,index=1,media=cdrom"}
+  # Use a drive ISO as a CD-ROM image, if specified. This is meant for an image with virtio drivers.
+  qemu_opts+=${DRIVER_IMG+" -drive file=$DRIVER_IMG,index=2,media=cdrom"}
   # Use the OVMF binary as the bios file.
   qemu_opts+=" -bios /usr/share/ovmf/x64/OVMF.fd"
   # Add a virtual filesystem for a directory shared with the host.
@@ -195,29 +214,42 @@ function qemu_reeves()
   info "QEMU Reeves Starting"
   info "https://gitlab.com/CodingKoopa/comet-observatory"
 
-  local image="$HOME"/Library/Virtualization/"$IMAGE_NAME".img
+  if [[ $ACTION = "run" ||  $ACTION = "install" ]]; then
+    local image="$HOME"/Library/Virtualization/"$IMAGE_NAME".img
 
-  if [[ ! -f "$image" ]]; then
-    # Make the file array empty if there aren't matches.
-    shopt -s nullglob
-    # Make an array of QEMU images.
-    local -ra IMAGES=("$HOME"/Library/Virtualization/*.img)
+    if [[ ! -f "$image" ]]; then
+      # Make the file array empty if there aren't matches.
+      shopt -s nullglob
+      # Make an array of QEMU images.
+      local -ra IMAGES=("$HOME"/Library/Virtualization/*.img)
 
-    image=$(zenity --list \
-        --width 1000 \
-        --height 400 \
-        --title "Select an image to launch" \
-        --column="Name" \
-        "${IMAGES[@]}")
-  fi
-
-  if [[ -n "$image" ]]; then
-    if [[ -f "$image" ]]; then
-      launch-qemu "$image" "$VIDEO_DRIVER" "$VIEWER"
-    else
-      zenity --error --text "Image not found."
+      image=$(zenity --list \
+          --width 1000 \
+          --height 400 \
+          --title "Select an image to launch" \
+          --column="Name" \
+          "${IMAGES[@]}")
     fi
-  fi
+    if [[ -n "$image" ]]; then
+      if [[ -f "$image" ]]; then
+        if [[ $ACTION = "install" ]]; then
+          if [[ ! -f "$INSTALLER_IMAGE" ]]; then
+            zenity --error \
+                --width 1000 \
+                --height 400 \
+                --title "Install image not provided" \
+                --text="You must provide an installer image to be mounted."
+            return 1
+          else
+            launch_qemu "$image" "$VIDEO_DRIVER" "$VIEWER" "$INSTALLER_IMAGE" "$DRIVER_IMAGE"
+          fi
+        else
+          launch_qemu "$image" "$VIDEO_DRIVER" "$VIEWER"
+        fi
+      else
+        zenity --error --text "Image not found."
+      fi
+    fi
   elif [[ $ACTION = "create" ]]; then
     info "Creating a blank image."
     qemu-img create -f qcow2 blank-image.img 15G
