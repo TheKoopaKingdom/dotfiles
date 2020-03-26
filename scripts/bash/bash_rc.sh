@@ -73,7 +73,7 @@ understand the thinking of others. That’s what makes life so interesting."
 It's all literally a matter of perspective."
   "Your truth can be changed simply by the way you accept it. That's how fragile the truth for a \
 human is."
-  "Anywhere can be paradise as long as you have the will to live. After all, you are alive, so you \
+  "Anywhere can be paradise, as long as you have the will to live. After all, you are alive, so you \
 will always have the chance to be happy. As long as the Sun, the Moon, and the Earth exist, \
 everything will be all right."
   "Humans constantly feel pain in their hearts. Because the heart is so sensitive to pain, humans \
