@@ -6,6 +6,9 @@
 
 set -e
 
+# shellcheck source=../bash/common.sh
+source "$COMET_OBSERVATORY/scripts/bash/common.sh"
+
 # Finds the bootnum from the name of a boot entry.
 # Arguments:
 #   - The name of the boot entry to find.
@@ -43,7 +46,7 @@ function remove_entry_if_existing()
 
   bootnum="$(find_bootnum "$LABEL")"
   if [[ -n "$bootnum" ]]; then
-    echo "Existing boot entry for \"$LABEL\" found, deleting."
+    info "Existing boot entry for \"$LABEL\" found, deleting."
     efibootmgr -q -b "$bootnum" -B
   fi
 }
@@ -75,6 +78,10 @@ function add_entry()
 #   Changes being made to EFI boot entries.
 function update_efi()
 {
+  figlet -k -f slant update-efi | lolcat -f -s 100 -p 1
+  info "Comet Observatory UEFI Boot Entry Updater Script"
+  info "https://gitlab.com/CodingKoopa/comet-observatory"
+
   local -r TYPE=$1  
 
   local -r ROOT="PARTUUID=91fb9373-d9b2-4e6d-a376-0388afe85bf0"
@@ -120,27 +127,27 @@ systemd.log_level=debug systemd.log_target=kmsg printk.devkmsg=on"
 
     case $TYPE in
       *debug*)
-        echo "Updating $1 debug UEFI boot entry ($VMLINUZ_PATH)."
+        info "Updating $1 debug UEFI boot entry ($VMLINUZ_PATH)."
         add_entry "$1 (Debug)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR \
 $CMDLINE_STR $CMDLINE_DEBUG_STR"
         ;;
       *rescue-fallback*)
-        echo "Updating $1 fallback rescue UEFI boot entry ($VMLINUZ_PATH)."
+        info "Updating $1 fallback rescue UEFI boot entry ($VMLINUZ_PATH)."
         add_entry "$1 (Fallback Rescue)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR \
 $FALLBACK_KERNEL_INITRD_STR $CMDLINE_STR $CMDLINE_DEBUG_STR $CMDLINE_RESCUE_STR"
         ;;
       *rescue*)
-        echo "Updating $1 rescue UEFI boot entry ($VMLINUZ_PATH)."
+        info "Updating $1 rescue UEFI boot entry ($VMLINUZ_PATH)."
         add_entry "$1 (Rescue)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR \
 $CMDLINE_STR $CMDLINE_DEBUG_STR $CMDLINE_RESCUE_STR"
         ;;
       *quiet*)
-        echo "Updating $1 quiet UEFI boot entry ($VMLINUZ_PATH)."
+        info "Updating $1 quiet UEFI boot entry ($VMLINUZ_PATH)."
         add_entry "$1 (Silent)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR \
 $CMDLINE_STR $CMDLINE_SILENT_STR"
         ;;
       *)
-        echo "Updating $1 normal UEFI boot entry ($VMLINUZ_PATH)."
+        info "Updating $1 normal UEFI boot entry ($VMLINUZ_PATH)."
         add_entry "$1 (Normal)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR $CMDLINE_STR"
         ;;
     esac
@@ -162,14 +169,14 @@ $CMDLINE_STR $CMDLINE_SILENT_STR"
     "Normal"
   )
 
-  echo "Scanning existing boot entries."
+  info "Scanning existing boot entries."
   for KERNEL in "${!KERNELS[@]}"; do
     for CONFIGURATION in "${CONFIGURATIONS[@]}"; do
       remove_entry_if_existing "Arch Linux ($KERNEL) ($CONFIGURATION)"
     done
   done
 
-  echo "Adding new boot entries."
+  info "Adding new boot entries."
   for KERNEL in "${!KERNELS[@]}"; do
     add_entry_decide_configuration "Arch Linux ($KERNEL)" "${KERNELS[${KERNEL}]}"
   done
@@ -177,7 +184,7 @@ $CMDLINE_STR $CMDLINE_SILENT_STR"
   local -r DEFAULT_ENTRY="Arch Linux (TkG) (Normal)"
   local -r DEFAULT_ENTRY_NUM=$(find_bootnum "$DEFAULT_ENTRY")
   if [[ -n $DEFAULT_ENTRY_NUM ]]; then
-    echo "Setting $DEFAULT_ENTRY as default."
+    info "Setting $DEFAULT_ENTRY as default entry."
     efibootmgr -q -O
     efibootmgr -q -o "$DEFAULT_ENTRY_NUM"
   fi
