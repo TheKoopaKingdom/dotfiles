@@ -115,7 +115,7 @@ function check_user()
 #   - Installation progress.
 # Returns:
 #   - 1 if the user couldn't be found.
-function setup()
+function setup_system()
 {
   print_header "System Setup"
 

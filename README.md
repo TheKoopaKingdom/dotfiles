@@ -22,7 +22,7 @@ Although functional on my own system, this repository isn't intended to be used 
 ## Features
 
 ### Setup Scripts (Installation Scripts)
-The setup scripts ([system](bin/setup), [user](bin/setup-user)) are a couple of utilities that installs the packages and configurations that comprise my Arch installation. It can be ran after [installing the base system](https://wiki.archlinux.org/index.php/Installation_guide) and cloning this repository:
+The setup scripts ([system](bin/setup-system), [user](bin/setup-user)) are a couple of utilities that installs the packages and configurations that comprise my Arch installation. It can be ran after [installing the base system](https://wiki.archlinux.org/index.php/Installation_guide) and cloning this repository:
 
 ![Initial setup screenshot](docs/setup-initial.jpg)
 
@@ -31,7 +31,7 @@ It can also be used to apply configuration changes to an existing configuration:
 ![Existing setup screenshot](docs/setup-existing.png)
 
 The scripts feature:
-- Separation of user and root. The responsibilities of `setup-user` include installing configurations that only apply to, and should be owned by the user, configuring user [systemd](https://www.freedesktop.org/wiki/Software/systemd/) services, and building and installing the [AUR helper](https://wiki.archlinux.org/index.php/AUR_helpers) (an exception in which privledge escalation is used: installing the AUR helper package). The responsibilities of `setup` include installing system-wide configurations, configuring system systemd services, and installing packages using the AUR helper installed by `setup-user`.
+- Separation of user and root. The responsibilities of `setup-user` include installing configurations that only apply to, and should be owned by the user, configuring user [systemd](https://www.freedesktop.org/wiki/Software/systemd/) services, and building and installing the [AUR helper](https://wiki.archlinux.org/index.php/AUR_helpers) (an exception in which privledge escalation is used: installing the AUR helper package). The responsibilities of `setup-system` include installing system-wide configurations, configuring system systemd services, and installing packages using the AUR helper installed by `setup-user`.
 - Simulation mode. By enabling dry run, the actions of the setup scripts can be printed, but will not actually take place.
 - Configuration. Configuration prompts are used to slightly customize how the installation will be carried out, e.g. whether to enter simulation mode, whether to assume that private configuration files are present in `~/Documents`. These prompts can be skipped by providing default values as parameters. For example, the above screenshot is the result of running:
 ```sh
