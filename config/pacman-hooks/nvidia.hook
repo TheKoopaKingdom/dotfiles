@@ -4,23 +4,13 @@ Operation = Upgrade
 Operation = Remove
 Type = Package
 Target = nvidia
-
-[Trigger]
-Operation = Install
-Operation = Upgrade
-Operation = Remove
-Type = Package
 Target = nvidia-dkms
-
-[Trigger]
-Operation = Install
-Operation = Upgrade
-Operation = Remove
-Type = Package
 Target = nvidia-dkms-tkg
+Target = linux
+Target = linux-tkg-pds-zen
 
 [Action]
-Description = Updating Nvidia module in initcpio.
+Description = Creating initial ramdisk.
 Exec = /usr/bin/mkinitcpio -P
 When = PostTransaction
 Depends = mkinitcpio
