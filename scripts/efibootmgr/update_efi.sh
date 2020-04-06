@@ -98,7 +98,7 @@ function update_efi()
     # Disable the watch dog, optimize for performance, and disable staggered spinup, for
     # performance.
     "nowatchdog workqueue.power_efficient=0 libahci.ignore_sss=1"
-    # Enable early DRM modesetting, for functionality.
+    # Enable DRM modesetting, for functionality.
     "nvidia-drm.modeset=1"
   )
   local -r CMDLINE_STR="${CMDLINE_ARRAY[*]}"
