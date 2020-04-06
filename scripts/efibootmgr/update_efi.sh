@@ -174,9 +174,10 @@ $CMDLINE_STR $CMDLINE_SILENT_STR"
     add_entry_decide_configuration "Arch Linux ($KERNEL)" "${KERNELS[${KERNEL}]}"
   done
 
-  local -r DEFAULT_ENTRY_NUM=$(find_bootnum "Arch Linux (TkG) (Normal)")
+  local -r DEFAULT_ENTRY="Arch Linux (TkG) (Normal)"
+  local -r DEFAULT_ENTRY_NUM=$(find_bootnum "$DEFAULT_ENTRY")
   if [[ -n $DEFAULT_ENTRY_NUM ]]; then
-    echo "Setting Arch Linux (TkG) (Normal) as default."
+    echo "Setting $DEFAULT_ENTRY as default."
     efibootmgr -q -O
     efibootmgr -q -o "$DEFAULT_ENTRY_NUM"
   fi
