@@ -69,7 +69,8 @@ function add_entry()
 
 # Updates Arch Linux UEFI boot entries.
 # Arguments:
-#   The type of entries to generate, out of "quiet", "debug", "rescue", and "fallback-rescue".
+#   The type of entries to generate, out of "normal", "quiet", "debug", "rescue", and
+# "fallback-rescue".
 # Outputs:
 #   Changes being made to EFI boot entries.
 function update_efi()
@@ -133,10 +134,14 @@ $FALLBACK_KERNEL_INITRD_STR $CMDLINE_STR $CMDLINE_DEBUG_STR $CMDLINE_RESCUE_STR"
         add_entry "$1 (Rescue)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR \
 $CMDLINE_STR $CMDLINE_DEBUG_STR $CMDLINE_RESCUE_STR"
         ;;
-      *)
+      *quiet*)
         echo "Updating $1 quiet UEFI boot entry ($VMLINUZ_PATH)."
         add_entry "$1 (Silent)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR \
 $CMDLINE_STR $CMDLINE_SILENT_STR"
+        ;;
+      *)
+        echo "Updating $1 normal UEFI boot entry ($VMLINUZ_PATH)."
+        add_entry "$1 (Normal)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR $CMDLINE_STR"
         ;;
     esac
   }
@@ -154,6 +159,7 @@ $CMDLINE_STR $CMDLINE_SILENT_STR"
     "Rescue"
     "Fallback Rescue"
     "Silent"
+    "Normal"
   )
 
   echo "Scanning existing boot entries."
@@ -168,9 +174,9 @@ $CMDLINE_STR $CMDLINE_SILENT_STR"
     add_entry_decide_configuration "Arch Linux ($KERNEL)" "${KERNELS[${KERNEL}]}"
   done
 
-  local -r DEFAULT_ENTRY_NUM=$(find_bootnum "Arch Linux (TkG) (Silent)")
+  local -r DEFAULT_ENTRY_NUM=$(find_bootnum "Arch Linux (TkG) (Normal)")
   if [[ -n $DEFAULT_ENTRY_NUM ]]; then
-    echo "Setting Arch Linux (TkG) (Silent) as default."
+    echo "Setting Arch Linux (TkG) (Normal) as default."
     efibootmgr -q -O
     efibootmgr -q -o "$DEFAULT_ENTRY_NUM"
   fi
