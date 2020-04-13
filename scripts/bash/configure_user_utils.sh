@@ -145,7 +145,7 @@ function link_directories()
 
     # Link Git configuration from documents to user configuration.
     ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Git Configuration"]="$INSTALL_HOME/.gitconfig"
-    # Link GPG configuration file from Comet Observatory to home directory.
+    # Link GPG configuration file from CO to home directory.
     ["$COMET_OBSERVATORY/config/gpg.conf"]="$INSTALL_HOME/.gnupg/gpg.conf"
     # Link Pikaur configuration file from CO to home directory.
     ["$COMET_OBSERVATORY/config/pikaur.conf"]="$INSTALL_HOME/.config/pikaur.conf"
