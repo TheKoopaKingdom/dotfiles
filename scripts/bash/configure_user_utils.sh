@@ -147,7 +147,8 @@ function link_directories()
     ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Git Configuration"]="$INSTALL_HOME/.gitconfig"
     # Link GPG configuration file from Comet Observatory to home directory.
     ["$COMET_OBSERVATORY/config/gpg.conf"]="$INSTALL_HOME/.gnupg/gpg.conf"
-
+    # Link Pikaur configuration file from CO to home directory.
+    ["$COMET_OBSERVATORY/config/pikaur.conf"]="$INSTALL_HOME/.config/pikaur.conf"
     # Link KeePassX configuration from documents to user configuration.
     ["$SYNCED_DOCUMENTS_DIR/Program Configurations/KeePassXC.ini"]=\
 "$INSTALL_HOME/.config/keepassxc/keepassxc.ini"
