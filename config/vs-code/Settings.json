@@ -100,5 +100,6 @@
   "cmake.configureOnOpen": true,
   // Build in the "Build" directory for consistency with upper camel case projects.
   "cmake.buildDirectory": "${workspaceRoot}/Build",
+  // Use the default WPILib simluation extension.
   "wpilib.selectDefaultSimulateExtension": true
 }
