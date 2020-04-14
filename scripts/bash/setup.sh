@@ -176,7 +176,8 @@ function setup_system()
   safe_cp ../../config/sysctl.conf /etc/sysctl.d/99-sysctl.conf
 
   info "Configuring kernel modules."
-  configure_kernel_modules
+  # This is not to be confused with the legacy "/etc/modprobe.conf".
+  safe_cp ../../config/modprobe.conf /etc/modprobe.d/modprobe.conf
 
   info "Configuring filesystems."
   safe_cp ../../config/fstab /etc/fstab
