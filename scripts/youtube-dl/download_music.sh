@@ -19,7 +19,7 @@ source "$COMET_OBSERVATORY/scripts/eyed3/tag_mp3.sh"
 function download_music()
 {
   info "Downloading music from Firefox music bookmark folder."
-  local -ra MUSIC_LIST=$(get_bookmark_urls Music)
+  local -ra MUSIC_LIST=$(get_bookmark_urls "Listening List")
   for URL in $MUSIC_LIST; do
     info "Getting info about \"$URL\" and selecting music directory."
     if ! DOWNLOAD_DIR=$(select_music_directory "$(youtube-dl --get-title "$URL")"); then
