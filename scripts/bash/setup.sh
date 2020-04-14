@@ -173,7 +173,7 @@ function setup_system()
   fi
 
   info "Configuring kernel attributes."
-  configure_kernel_attributes
+  safe_cp ../../config/sysctl.conf /etc/sysctl.d/99-sysctl.conf
 
   info "Configuring kernel modules."
   configure_kernel_modules

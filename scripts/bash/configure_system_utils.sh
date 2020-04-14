@@ -23,18 +23,6 @@ function configure_initial_ramdisk()
   done
 }
 
-# Applies sysctl configurations.
-# Globals Read:
-#   - DRY_RUN: See setup().
-# Outputs;
-#   - Copy feedback.
-function configure_kernel_attributes()
-{
-  for CONF in ../../config/sysctl/*.conf; do
-    safe_cp "$CONF" "/etc/sysctl.d/$(basename "$CONF")"
-  done
-}
-
 # Applies kernel module configurations.
 # Globals Read:
 #   - DRY_RUN: See setup().
