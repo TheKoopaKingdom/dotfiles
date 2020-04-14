@@ -143,6 +143,9 @@ function link_directories()
 
     # Tools
 
+    # Link top configuration from documents to user configuration.
+    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Top Configuration"]=\
+"$INSTALL_HOME/.config/procps/toprc"
     # Link Git configuration from documents to user configuration.
     ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Git Configuration"]="$INSTALL_HOME/.gitconfig"
     # Link GPG configuration file from CO to home directory.
