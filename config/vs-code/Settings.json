@@ -44,6 +44,10 @@
   "git.autofetch": true,
   // Don't confirm before synchronizing Git repositories.
   "git.confirmSync": false,
+  // Allow force pushing.
+  "git.allowForcePush": true,
+  // Don't confirm force pushes.
+  "git.confirmForcePush": false,
   // Don't ignore whitespace when viewing diffs, because they will sneak by otherwise.
   "diffEditor.ignoreTrimWhitespace": false,
   // Set the console font.
