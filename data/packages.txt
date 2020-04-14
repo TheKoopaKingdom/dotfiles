@@ -349,6 +349,8 @@ okteta
 
 # Hardware
 
+# modprobed-db, for storing a list of kernel modules used.
+modprobed-db
 # TkG Linux kernel, for doing stuff.
 linux-tkg-pds-zen
 # TkG Linux kernel headers, for compiling kernel modules.
