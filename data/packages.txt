@@ -78,8 +78,8 @@ neofetch
 efibootmgr
 # hdparm, for managing HDDs.
 hdparm
-# GParted, for managing disks.
-gparted
+# KDE Partition Manager, for managing disks.
+partitionmanager
 # bluez, for the Bluetooth stack.
 bluez
 
