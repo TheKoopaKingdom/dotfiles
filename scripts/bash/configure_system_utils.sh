@@ -51,7 +51,7 @@ function create_swap()
 # Configures systemwide systemd units.
 # Globals Read:
 #   - DRY_RUN: See setup().
-# Outputs;
+# Outputs:
 #   - Copy feedback.
 function configure_system_units()
 {

@@ -121,7 +121,7 @@ function setup_system()
     pacman -Syu "${PACMAN_ARGS[@]}"
   fi
 
-  info "Installing new packages."
+  info "Installing packages."
   if [[ $DRY_RUN = false ]]; then  
     # Initially run pikaur as the user, to utilize the pikaur cache in their home directory.
     grep -v "^#" "$COMET_OBSERVATORY/data/packages.txt" | sudo -u "$INSTALL_USER" xargs pikaur -S "${PACMAN_ARGS[@]}"
