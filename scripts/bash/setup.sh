@@ -149,7 +149,7 @@ function setup_system()
   safe_cp ../../config/fstab /etc/fstab
 
   info "Creating swap memory."
-  create_swap
+  create_swap 8
 
   # System Services
   info_section "Setting Up System Services"

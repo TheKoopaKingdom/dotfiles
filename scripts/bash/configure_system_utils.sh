@@ -23,16 +23,22 @@ function configure_initial_ramdisk()
   done
 }
 
-# Creates 4GB of swap. See: https://wiki.archlinux.org/index.php/Swap#Manually
+# Creates a swap file. See: https://wiki.archlinux.org/index.php/Swap#Manually
+# Globals Read:
+#   - DRY_RUN: See setup().
+# Arguments:
+#   - The number of gigabytes of swap to create.
 function create_swap()
 {
+  local -r GIGABYTES=$1
+
   if [[ -f /swapfile ]]; then
       verbose "Swap file already exists."
   else
       info "Creating swapfile."
       if [[ $DRY_RUN = false ]]; then
         truncate -s 0 /swapfile
-        fallocate -l 8G /swapfile
+        fallocate -l "${GIGABYTES}G" /swapfile
         chmod 600 /swapfile
         mkswap /swapfile
         swapon /swapfile
