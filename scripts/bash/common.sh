@@ -165,6 +165,16 @@ function check_user()
   fi
 }
 
+# Enters the script directory, and sets up a trap to return.
+# Arguments:
+#   - The name of the script.
+function enter_script_dir()
+{
+  # Enter the script directory so that we can use relative paths.
+  pushd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null
+  trap popd ERR
+}
+
 # Asks if the directory selection process should be canceled or not.
 # Outputs:
 #   - 1 if the user wants to exit, else 0.

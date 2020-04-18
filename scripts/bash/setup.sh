@@ -69,16 +69,6 @@ function export_constants()
   export PACMAN_ARGS=(--noconfirm --needed --noprogressbar)
 }
 
-# Enters the script directory, and sets up a trap to return.
-# Arguments:
-#   - The name of the script.
-function enter_script_dir()
-{
-  # Enter the script directory so that we can use relative paths.
-  pushd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null
-  trap popd ERR
-}
-
 # Sets up the system components of the system.
 # Globals Read:
 #   - COMET_OBSERVATORY: See export_constants().
