@@ -240,8 +240,9 @@ obs-studio
 guvcview
 # Blender, for editing 3D models.
 blender
-# GStreamer base plugins, for decoding media.
+# GStreamer base plugins, for decoding media. Wine looks for the 32 bit version.
 gst-plugins-base
+lib32-gst-plugins-base-libs
 # GStreamer Libav plugin, for decoding media.
 gst-libav
 # GStreamer good plugins, for decoding media.
@@ -261,6 +262,8 @@ deluge
 discord
 # HexChat, for messaging.
 hexchat
+# Samba, for Wine.
+samba
 
 # Gaming
 
