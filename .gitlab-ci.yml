@@ -28,4 +28,4 @@ analyze:shellcheck:
   image: koalaman/shellcheck-alpine:stable
   script:
     # Check that all Bash code is proper.
-    - shellcheck scripts/**/*.sh bin/**/*.sh
+    - shellcheck -x scripts/**/*.sh bin/*
