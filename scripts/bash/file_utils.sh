@@ -11,7 +11,7 @@ source "$COMET_OBSERVATORY/scripts/bash/common.sh"
 # Arguments:
 #   - The source file path.
 #   - The destination file paths.
-# Outputs;
+# Outputs:
 #   - Copy feedback.
 function safe_cp()
 {
@@ -32,7 +32,7 @@ function safe_cp()
 # Arguments:
 # - The target file path.
 # - The link file path.
-# Outputs;
+# Outputs:
 #   - Link feedback.
 function safe_ln()
 {

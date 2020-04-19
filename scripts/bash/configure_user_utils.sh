@@ -46,7 +46,7 @@ function create_directories()
 #   - COMET_OBSERVATORY: See export_constants().
 #   - SYNCED_DOCUMENTS_DIR: See export_constants().
 #   - SYNCED_GTK3_DIR: See export_constants().
-# Outputs;
+# Outputs:
 #   - Link feedback.
 function link_directories()
 {
@@ -228,7 +228,7 @@ Testing/"]="$SYNCED_DOCUMENTS_DIR/Program Data/Lucas' Simpsons Hit & Run Mod Lau
 # Configures user systemd units.
 # Globals Read:
 #   - DRY_RUN: See setup().
-# Outputs;
+# Outputs:
 #   - Copy feedback.
 function configure_user_units()
 {

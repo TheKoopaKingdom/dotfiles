@@ -12,7 +12,7 @@ source "$COMET_OBSERVATORY/scripts/bash/file_utils.sh"
 # Configures the initial ramdisk.
 # Globals Read:
 #   - DRY_RUN: See setup().
-# Outputs;
+# Outputs:
 #   - Copy feedback.
 function configure_initial_ramdisk()
 {
@@ -106,7 +106,7 @@ function enable_system_units()
 # Applies udev rules.
 # Globals Read:
 #   - DRY_RUN: See setup().
-# Outputs;
+# Outputs:
 #   - Copy feedback.
 function configure_udev_rules()
 {
@@ -118,7 +118,7 @@ function configure_udev_rules()
 # Configures Pacman.
 # Globals Read:
 #   - DRY_RUN: See setup().
-# Outputs;
+# Outputs:
 #   - Copy feedback.
 function configure_pacman()
 {
