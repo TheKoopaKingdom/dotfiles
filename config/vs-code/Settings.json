@@ -37,7 +37,7 @@
   // Never autoclose quotes or brackets, because they get in the way more than they help.
   "editor.autoClosingQuotes": "never",
   "editor.autoClosingBrackets": "never",
-  // Use Fira 
+  // Use Fira
   "editor.fontFamily": "'Fira Code', 'Noto Sans Mono'",
   "editor.fontLigatures": true,
   // Periodically fetch remote Git repos.
@@ -83,6 +83,12 @@
   "spellright.notificationClass": "information",
   // When formatting YAML, allow a max of 100 characters per line.
   "yaml.format.printWidth": 100,
+  // Allow ShellCheck to follow sources.
+  "shellcheck.customArgs": [
+    "-x"
+  ],
+  // Make ShellCheck use the project root as the working directory.
+  "shellcheck.useWorkspaceRootAsCwd": true,
   // Disable builtin JS formatting since ESLint fixing is enabled.
   "javascript.format.enable": false,
   // Default to the C++17 standard when formatting.
