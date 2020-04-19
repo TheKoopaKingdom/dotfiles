@@ -1,0 +1,9 @@
+{
+  "exclude": [
+    "config/gpg.conf",
+    "config/pacman.conf",
+    "config/pacman.conf",
+    "data/*",
+    "license.txt"
+  ]
+}
