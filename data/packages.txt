@@ -422,5 +422,3 @@ android-studio
 ctrtool-git
 # firmtool, for managine 3DS firmware.
 firmtool-git
-
-# There must be an empty line at the end here.
