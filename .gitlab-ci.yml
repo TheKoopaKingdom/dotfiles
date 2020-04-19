@@ -21,11 +21,10 @@ analyze:shfmt:
     # Check that all Bash code has proper formatting.
     - shfmt -d .
 
-analyze:shellcheck:
-  # Add to the analysis stage.
-  stage: analyze
-  # Use the latest stable shellchecl Docker image.
+shell check:
   image: koalaman/shellcheck-alpine:stable
+  stage: test
+  before_script:
+    - shellcheck --version
   script:
-    # Check that all Bash code is proper.
-    - shellcheck ./**/*.sh
+    - shellcheck scripts/**/*.sh # path to your shell scripts
