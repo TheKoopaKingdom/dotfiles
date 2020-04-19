@@ -9,9 +9,3 @@ insert_final_newline = true
 
 [{*.sh,*.yaml,melchoir/bin/**}]
 max_line_length = 100
-
-[{*.sh}]
-binary_next_line = false   # like -bn
-switch_case_indent = false # like -ci
-space_redirects = false    # like -sr
-keep_padding = false       # like -kp
