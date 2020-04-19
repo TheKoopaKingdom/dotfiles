@@ -6,7 +6,9 @@
 code --install-extension ban.spellright
 code --install-extension bungcip.better-toml
 code --install-extension dbaeumer.vscode-eslint
+code --install-extension EditorConfig.EditorConfig
 code --install-extension fatihacet.gitlab-workflow
+code --install-extension foxundermoon.shell-format
 code --install-extension geddski.macros
 code --install-extension GitHub.vscode-pull-request-github
 code --install-extension icrawl.discord-vscode
