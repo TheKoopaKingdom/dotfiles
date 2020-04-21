@@ -19,7 +19,8 @@ analysis:shfmt:
   image: mvdan/shfmt:latest-alpine
   rules:
     - changes:
-        - CI/**/*.sh
+        - scripts/**/*.sh
+        - bin/*
   script:
     # Check that all Bash code has proper formatting.
     - shfmt -d .
@@ -31,7 +32,8 @@ analysis:shellcheck:
   image: koalaman/shellcheck-alpine:stable
   rules:
     - changes:
-        - CI/**/*.sh
+        - scripts/**/*.sh
+        - bin/*
   script:
     # Check that all Bash code is proper.
     - shellcheck -x scripts/**/*.sh bin/*
