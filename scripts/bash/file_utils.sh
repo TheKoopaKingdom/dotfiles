@@ -25,7 +25,7 @@ safe_cp() {
   local -r PERMISSION=$4
 
   if cmp "$SOURCE" "$DESTINATION" >/dev/null 2>&1; then
-    info "$DESTINATION is already copied."
+    verbose "$DESTINATION is already copied."
   else
     info "Copying file $SOURCE => $DESTINATION."
     if [[ $DRY_RUN = false ]]; then
