@@ -4,7 +4,7 @@
 # Licensed under GPLv3.
 # Refer to License.txt file included.
 
-export COMET_OBSERVATORY=/home/kyle/Documents/Projects/Bash/comet-observatory
+export CO=/home/kyle/Documents/Projects/Bash/comet-observatory
 
 # shellcheck source=scripts/bash/setup.sh
 source "${BASH_SOURCE%/*}/../scripts/bash/setup.sh"

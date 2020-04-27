@@ -5,7 +5,7 @@
 # Refer to License.txt file included.
 
 # shellcheck source=scripts/bash/common.sh
-source "$COMET_OBSERVATORY/scripts/bash/common.sh"
+source "$CO/scripts/bash/common.sh"
 
 declare -r PROGRAM_NAME=${0##*/}
 

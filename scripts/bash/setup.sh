@@ -8,13 +8,13 @@
 set -e
 
 # shellcheck source=scripts/bash/common.sh
-source "$COMET_OBSERVATORY/scripts/bash/common.sh"
+source "$CO/scripts/bash/common.sh"
 # shellcheck source=scripts/bash/file_utils.sh
-source "$COMET_OBSERVATORY/scripts/bash/file_utils.sh"
+source "$CO/scripts/bash/file_utils.sh"
 # shellcheck source=scripts/bash/configure_system_utils.sh
-source "$COMET_OBSERVATORY/scripts/bash/configure_system_utils.sh"
+source "$CO/scripts/bash/configure_system_utils.sh"
 # shellcheck source=scripts/bash/configure_user_utils.sh
-source "$COMET_OBSERVATORY/scripts/bash/configure_user_utils.sh"
+source "$CO/scripts/bash/configure_user_utils.sh"
 
 # Prints a header.
 # Arguments:
@@ -25,8 +25,8 @@ function print_header() {
   local -r SCRIPT=$1
 
   # The comet observatory variable has not yet been checked.
-  if [[ $DEBUG != true && -d $COMET_OBSERVATORY ]]; then
-    cat "$COMET_OBSERVATORY/data/luma.txt" || true
+  if [[ $DEBUG != true && -d $CO ]]; then
+    cat "$CO/data/luma.txt" || true
   fi
   info "Comet Observatory System $SCRIPT Script"
   info "https://gitlab.com/CodingKoopa/comet-observatory"
@@ -36,7 +36,7 @@ function print_header() {
 # Exports certain constant variables.
 # Globals Exported:
 #   - INSTALL_HOME: Location of the home directory of the current install user.
-#   - COMET_OBSERVATORY: Location of this Comet Observatory repository.
+#   - CO: Location of this Comet Observatory repository.
 #   - SYNCED_DOCUMENTS_DIR: Location of the synced documents directory of the current install user.
 #   - SYNCED_GTK3_DIR: Location of the GTK 3.0 configuration directory of the current install user.
 #   - ABS_DIR: Location of the Arch Build System directory.
@@ -51,9 +51,9 @@ function export_constants() {
   readonly INSTALL_HOME
   export INSTALL_HOME
 
-  export COMET_OBSERVATORY="$INSTALL_HOME/Documents/Projects/Bash/comet-observatory"
-  if [[ ! -d $COMET_OBSERVATORY ]]; then
-    error "Comet Observatory directory \"$COMET_OBSERVATORY\" not found."
+  export CO="$INSTALL_HOME/Documents/Projects/Bash/comet-observatory"
+  if [[ ! -d $CO ]]; then
+    error "Comet Observatory directory \"$CO\" not found."
     exit 1
   fi
 
@@ -69,7 +69,7 @@ function export_constants() {
 
 # Sets up the system components of the system.
 # Globals Read:
-#   - COMET_OBSERVATORY: See export_constants().
+#   - CO: See export_constants().
 #   - PACMAN_ARGS: See export_constants().
 #   - SYNCED_GTK_DIR: See export_constants().
 # Globals Exported:
@@ -119,7 +119,7 @@ function setup_system() {
   info "Installing packages."
   if [[ $DRY_RUN = false ]]; then
     # Initially run pikaur as the user, to utilize the pikaur cache in their home directory.
-    grep -v "^#" "$COMET_OBSERVATORY/data/packages.txt" | sudo -u "$INSTALL_USER" xargs pikaur -S "${PACMAN_ARGS[@]}"
+    grep -v "^#" "$CO/data/packages.txt" | sudo -u "$INSTALL_USER" xargs pikaur -S "${PACMAN_ARGS[@]}"
   fi
 
   # Kernel & Hardware
@@ -171,7 +171,7 @@ function setup_system() {
 # root.
 # Globals Read:
 #   - INSTALL_HOME: See export_constants().
-#   - COMET_OBSERVATORY: See export_constants().
+#   - CO: See export_constants().
 #   - SYNCED_DOCUMENTS_DIR: See export_constants().
 #   - SYNCED_GTK_DIR: See export_constants().
 #   - ABS_DIR: See export_constants().

@@ -5,9 +5,9 @@
 # Refer to License.txt file included.
 
 # shellcheck source=scripts/bash/common.sh
-source "$COMET_OBSERVATORY/scripts/bash/common.sh"
+source "$CO/scripts/bash/common.sh"
 # shellcheck source=scripts/bash/file_utils.sh
-source "$COMET_OBSERVATORY/scripts/bash/file_utils.sh"
+source "$CO/scripts/bash/file_utils.sh"
 
 # Configures the initial ramdisk.
 # Globals Read:

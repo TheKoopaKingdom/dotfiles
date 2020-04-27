@@ -5,9 +5,9 @@
 # Refer to License.txt file included.
 
 # shellcheck source=scripts/bash/common.sh
-source "$COMET_OBSERVATORY/scripts/bash/common.sh"
+source "$CO/scripts/bash/common.sh"
 # shellcheck source=scripts/bash/config.template.sh
-source "$COMET_OBSERVATORY/scripts/bash/config.sh"
+source "$CO/scripts/bash/config.sh"
 
 # Fixes youtube-dl default filenames.
 # Outputs:

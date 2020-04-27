@@ -3,7 +3,7 @@ This document details how the user portion of the booting process works, particu
 - Systemd starts the Getty service on VTY 1.
 - Getty logs us in, using its [configuration](/config/systemd-overrides/getty-autologin.conf).
 - PAM for our user loads pam_env, which loads our [`env` file](/config/pam-environment.env), which sets environmental variables used by all programs.
-  - This sets `COMET_OBSERVATORY`. The libraries in `scripts` may assume that this variable is set at all times, either by this environment variable, or by a `/bin` script, for root scripts.
+  - This sets `CO`. The libraries in `scripts` may assume that this variable is set at all times, either by this environment variable, or by a `/bin` script, for root scripts.
 - Bash runs the [Bash profile](/scripts/bash/bash_profile.sh), which starts X if the conditions are right.
   - If the conditions aren't right, then we opt to treat this as a normal terminal, and run the [Bash RC file](/scripts/bash/bash_rc.sh).
   - Wayland could be implemented at this point.

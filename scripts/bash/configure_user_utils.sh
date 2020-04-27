@@ -5,9 +5,9 @@
 # Refer to License.txt file included.
 
 # shellcheck source=scripts/bash/common.sh
-source "$COMET_OBSERVATORY/scripts/bash/common.sh"
+source "$CO/scripts/bash/common.sh"
 # shellcheck source=scripts/bash/file_utils.sh
-source "$COMET_OBSERVATORY/scripts/bash/file_utils.sh"
+source "$CO/scripts/bash/file_utils.sh"
 
 # Creates new directories, and sets them up with proper permissions if necessary.
 # Globals Read:
@@ -42,7 +42,7 @@ function create_directories() {
 # Globals Read:
 #   - DRY_RUN: See setup().
 #   - INSTALL_HOME: See export_constants().
-#   - COMET_OBSERVATORY: See export_constants().
+#   - CO: See export_constants().
 #   - SYNCED_DOCUMENTS_DIR: See export_constants().
 #   - SYNCED_GTK3_DIR: See export_constants().
 # Outputs:
@@ -60,22 +60,22 @@ function link_directories() {
     # Shell
 
     # Link PAM environemnt from CO to home directory.
-    ["$COMET_OBSERVATORY/config/pam-environment.env"]="$INSTALL_HOME/.pam_environment"
+    ["$CO/config/pam-environment.env"]="$INSTALL_HOME/.pam_environment"
     # Link Bash profile from CO to home directory.
-    ["$COMET_OBSERVATORY/scripts/bash/bash_profile.sh"]="$INSTALL_HOME/.bash_profile"
+    ["$CO/scripts/bash/bash_profile.sh"]="$INSTALL_HOME/.bash_profile"
     # Link Bash RC file from CO to home directory.
-    ["$COMET_OBSERVATORY/scripts/bash/bash_rc.sh"]="$INSTALL_HOME/.bashrc"
+    ["$CO/scripts/bash/bash_rc.sh"]="$INSTALL_HOME/.bashrc"
     # Link X RC file from CO to home directory.
-    ["$COMET_OBSERVATORY/scripts/x/x_rc.sh"]="$INSTALL_HOME/.xinitrc"
+    ["$CO/scripts/x/x_rc.sh"]="$INSTALL_HOME/.xinitrc"
     # Link X Compose file from CO to home directory.
-    ["$COMET_OBSERVATORY/config/compose-keys.conf"]="$INSTALL_HOME/.XCompose"
+    ["$CO/config/compose-keys.conf"]="$INSTALL_HOME/.XCompose"
     # Link CO configuration from documents to CO.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Dotfiles Configuration.sh"]="$COMET_OBSERVATORY/scripts/bash/config.sh"
+    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Dotfiles Configuration.sh"]="$CO/scripts/bash/config.sh"
 
     # Desktop Environment
 
     # Link user directory configuration from CO to user configuration.
-    ["$COMET_OBSERVATORY/config/user-dirs.dirs"]="$INSTALL_HOME/.config/user-dirs.dirs"
+    ["$CO/config/user-dirs.dirs"]="$INSTALL_HOME/.config/user-dirs.dirs"
     # Link GTK 3.0 configuration from documents to user configuration.
     ["$SYNCED_GTK3_DIR"]="$INSTALL_HOME/.config/gtk-3.0"
     # Link GTK 3.0 configuration from documents to user configuration.
@@ -107,7 +107,7 @@ function link_directories() {
     # Link autostart programs from documents to user configuration.
     ["$SYNCED_DOCUMENTS_DIR/LinuxAutostartPrograms"]="$INSTALL_HOME/.config/autostart"
     # Link autostart scripts from CO to user configuration.
-    ["$COMET_OBSERVATORY/config/autostart/"]="$INSTALL_HOME/.config/autostart-scripts"
+    ["$CO/config/autostart/"]="$INSTALL_HOME/.config/autostart-scripts"
     # Link Konsole configuration from documents to user data.
     ["$SYNCED_DOCUMENTS_DIR/Program Configurations/KDE/Konsole Profile.profile"]="$INSTALL_HOME/.local/share/konsole/Garage.profile"
     # Link RSIBreak configuration from documents to user configuration.
@@ -131,11 +131,11 @@ function link_directories() {
     # Link Git configuration from documents to user configuration.
     ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Git Configuration"]="$INSTALL_HOME/.gitconfig"
     # Link GPG configuration file from CO to home directory.
-    ["$COMET_OBSERVATORY/config/gpg.conf"]="$INSTALL_HOME/.gnupg/gpg.conf"
+    ["$CO/config/gpg.conf"]="$INSTALL_HOME/.gnupg/gpg.conf"
     # Link GPG configuration file from CO to home directory.
-    ["$COMET_OBSERVATORY/config/gpg-agent.conf"]="$INSTALL_HOME/.gnupg/gpg-agent.conf"
+    ["$CO/config/gpg-agent.conf"]="$INSTALL_HOME/.gnupg/gpg-agent.conf"
     # Link Pikaur configuration file from CO to home directory.
-    ["$COMET_OBSERVATORY/config/pikaur.conf"]="$INSTALL_HOME/.config/pikaur.conf"
+    ["$CO/config/pikaur.conf"]="$INSTALL_HOME/.config/pikaur.conf"
     # Link KeePassX configuration from documents to user configuration.
     ["$SYNCED_DOCUMENTS_DIR/Program Configurations/KeePassXC.ini"]="$INSTALL_HOME/.config/keepassxc/keepassxc.ini"
 
@@ -145,7 +145,7 @@ function link_directories() {
     # configuration, because other files in the directory are subject to change.
     ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Clementine.conf"]="$INSTALL_HOME/.config/Clementine/Clementine.conf"
     # Link mpv configuration from CO to user configuration.
-    ["$COMET_OBSERVATORY/config/mpv.conf"]="$INSTALL_HOME/.config/mpv/mpv.conf"
+    ["$CO/config/mpv.conf"]="$INSTALL_HOME/.config/mpv/mpv.conf"
     # Link SVP configuration from documents to user configuration.
     ["$SYNCED_DOCUMENTS_DIR/Program Configurations/SVP"]="$INSTALL_HOME/.local/share/SVP4/settings"
     # Link OBS Studio configuration from documents to user configuration.
@@ -182,11 +182,11 @@ function link_directories() {
     # Programming
 
     # Link VSCode keybindings from CO to user configuration.
-    ["$COMET_OBSERVATORY/config/vs-code/Keybindings.json"]="$INSTALL_HOME/.config/Code - OSS/User/keybindings.json"
+    ["$CO/config/vs-code/Keybindings.json"]="$INSTALL_HOME/.config/Code - OSS/User/keybindings.json"
     # Link VSCode settings from documents to user configuration.
-    ["$COMET_OBSERVATORY/config/vs-code/Settings.json"]="$INSTALL_HOME/.config/Code - OSS/User/settings.json"
+    ["$CO/config/vs-code/Settings.json"]="$INSTALL_HOME/.config/Code - OSS/User/settings.json"
     # Link VSCode snippets from documents to user configuration.
-    ["$COMET_OBSERVATORY/config/vs-code/Snippets/"]="$INSTALL_HOME/.config/Code - OSS/User/snippets"
+    ["$CO/config/vs-code/Snippets/"]="$INSTALL_HOME/.config/Code - OSS/User/snippets"
     # Link VSCode extensions from documents to user configuration.
     ["$SYNCED_DOCUMENTS_DIR/Program Data/VSCode/Extensions/"]="$INSTALL_HOME/.vscode-oss/extensions"
   )

@@ -10,5 +10,5 @@ if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]
   startx -- -keeptty &>"$HOME/.local/share/xorg/startx.log"
 else
   # shellcheck source=scripts/bash/bash_rc.sh
-  "$COMET_OBSERVATORY/scripts/bash/bash_rc.sh"
+  "$CO/scripts/bash/bash_rc.sh"
 fi
