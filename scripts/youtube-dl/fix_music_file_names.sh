@@ -5,9 +5,9 @@
 # Refer to License.txt file included.
 
 # shellcheck source=scripts/bash/common.sh
-source "$CO/scripts/bash/common.sh"
+source "$CO"/scripts/bash/common.sh
 # shellcheck source=scripts/bash/config.template.sh
-source "$CO/scripts/bash/config.sh"
+source "$CO"/scripts/bash/config.sh
 
 # Fixes youtube-dl default filenames.
 # Outputs:
@@ -30,7 +30,7 @@ function fix_music_file_names() {
       # The 16 here is made up of: 1 char dash + 11 char video ID + 3 char extention + 1 char dot.
       local -r NEW_FILE_NAME=${FILE_NAME:0:${#FILE_NAME}-16}${FILE_NAME: -4}
       info "$FILE_NAME -> $NEW_FILE_NAME"
-      mv "$FILE_DIRECTORY/$FILE_NAME" "$FILE_DIRECTORY/$NEW_FILE_NAME"
+      mv "$FILE_DIRECTORY"/"$FILE_NAME" "$FILE_DIRECTORY"/"$NEW_FILE_NAME"
     fi
   done
   info "Checking finished."

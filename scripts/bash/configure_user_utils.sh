@@ -5,9 +5,9 @@
 # Refer to License.txt file included.
 
 # shellcheck source=scripts/bash/common.sh
-source "$CO/scripts/bash/common.sh"
+source "$CO"/scripts/bash/common.sh
 # shellcheck source=scripts/bash/file_utils.sh
-source "$CO/scripts/bash/file_utils.sh"
+source "$CO"/scripts/bash/file_utils.sh
 
 # Creates new directories, and sets them up with proper permissions if necessary.
 # Globals Read:
@@ -207,8 +207,8 @@ function link_directories() {
 # Outputs:
 #   - Copy feedback.
 function configure_user_units() {
-  for SERVICE in ../../config/systemd-user-units/*.service; do
-    safe_cp "$SERVICE" "$INSTALL_HOME/.config/systemd/user/$(basename "$SERVICE")"
+  for SERVICE in "$CO"/config/systemd-user-units/*.service; do
+    safe_cp "$SERVICE" "$INSTALL_HOME"/.config/systemd/user/"$(basename "$SERVICE")"
   done
 }
 

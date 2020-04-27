@@ -7,7 +7,7 @@
 set -e
 
 # shellcheck source=scripts/bash/common.sh
-source "$CO/scripts/bash/common.sh"
+source "$CO"/scripts/bash/common.sh
 
 # Finds the bootnum from the name of a boot entry.
 # Arguments:

@@ -5,7 +5,7 @@
 # Refer to License.txt file included.
 
 # shellcheck source=scripts/bash/common.sh
-source "$CO/scripts/bash/common.sh"
+source "$CO"/scripts/bash/common.sh
 
 # Tags a MP3 file with its title, artist, and album.
 # Arguments:

@@ -5,9 +5,9 @@
 # Refer to License.txt file included.
 
 # shellcheck source=scripts/bash/common.sh
-source "$CO/scripts/bash/common.sh"
+source "$CO"/scripts/bash/common.sh
 # shellcheck source=scripts/bash/config.template.sh
-source "$CO/scripts/bash/config.sh"
+source "$CO"/scripts/bash/config.sh
 
 readonly FIREFOX_PLACES_DATABASE="$FIREFOX_USER_DIRECTORY"/places.sqlite
 

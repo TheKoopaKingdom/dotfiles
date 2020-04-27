@@ -5,13 +5,13 @@
 # Refer to License.txt file included.
 
 # shellcheck source=scripts/bash/common.sh
-source "$CO/scripts/bash/common.sh"
+source "$CO"/scripts/bash/common.sh
 # shellcheck source=scripts/youtube-dl/select_music_directory.sh
-source "$CO/scripts/youtube-dl/select_music_directory.sh"
+source "$CO"/scripts/youtube-dl/select_music_directory.sh
 # shellcheck source=scripts/sqlite3/firefox_music_bookmarks.sh
-source "$CO/scripts/sqlite3/firefox_music_bookmarks.sh"
+source "$CO"/scripts/sqlite3/firefox_music_bookmarks.sh
 # shellcheck source=scripts/eyed3/tag_mp3.sh
-source "$CO/scripts/eyed3/tag_mp3.sh"
+source "$CO"/scripts/eyed3/tag_mp3.sh
 
 # Downloads music from the Firefox music folder.
 # Outputs:

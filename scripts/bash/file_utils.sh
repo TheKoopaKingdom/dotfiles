@@ -5,7 +5,7 @@
 # Refer to License.txt file included.
 
 # shellcheck source=scripts/bash/common.sh
-source "$CO/scripts/bash/common.sh"
+source "$CO"/scripts/bash/common.sh
 
 # Copies a file, checking to see if it's already updated or not.
 # Arguments:

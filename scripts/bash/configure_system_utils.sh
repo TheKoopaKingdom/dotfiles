@@ -5,9 +5,9 @@
 # Refer to License.txt file included.
 
 # shellcheck source=scripts/bash/common.sh
-source "$CO/scripts/bash/common.sh"
+source "$CO"/scripts/bash/common.sh
 # shellcheck source=scripts/bash/file_utils.sh
-source "$CO/scripts/bash/file_utils.sh"
+source "$CO"/scripts/bash/file_utils.sh
 
 # Configures the initial ramdisk.
 # Globals Read:
@@ -15,10 +15,10 @@ source "$CO/scripts/bash/file_utils.sh"
 # Outputs:
 #   - Copy feedback.
 function configure_initial_ramdisk() {
-  safe_cp ../../config/mkinitcpio.conf /etc/mkinitcpio.conf
+  safe_cp "$CO"/config/mkinitcpio.conf /etc/mkinitcpio.conf
 
-  for PRESET in ../../config/mkinitcpio-presets/*.preset; do
-    safe_cp "$PRESET" "/etc/mkinitcpio.d/$(basename "$PRESET")"
+  for PRESET in "$CO"/config/mkinitcpio-presets/*.preset; do
+    safe_cp "$PRESET" /etc/mkinitcpio.d/"$(basename "$PRESET")"
   done
 }
 
@@ -36,7 +36,7 @@ function create_swap() {
     info "Creating swapfile."
     if [[ $DRY_RUN = false ]]; then
       truncate -s 0 /swapfile
-      fallocate -l "${GIGABYTES}G" /swapfile
+      fallocate -l "${GIGABYTES}"G /swapfile
       chmod 600 /swapfile
       mkswap /swapfile
       swapon /swapfile
@@ -57,15 +57,15 @@ function configure_system_units() {
   )
   for UNIT in "${!UNIT_OVERRIDES[@]}"; do
     local -r DESTINATION=/etc/systemd/system/"$UNIT".d/override.conf
-    safe_cp ../../config/systemd-overrides/"${UNIT_OVERRIDES[${UNIT}]}" "$DESTINATION"
+    safe_cp "$CO"/config/systemd-overrides/"${UNIT_OVERRIDES[${UNIT}]}" "$DESTINATION"
     if [[ $DRY_RUN = false ]]; then
       chmod -x "$DESTINATION"
     fi
   done
 
-  safe_cp ../../config/httpd.conf /etc/httpd/conf/httpd.conf
-  safe_cp ../../config/journald.conf /etc/systemd/journald.conf
-  safe_cp ../../config/geoclue.conf /etc/geoclue/geoclue.conf
+  safe_cp "$CO"/config/httpd.conf /etc/httpd/conf/httpd.conf
+  safe_cp "$CO"/config/journald.conf /etc/systemd/journald.conf
+  safe_cp "$CO"/config/geoclue.conf /etc/geoclue/geoclue.conf
 }
 
 # Enables systemwide systemd units.
@@ -105,8 +105,8 @@ function enable_system_units() {
 # Outputs:
 #   - Copy feedback.
 function configure_udev_rules() {
-  for RULE in ../../config/udev/*.rules; do
-    safe_cp "$RULE" "/etc/udev/rules.d/$(basename "$RULE")"
+  for RULE in "$CO"/config/udev/*.rules; do
+    safe_cp "$RULE" /etc/udev/rules.d/"$(basename "$RULE")"
   done
 }
 
@@ -116,8 +116,8 @@ function configure_udev_rules() {
 # Outputs:
 #   - Copy feedback.
 function configure_pacman() {
-  safe_cp "../../config/pacman.conf" /etc/pacman.conf
-  safe_cp "../../config/makepkg.conf" /etc/makepkg.conf
+  safe_cp "$CO"/config/pacman.conf /etc/pacman.conf
+  safe_cp "$CO"/config/makepkg.conf /etc/makepkg.conf
 
   if [[ $DRY_RUN = false ]]; then
     info "Importing Chaotic AUR keys into pacman."

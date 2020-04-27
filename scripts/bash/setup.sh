@@ -8,13 +8,13 @@
 set -e
 
 # shellcheck source=scripts/bash/common.sh
-source "$CO/scripts/bash/common.sh"
+source "$CO"/scripts/bash/common.sh
 # shellcheck source=scripts/bash/file_utils.sh
-source "$CO/scripts/bash/file_utils.sh"
+source "$CO"/scripts/bash/file_utils.sh
 # shellcheck source=scripts/bash/configure_system_utils.sh
-source "$CO/scripts/bash/configure_system_utils.sh"
+source "$CO"/scripts/bash/configure_system_utils.sh
 # shellcheck source=scripts/bash/configure_user_utils.sh
-source "$CO/scripts/bash/configure_user_utils.sh"
+source "$CO"/scripts/bash/configure_user_utils.sh
 
 # Prints a header.
 # Arguments:
@@ -96,9 +96,6 @@ function setup_system() {
     exit 1
   fi
 
-  info "Entering script directory."
-  enter_script_dir
-
   info "Checking permissions."
   check_user true
 
@@ -119,7 +116,7 @@ function setup_system() {
   info "Installing packages."
   if [[ $DRY_RUN = false ]]; then
     # Initially run pikaur as the user, to utilize the pikaur cache in their home directory.
-    grep -v "^#" "$CO/data/packages.txt" | sudo -u "$INSTALL_USER" xargs pikaur -S "${PACMAN_ARGS[@]}"
+    grep -v "^#" "$CO"/data/packages.txt | sudo -u "$INSTALL_USER" xargs pikaur -S "${PACMAN_ARGS[@]}"
   fi
 
   # Kernel & Hardware
@@ -134,14 +131,14 @@ function setup_system() {
   fi
 
   info "Configuring kernel attributes."
-  safe_cp ../../config/sysctl.conf /etc/sysctl.d/99-sysctl.conf
+  safe_cp "$CO"/config/sysctl.conf /etc/sysctl.d/99-sysctl.conf
 
   info "Configuring kernel modules."
   # This is not to be confused with the legacy "/etc/modprobe.conf".
-  safe_cp ../../config/modprobe.conf /etc/modprobe.d/modprobe.conf
+  safe_cp "$CO"/config/modprobe.conf /etc/modprobe.d/modprobe.conf
 
   info "Configuring filesystems."
-  safe_cp ../../config/fstab /etc/fstab
+  safe_cp "$CO"/config/fstab /etc/fstab
 
   info "Creating swap memory."
   create_swap 8
@@ -161,8 +158,6 @@ function setup_system() {
   info "Setting up root GTK."
   # Apply the GTK configuration to root, to make applications like Gparted look nice.
   safe_ln "$SYNCED_GTK3_DIR" /root/.config/gtk-3.0
-
-  popd >/dev/null
 
   info "Setup complete!"
 }
@@ -202,9 +197,6 @@ function setup_user() {
   fi
   config_bool "Have private documents been synced yet? (y/n)?" SYNCED_DOCUMENTS "$2"
 
-  info "Entering script directory."
-  enter_script_dir
-
   info "Checking permissions."
   check_user false
 
@@ -242,8 +234,6 @@ function setup_user() {
 
   info_section "Setting Up Pikaur"
   install_pikaur
-
-  popd >/dev/null
 
   info "Setup complete!"
 }
