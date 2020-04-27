@@ -7,6 +7,6 @@
 export CO=/home/kyle/Documents/Projects/Bash/comet-observatory
 
 # shellcheck source=scripts/bash/setup.sh
-source "$CO/scripts/bash/setup.sh"
+source "$CO"/scripts/bash/setup.sh
 time setup_system "$@"
 echo "Have a wonderful day!"

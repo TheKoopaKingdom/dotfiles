@@ -5,5 +5,5 @@
 # Refer to License.txt file included.
 
 # shellcheck source=scripts/qemu/qemu_reeves.sh
-source "${BASH_SOURCE%/*}/../scripts/qemu/qemu_reeves.sh"
+source "$CO"/scripts/qemu/qemu_reeves.sh
 qemu_reeves "$@"

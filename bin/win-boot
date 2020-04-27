@@ -12,7 +12,7 @@ fi
 export CO=/home/kyle/Documents/Projects/Bash/comet-observatory
 
 # shellcheck source=scripts/efibootmgr/update_efi.sh
-source "${BASH_SOURCE%/*}/../scripts/efibootmgr/update_efi.sh"
+source "$CO"/scripts/efibootmgr/update_efi.sh
 
 set -e
 declare WINDOWS_ENTRY_NUM

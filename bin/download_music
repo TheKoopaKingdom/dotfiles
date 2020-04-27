@@ -5,5 +5,5 @@
 # Refer to License.txt file included.
 
 # shellcheck source=scripts/youtube-dl/download_music.sh
-source "${BASH_SOURCE%/*}/../scripts/youtube-dl/download_music.sh"
+source "$CO"/scripts/youtube-dl/download_music.sh
 download_music
