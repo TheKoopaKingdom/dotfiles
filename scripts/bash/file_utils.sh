@@ -29,7 +29,11 @@ safe_cp() {
   else
     info "Copying file $SOURCE => $DESTINATION."
     if [[ $DRY_RUN = false ]]; then
-      mkdir -p "$(dirname "$DESTINATION")"
+      PARENT=$(dirname "$DESTINATION")
+      if [[ ! -d $PARENT ]]; then
+        info "Making parent $PARENT."
+        mkdir -p "$PARENT"
+      fi
       cp "$SOURCE" "$DESTINATION"
     fi
   fi
