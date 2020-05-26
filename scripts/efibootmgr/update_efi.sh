@@ -90,9 +90,9 @@ function update_efi() {
     "rw"
     # Set the root filesystem, for functionality.
     "root=$ROOT"
-    # Disable the watch dog, optimize for performance, and disable staggered spinup, for
-    # performance.
-    "nowatchdog workqueue.power_efficient=0 libahci.ignore_sss=1"
+    # Enable zswap, disable the watch dog, optimize for performance, and disable staggered spinup,
+    # for performance.
+    "zswap.enabled=1 nowatchdog workqueue.power_efficient=0 libahci.ignore_sss=1"
     # Enable DRM modesetting, for functionality.
     "nvidia-drm.modeset=1"
     # Enable NVME loading, for functionality.
