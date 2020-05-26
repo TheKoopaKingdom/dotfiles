@@ -410,7 +410,7 @@ lucas-simpsons-hit-and-run-mod-launcher
 # Programming
 
 # Statically linked ShellCheck, for Bash linting.
-shellcheck
+shellcheck-bin
 # JDK 12 w/ OpenJ9, for developing Java applications.
 jdk12-openj9-bin
 # Android Studio, for developing Android applications.
