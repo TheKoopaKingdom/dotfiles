@@ -13,8 +13,5 @@ if [[ -d /etc/X11/xinit/xinitrc.d ]]; then
   unset f
 fi
 
-# Sets environment variables for graphical applications. See /docs/Init.md.
-before-de-launch
-
 # Start KDE Plasma.
 exec startplasma-x11
