@@ -150,7 +150,7 @@ $CMDLINE_STR $CMDLINE_SILENT_STR"
   }
 
   local -r VMLINUZ_TKG_PATH=$(find /boot -mindepth 1 -maxdepth 1 -type f \
-    -name 'vmlinuz-linux-tkg*' -print -quit)
+    -regex '/boot/vmlinuz-linux[0-9]+-tkg.*' -print -quit)
   # Assign a vmlinux suffix to the different kernels.
   local -rA KERNELS=(
     ["Vanilla"]=""
