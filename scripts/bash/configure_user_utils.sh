@@ -16,6 +16,9 @@ source "$CO"/scripts/bash/file_utils.sh
 #   - Installation progress.
 function create_directories() {
   declare -ra NEW_PATHS=(
+    "$TERRACE_DOWNLOADS_DIR"
+    "$TERRACE_VIDEOS_DIR"
+    "$TERRACE_MUSIC_DIR"
     "$ABS_DIR"
     "$AUR_DIR"
     "$GPG_DIR"
@@ -53,9 +56,11 @@ function link_directories() {
     # Storage
 
     # Link downloads from the terrace to home directory.
-    ["$INSTALL_HOME/Terrace/Downloads"]="$INSTALL_HOME/Downloads"
+    ["$TERRACE_DOWNLOADS_DIR"]="$INSTALL_HOME/Downloads"
+    # Link videos from the terrace to home directory.
+    ["$TERRACE_VIDEOS_DIR"]="$INSTALL_HOME/Videos"
     # Link music from the terrace to home directory.
-    ["$INSTALL_HOME/Terrace/Music"]="$INSTALL_HOME/Music"
+    ["$TERRACE_MUSIC_DIR"]="$INSTALL_HOME/Music"
 
     # Shell
 
