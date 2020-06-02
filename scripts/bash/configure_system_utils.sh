@@ -9,19 +9,6 @@ source "$CO"/scripts/bash/common.sh
 # shellcheck source=scripts/bash/file_utils.sh
 source "$CO"/scripts/bash/file_utils.sh
 
-# Configures the initial ramdisk.
-# Globals Read:
-#   - DRY_RUN: See setup().
-# Outputs:
-#   - Copy feedback.
-function configure_initial_ramdisk() {
-  safe_cp "$CO"/config/mkinitcpio.conf /etc/mkinitcpio.conf
-
-  for PRESET in "$CO"/config/mkinitcpio-presets/*.preset; do
-    safe_cp "$PRESET" /etc/mkinitcpio.d/"$(basename "$PRESET")"
-  done
-}
-
 # Creates a swap file. See: https://wiki.archlinux.org/index.php/Swap#Manually
 # Globals Read:
 #   - DRY_RUN: See setup().

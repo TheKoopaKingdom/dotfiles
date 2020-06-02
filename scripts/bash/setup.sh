@@ -125,7 +125,7 @@ function setup_system() {
   info_section "Setting Up Kernel & Hardware"
 
   info "Configuring initial ramdisk."
-  configure_initial_ramdisk
+  safe_cp "$CO"/config/mkinitcpio.conf /etc/mkinitcpio.conf
 
   info "Making initial ramdisks."
   if [[ $DRY_RUN = false ]]; then
