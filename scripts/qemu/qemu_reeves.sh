@@ -121,7 +121,7 @@ function launch_qemu() {
   # Add a virtio serial port input device, that the guest spice-vdagent can access.
   qemu_opts+=${SPICE+" -device virtserialport,chardev=spicechannel0,name=com.redhat.spice.0"}
   # Set the name of the VM.
-  qemu_opts+=" -name Debian.$VIDEO_DRIVER_STR.$VIEWER_STR"
+  qemu_opts+=" -name main_img.$VIDEO_DRIVER_STR.$VIEWER_STR"
 
   # Block Device Options
 
