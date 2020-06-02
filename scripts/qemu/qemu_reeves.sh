@@ -136,7 +136,7 @@ function launch_qemu() {
   # Use the OVMF binary as the bios file.
   qemu_opts+=" -bios /usr/share/edk2-ovmf/x64/OVMF.fd"
   # Add a virtual filesystem for a directory shared with the host.
-  qemu_opts+=" -virtfs local,path=${QR_SHARE-/home/kyle/Terrace/Virtualization/Share},\
+  qemu_opts+=" -virtfs local,path=${QR_SHARE-/home/kyle/Terrace/Documents/Virtualization/Share},\
 mount_tag=share,security_model=none"
 
   # USB Options
