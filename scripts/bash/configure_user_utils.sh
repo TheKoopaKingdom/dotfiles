@@ -15,7 +15,7 @@ source "$CO"/scripts/bash/file_utils.sh
 # Outputs:
 #   - Installation progress.
 function create_directories() {
-  declare -ra NEW_PATHS=(
+  declare -ra new_paths=(
     "$TERRACE_DOWNLOADS_DIR"
     "$TERRACE_VIDEOS_DIR"
     "$TERRACE_MUSIC_DIR"
@@ -24,11 +24,11 @@ function create_directories() {
     "$GPG_DIR"
   )
 
-  for TARGET in "${NEW_PATHS[@]}"; do
-    if [[ ! -d $TARGET ]]; then
-      info "Making new path $TARGET."
+  for target in "${new_paths[@]}"; do
+    if [[ ! -d $target ]]; then
+      info "Making new path $target."
       if [[ $DRY_RUN = false ]]; then
-        mkdir -p "$TARGET"
+        mkdir -p "$target"
       fi
     fi
   done
@@ -52,7 +52,7 @@ function create_directories() {
 #   - Link feedback.
 function link_directories() {
   # The structure here (although will be random at runtime) is parallel to that of the package list.
-  declare -rA LINKED_PATHS=(
+  declare -rA linked_paths=(
     # Storage
 
     # Link downloads from the terrace to home directory.
@@ -198,13 +198,13 @@ function link_directories() {
     ["$SYNCED_DOCUMENTS_DIR/Program Data/VSCode/Extensions/"]="$INSTALL_HOME/.vscode-oss/extensions"
   )
 
-  for TARGET in "${!LINKED_PATHS[@]}"; do
+  for target in "${!linked_paths[@]}"; do
     if [[ $SYNCED_DOCUMENTS = false ]]; then
-      if [[ $TARGET == "$SYNCED_DOCUMENTS_DIR"* ]]; then
+      if [[ $target == "$SYNCED_DOCUMENTS_DIR"* ]]; then
         continue
       fi
     fi
-    safe_ln "$TARGET" "${LINKED_PATHS[${TARGET}]}"
+    safe_ln "$target" "${linked_paths[${target}]}"
   done
 }
 
@@ -214,8 +214,8 @@ function link_directories() {
 # Outputs:
 #   - Copy feedback.
 function configure_user_units() {
-  for SERVICE in "$CO"/config/systemd-user-units/*.service; do
-    safe_cp "$SERVICE" "$INSTALL_HOME"/.config/systemd/user/"$(basename "$SERVICE")"
+  for service in "$CO"/config/systemd-user-units/*.service; do
+    safe_cp "$service" "$INSTALL_HOME"/.config/systemd/user/"$(basename "$service")"
   done
 }
 
@@ -225,20 +225,20 @@ function configure_user_units() {
 # Outputs:
 #   - Installation progress.
 function enable_user_units() {
-  local -ra UNITS=(
+  local -ra units=(
     # Enable the SSH agent.
     "ssh-agent.service"
     # Enable the modprobed-db service.
     "modprobed-db.service"
   )
 
-  for UNIT in "${UNITS[@]}"; do
-    if systemctl --user -q is-active "$UNIT"; then
-      verbose "$UNIT is already enabled."
+  for unit in "${units[@]}"; do
+    if systemctl --user -q is-active "$unit"; then
+      verbose "$unit is already enabled."
     else
       if [[ $DRY_RUN = false ]]; then
-        info "Enabling systemd unit $UNIT"
-        systemctl --user -q enable "$UNIT"
+        info "Enabling systemd unit $unit"
+        systemctl --user -q enable "$unit"
       fi
     fi
   done
@@ -272,13 +272,13 @@ function install_pikaur() {
 
     info "Installing pikaur."
     if [[ $DRY_RUN = false ]]; then
-      local -r PACKAGE_BUILD_DIR="$AUR_DIR/$PACKAGE"
+      local -r package_build_dir="$AUR_DIR/$PACKAGE"
       # Make sure there's no pikaur dir becuase, if there is, Git will throw a fit.
-      rm -rf "$PACKAGE_BUILD_DIR"
+      rm -rf "$package_build_dir"
       # Clone the AUR package Git repository.
-      git clone -q "https://aur.archlinux.org/$PACKAGE.git" "$PACKAGE_BUILD_DIR"
+      git clone -q "https://aur.archlinux.org/$PACKAGE.git" "$package_build_dir"
       # Skip the PGP check becasue we have not yet established our PGP keyring.
-      cd "$PACKAGE_BUILD_DIR" && makepkg -cis --skippgpcheck
+      cd "$package_build_dir" && makepkg -cis --skippgpcheck
     fi
   else
     verbose "Pikaur is already installed."

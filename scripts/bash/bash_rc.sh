@@ -35,7 +35,7 @@ alias lt='ls --tree'
 
 # Customize the prompt.
 
-QUOTES=(
+declare -ra QUOTES=(
   # Neon Genesis Evangelion.
   "Understanding 100% of everything is impossible. That’s why we spend all our lives trying to \
 understand the thinking of others. That’s what makes life so interesting."

@@ -39,11 +39,11 @@ function find_bootnum() {
 # Outputs:
 #   Deletion message.
 function remove_entry_if_existing() {
-  local -r LABEL=$1
+  local -r label=$1
 
-  bootnum="$(find_bootnum "$LABEL")"
+  bootnum="$(find_bootnum "$label")"
   if [[ -n "$bootnum" ]]; then
-    info "Existing boot entry for \"$LABEL\" found, deleting."
+    info "Existing boot entry for \"$label\" found, deleting."
     efibootmgr -q -b "$bootnum" -B
   fi
 }
@@ -56,14 +56,14 @@ function remove_entry_if_existing() {
 # Outputs:
 #   The bootnum of the boot entry.
 function add_entry() {
-  local -r LABEL=$1
-  local -r LOADER=$2
-  local -r CMDLINE=$3
+  local -r label=$1
+  local -r loader=$2
+  local -r cmdline=$3
 
   # It's necessary to delete the existing entry and replace it, because efibootmgr doesn't support
   # editing an existing entry: https://github.com/rhboot/efibootmgr/issues/49.
-  remove_entry_if_existing "$LABEL"
-  efibootmgr -q -c --label "$LABEL" -l "$LOADER" -u "$CMDLINE"
+  remove_entry_if_existing "$label"
+  efibootmgr -q -c --label "$label" -l "$loader" -u "$cmdline"
 }
 
 # Updates Arch Linux UEFI boot entries.
@@ -73,11 +73,11 @@ function add_entry() {
 # Outputs:
 #   Changes being made to EFI boot entries.
 function update_efi() {
+  local -r type=$1
+
   figlet -k -f slant update-efi | lolcat -f -s 100 -p 1
   info "Comet Observatory UEFI Boot Entry Updater Script"
   info "https://gitlab.com/CodingKoopa/comet-observatory"
-
-  local -r TYPE=$1
 
   local -r ROOT="PARTUUID=91fb9373-d9b2-4e6d-a376-0388afe85bf0"
   local -r MICROCODE="amd-ucode.img"
@@ -117,34 +117,34 @@ systemd.log_level=debug systemd.log_target=kmsg printk.devkmsg=on"
   # Outputs:
   #   Entry addition progress.
   function add_entry_decide_configuration() {
-    local -r VMLINUZ_PATH=/vmlinuz-linux${2}
-    local -r KERNEL_INITRD_STR=initrd=initramfs-linux${2}.img
-    local -r FALLBACK_KERNEL_INITRD_STR=initrd=initramfs-linux${2}.img
+    local -r vmlinuz_path=/vmlinuz-linux${2}
+    local -r kernel_initrd_str=initrd=initramfs-linux${2}.img
+    local -r fallback_kernel_initrd_str=initrd=initramfs-linux${2}.img
 
-    case $TYPE in
+    case $type in
     *debug*)
-      info "Updating $1 debug UEFI boot entry ($VMLINUZ_PATH)."
-      add_entry "$1 (Debug)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR \
+      info "Updating $1 debug UEFI boot entry ($vmlinuz_path)."
+      add_entry "$1 (Debug)" "$vmlinuz_path" "$MICROCODE_INITRD_STR $kernel_initrd_str \
 $CMDLINE_STR $CMDLINE_DEBUG_STR"
       ;;
     *rescue-fallback*)
-      info "Updating $1 fallback rescue UEFI boot entry ($VMLINUZ_PATH)."
-      add_entry "$1 (Fallback Rescue)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR \
-$FALLBACK_KERNEL_INITRD_STR $CMDLINE_STR $CMDLINE_DEBUG_STR $CMDLINE_RESCUE_STR"
+      info "Updating $1 fallback rescue UEFI boot entry ($vmlinuz_path)."
+      add_entry "$1 (Fallback Rescue)" "$vmlinuz_path" "$MICROCODE_INITRD_STR \
+$fallback_kernel_initrd_str $CMDLINE_STR $CMDLINE_DEBUG_STR $CMDLINE_RESCUE_STR"
       ;;
     *rescue*)
-      info "Updating $1 rescue UEFI boot entry ($VMLINUZ_PATH)."
-      add_entry "$1 (Rescue)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR \
+      info "Updating $1 rescue UEFI boot entry ($vmlinuz_path)."
+      add_entry "$1 (Rescue)" "$vmlinuz_path" "$MICROCODE_INITRD_STR $kernel_initrd_str \
 $CMDLINE_STR $CMDLINE_DEBUG_STR $CMDLINE_RESCUE_STR"
       ;;
     *quiet*)
-      info "Updating $1 quiet UEFI boot entry ($VMLINUZ_PATH)."
-      add_entry "$1 (Silent)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR \
+      info "Updating $1 quiet UEFI boot entry ($vmlinuz_path)."
+      add_entry "$1 (Silent)" "$vmlinuz_path" "$MICROCODE_INITRD_STR $kernel_initrd_str \
 $CMDLINE_STR $CMDLINE_SILENT_STR"
       ;;
     *)
-      info "Updating $1 normal UEFI boot entry ($VMLINUZ_PATH)."
-      add_entry "$1 (Normal)" "$VMLINUZ_PATH" "$MICROCODE_INITRD_STR $KERNEL_INITRD_STR $CMDLINE_STR"
+      info "Updating $1 normal UEFI boot entry ($vmlinuz_path)."
+      add_entry "$1 (Normal)" "$vmlinuz_path" "$MICROCODE_INITRD_STR $kernel_initrd_str $CMDLINE_STR"
       ;;
     esac
   }
@@ -173,22 +173,22 @@ $CMDLINE_STR $CMDLINE_SILENT_STR"
   )
 
   info "Scanning existing boot entries."
-  for KERNEL in "${!kernel_suffixes[@]}"; do
-    for CONFIGURATION in "${CONFIGURATIONS[@]}"; do
-      remove_entry_if_existing "Arch Linux ($KERNEL) ($CONFIGURATION)"
+  for kernel in "${!kernel_suffixes[@]}"; do
+    for configuration in "${CONFIGURATIONS[@]}"; do
+      remove_entry_if_existing "Arch Linux ($kernel) ($configuration)"
     done
   done
 
   info "Adding new boot entries."
-  for KERNEL in "${!kernel_suffixes[@]}"; do
-    add_entry_decide_configuration "Arch Linux ($KERNEL)" "${kernel_suffixes[${KERNEL}]}"
+  for kernel in "${!kernel_suffixes[@]}"; do
+    add_entry_decide_configuration "Arch Linux ($kernel)" "${kernel_suffixes[${kernel}]}"
   done
 
-  local -r DEFAULT_ENTRY="Arch Linux ($latest_tkg_name) (Normal)"
-  local -r DEFAULT_ENTRY_NUM=$(find_bootnum "$DEFAULT_ENTRY")
-  if [[ -n $DEFAULT_ENTRY_NUM ]]; then
-    info "Setting $DEFAULT_ENTRY as default entry."
+  local -r default_entry="Arch Linux ($latest_tkg_name) (Normal)"
+  local -r default_entry_num=$(find_bootnum "$default_entry")
+  if [[ -n $default_entry_num ]]; then
+    info "Setting $default_entry as default entry."
     efibootmgr -q -O
-    efibootmgr -q -o "$DEFAULT_ENTRY_NUM"
+    efibootmgr -q -o "$default_entry_num"
   fi
 }

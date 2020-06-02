@@ -15,7 +15,7 @@ source "$CO"/scripts/bash/file_utils.sh
 # Arguments:
 #   - The number of gigabytes of swap to create.
 function create_swap() {
-  local -r GIGABYTES=$1
+  local -r gigabytes=$1
 
   if [[ -f /swapfile ]]; then
     verbose "Swap file already exists."
@@ -23,7 +23,7 @@ function create_swap() {
     info "Creating swapfile."
     if [[ $DRY_RUN = false ]]; then
       truncate -s 0 /swapfile
-      fallocate -l "${GIGABYTES}"G /swapfile
+      fallocate -l "${gigabytes}"G /swapfile
       chmod 600 /swapfile
       mkswap /swapfile
       swapon /swapfile
@@ -39,14 +39,14 @@ function create_swap() {
 # Outputs:
 #   - Copy feedback.
 function configure_system_units() {
-  local -rA UNIT_OVERRIDES=(
+  local -rA unit_overrides=(
     ["getty@tty1.service"]="getty-autologin.conf"
   )
-  for UNIT in "${!UNIT_OVERRIDES[@]}"; do
-    local -r DESTINATION=/etc/systemd/system/"$UNIT".d/override.conf
-    safe_cp "$CO"/config/systemd-overrides/"${UNIT_OVERRIDES[${UNIT}]}" "$DESTINATION"
+  for unit in "${!unit_overrides[@]}"; do
+    local -r destination=/etc/systemd/system/"$unit".d/override.conf
+    safe_cp "$CO"/config/systemd-overrides/"${unit_overrides[${unit}]}" "$destination"
     if [[ $DRY_RUN = false ]]; then
-      chmod -x "$DESTINATION"
+      chmod -x "$destination"
     fi
   done
 
@@ -61,7 +61,7 @@ function configure_system_units() {
 # Outputs:
 #   - Installation progress.
 function enable_system_units() {
-  local -ra UNITS=(
+  local -ra units=(
     # Enable periodic TRIM.
     "fstrim.timer"
     # Enable bluetooth.
@@ -74,13 +74,13 @@ function enable_system_units() {
     "httpd.service"
   )
 
-  for UNIT in "${UNITS[@]}"; do
-    if systemctl -q is-active "$UNIT"; then
-      verbose "$UNIT is already enabled."
+  for unit in "${units[@]}"; do
+    if systemctl -q is-active "$unit"; then
+      verbose "$unit is already enabled."
     else
       if [[ $DRY_RUN = false ]]; then
-        info "Enabling systemd unit $UNIT"
-        systemctl -q enable --now "$UNIT"
+        info "Enabling systemd unit $unit"
+        systemctl -q enable --now "$unit"
       fi
     fi
   done
@@ -97,8 +97,8 @@ function enable_system_units() {
 # Outputs:
 #   - Copy feedback.
 function configure_udev_rules() {
-  for RULE in "$CO"/config/udev/*.rules; do
-    safe_cp "$RULE" /etc/udev/rules.d/"$(basename "$RULE")"
+  for rule in "$CO"/config/udev/*.rules; do
+    safe_cp "$rule" /etc/udev/rules.d/"$(basename "$rule")"
   done
 }
 

@@ -19,34 +19,34 @@ source "$CO"/scripts/bash/common.sh
 # Returns:
 #   None.
 safe_cp() {
-  local -r SOURCE=$1
-  local -r DESTINATION=$2
-  local -r OWNER=$3
-  local -r PERMISSION=$4
+  local -r source=$1
+  local -r destination=$2
+  local -r owner=$3
+  local -r permission=$4
 
-  if cmp "$SOURCE" "$DESTINATION" >/dev/null 2>&1; then
-    verbose "$DESTINATION is already copied."
+  if cmp "$source" "$destination" >/dev/null 2>&1; then
+    verbose "$destination is already copied."
   else
-    info "Copying file $SOURCE => $DESTINATION."
+    info "Copying file $source => $destination."
     if [[ $DRY_RUN = false ]]; then
-      PARENT=$(dirname "$DESTINATION")
+      PARENT=$(dirname "$destination")
       if [[ ! -d $PARENT ]]; then
         info "Making parent $PARENT."
         mkdir -p "$PARENT"
       fi
-      cp "$SOURCE" "$DESTINATION"
+      cp "$source" "$destination"
     fi
   fi
-  if [[ -n $OWNER ]]; then
-    info "Setting owner of $DESTINATION to $OWNER."
+  if [[ -n $owner ]]; then
+    info "Setting owner of $destination to $owner."
     if [[ $DRY_RUN = false ]]; then
-      chown "$OWNER" "$DESTINATION"
+      chown "$owner" "$destination"
     fi
   fi
-  if [[ -n $PERMISSION ]]; then
-    info "Setting permissions of $DESTINATION to $PERMISSION."
+  if [[ -n $permission ]]; then
+    info "Setting permissions of $destination to $permission."
     if [[ $DRY_RUN = false ]]; then
-      chmod "$PERMISSION" "$DESTINATION"
+      chmod "$permission" "$destination"
     fi
   fi
 }
@@ -60,53 +60,53 @@ safe_cp() {
 # Outputs:
 #   - Link feedback.
 function safe_ln() {
-  local -r TARGET=$1
-  local -r LINK_NAME=$2
+  local -r target=$1
+  local -r link_name=$2
 
-  if [[ -L "$LINK_NAME" ]] && cmp "$TARGET" "$LINK_NAME" >/dev/null 2>&1; then
-    verbose "$LINK_NAME is already updated."
+  if [[ -L "$link_name" ]] && cmp "$target" "$link_name" >/dev/null 2>&1; then
+    verbose "$link_name is already updated."
   else
-    local -r TARGET_PARENT_DIRECTORY=$(dirname "$TARGET")
+    local -r target_parent_directory=$(dirname "$target")
     # Handle conflicts with nonexistent target parent directories. This is a pretty unlikely
     # scenario, but possible if the path will later be populated with files.
-    if ! [[ -d "$TARGET_PARENT_DIRECTORY" ]]; then
-      info "Making target parent directory $TARGET_PARENT_DIRECTORY."
+    if ! [[ -d "$target_parent_directory" ]]; then
+      info "Making target parent directory $target_parent_directory."
       if [[ $DRY_RUN = false ]]; then
-        mkdir -p "$TARGET_PARENT_DIRECTORY"
+        mkdir -p "$target_parent_directory"
       fi
     fi
 
     # Handle conflicts with preexisting files or directories.
-    if [[ -f "$LINK_NAME" ]] || [[ -d "$LINK_NAME" ]]; then
-      local -r COMMON_STR="Path $LINK_NAME exists"
-      if [[ -L "$LINK_NAME" ]]; then
+    if [[ -f "$link_name" ]] || [[ -d "$link_name" ]]; then
+      local -r COMMON_STR="Path $link_name exists"
+      if [[ -L "$link_name" ]]; then
         info "$COMMON_STR, is a link. Overwriting."
       else
-        local -r LINK_NAME_OLD="$LINK_NAME.old"
-        info ", isn't a link. Moving to $LINK_NAME_OLD."
+        local -r link_name_old="$link_name.old"
+        info ", isn't a link. Moving to $link_name_old."
         if [[ $DRY_RUN = false ]]; then
-          mv "$LINK_NAME" "$LINK_NAME_OLD"
+          mv "$link_name" "$link_name_old"
         fi
       fi
 
     # Handle conflcits with nonexistent link name parent directories.
     else
-      local -r LINK_NAME_PARENT_DIRECTORY=$(dirname "$LINK_NAME")
-      info "Making link name parent directory $LINK_NAME_PARENT_DIRECTORY."
-      if [[ -L "$LINK_NAME_PARENT_DIRECTORY" ]]; then
-        info "Parent directory $LINK_NAME_PARENT_DIRECTORY is a link, overwriting."
-        rm "$LINK_NAME_PARENT_DIRECTORY"
+      local -r link_name_parent_directory=$(dirname "$link_name")
+      info "Making link name parent directory $link_name_parent_directory."
+      if [[ -L "$link_name_parent_directory" ]]; then
+        info "Parent directory $link_name_parent_directory is a link, overwriting."
+        rm "$link_name_parent_directory"
       fi
       if [[ $DRY_RUN = false ]]; then
-        mkdir -p "$LINK_NAME_PARENT_DIRECTORY"
+        mkdir -p "$link_name_parent_directory"
       fi
     fi
 
-    info "Creating link to target $TARGET at $LINK_NAME."
+    info "Creating link to target $target at $link_name."
 
     if [[ $DRY_RUN = false ]]; then
-      debug "Executing ln -sf \"$TARGET\" \"$LINK_NAME\""
-      ln -sf "$TARGET" "$LINK_NAME"
+      debug "Executing ln -sf \"$target\" \"$link_name\""
+      ln -sf "$target" "$link_name"
     fi
   fi
 }

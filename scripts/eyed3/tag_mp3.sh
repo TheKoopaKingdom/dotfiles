@@ -13,41 +13,41 @@ source "$CO"/scripts/bash/common.sh
 # Outputs:
 #   - Error message if arguments are invalid.
 function tag_mp3() {
-  readonly MP3=$1
+  local -r mp3=$1
 
-  if [[ -z "$MP3" ]]; then
+  if [[ -z "$mp3" ]]; then
     error "First argument (MP3 file path) not passed."
     return 1
-  elif [[ ! -f "$MP3" ]]; then
-    error "MP3 file \"$MP3\" not found."
+  elif [[ ! -f "$mp3" ]]; then
+    error "MP3 file \"$mp3\" not found."
     return 1
   fi
 
-  local -r TITLE=$(basename -s .mp3 "$MP3")
-  local -r WINDOW_TITLE="Enter Metedata for $TITLE"
-  printf "%s" "$TITLE" | xclip -selection clipboard
+  local -r title=$(basename -s .mp3 "$mp3")
+  local -r window_title="Enter Metedata for $title"
+  printf "%s" "$title" | xclip -selection clipboard
 
   local -r METADATA_INPUT=$(zenity --width 1000 --height 500 \
     --forms \
-    --title "$WINDOW_TITLE" \
+    --title "$window_title" \
     --text "Enter metadata for \"$1\". Blank fields will not be added." \
     --add-entry "Title (%b will be substituted for the MP3 basename)" \
     --add-entry "Artist(s)" \
     --add-entry "Album")
   local title_input
   title_input=$(echo "$METADATA_INPUT" | cut -d'|' -f1)
-  local -r ARTIST_INPUT=$(echo "$METADATA_INPUT" | cut -d'|' -f2)
-  local -r ALBUM_INPUT=$(echo "$METADATA_INPUT" | cut -d'|' -f3)
+  local -r artist_input=$(echo "$METADATA_INPUT" | cut -d'|' -f2)
+  local -r album_input=$(echo "$METADATA_INPUT" | cut -d'|' -f3)
 
-  if [[ -n "$ARTIST_INPUT" ]]; then
-    eyeD3 -Qa "$ARTIST_INPUT" "$MP3"
+  if [[ -n "$artist_input" ]]; then
+    eyeD3 -Qa "$artist_input" "$mp3"
   fi
-  if [[ -n "$ALBUM_INPUT" ]]; then
-    eyeD3 -QA "$ALBUM_INPUT" "$MP3"
+  if [[ -n "$album_input" ]]; then
+    eyeD3 -QA "$album_input" "$mp3"
   fi
   if [[ -n "$title_input" ]]; then
     title_input=${title_input//%b/$TITLE}
-    eyeD3 -Qt "$title_input" "$MP3"
-    rename "$TITLE" "$title_input" "$MP3"
+    eyeD3 -Qt "$title_input" "$mp3"
+    rename "$TITLE" "$title_input" "$mp3"
   fi
 }

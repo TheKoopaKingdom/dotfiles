@@ -22,13 +22,13 @@ source "$CO"/scripts/bash/configure_user_utils.sh
 # Outputs:
 #   - The Luma ASCII art, and repository info.
 function print_header() {
-  local -r SCRIPT=$1
+  local -r script=$1
 
   # The comet observatory variable has not yet been checked.
   if [[ $DEBUG != true && -d $CO ]]; then
     cat "$CO/data/luma.txt" || true
   fi
-  info "Comet Observatory System $SCRIPT Script"
+  info "Comet Observatory System $script Script"
   info "https://gitlab.com/CodingKoopa/comet-observatory"
   debug "Running in debug mode."
 }

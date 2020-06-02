@@ -37,48 +37,48 @@ function select_music_directory() {
     return 1
   fi
 
-  local -a CATEGORIES
-  local -a PARENT_CATEGORIES
-  while read -r CATEGORY_DIRECTORY_PATH; do
+  local -a categories
+  local -a parent_categories
+  while read -r category_directory_path; do
     # Find will first output the starting point.
-    if [[ "$CATEGORY_DIRECTORY_PATH" = "$MUSIC_DIRECTORY" ]]; then
+    if [[ "$category_directory_path" = "$MUSIC_DIRECTORY" ]]; then
       continue
     # Ignore directories left by file synchronization.
     # .debris   MEGA
-    elif [[ $CATEGORY_DIRECTORY_PATH == *".debris"* ]]; then
+    elif [[ $category_directory_path == *".debris"* ]]; then
       continue
     fi
     local has_subdirectories=false
     # Check if the category has subcategories.
-    while read -r SUBCATEGORY_DIRECTORY_PATH; do
+    while read -r subcategory_directory_path; do
       # Find will first output the starting point, again.
-      if [[ "$SUBCATEGORY_DIRECTORY_PATH" = "$CATEGORY_DIRECTORY_PATH" ]]; then
+      if [[ "$subcategory_directory_path" = "$category_directory_path" ]]; then
         continue
       # Check if the directory is just a disc folder. Regex:
       # Disc    Match the word Disc.
       # \ *     Match 0 or more spaces (\ used to escape the space, for Bash.)
       # [0-9]+  Match a number one or more times.
-      elif [[ $SUBCATEGORY_DIRECTORY_PATH =~ Disc\ *[0-9]+ ]]; then
+      elif [[ $subcategory_directory_path =~ Disc\ *[0-9]+ ]]; then
         continue
       fi
-      debug "Subcategory $SUBCATEGORY_DIRECTORY_PATH."
-      local CATEGORIES+=("$(basename "$SUBCATEGORY_DIRECTORY_PATH")")
-      local PARENT_CATEGORIES+=("$(basename "$CATEGORY_DIRECTORY_PATH")")
+      debug "Subcategory $subcategory_directory_path."
+      local categories+=("$(basename "$subcategory_directory_path")")
+      local parent_categories+=("$(basename "$category_directory_path")")
       has_subdirectories=true
       # Don't run the while loop in a subshell.
-    done <<<"$(find "$CATEGORY_DIRECTORY_PATH" -maxdepth 1 -type d)"
+    done <<<"$(find "$category_directory_path" -maxdepth 1 -type d)"
     if [[ $has_subdirectories = false ]]; then
-      debug "Category $CATEGORY_DIRECTORY_PATH."
-      local CATEGORIES+=("$(basename "$CATEGORY_DIRECTORY_PATH")")
-      local PARENT_CATEGORIES+=("")
+      debug "Category $category_directory_path."
+      local categories+=("$(basename "$category_directory_path")")
+      local parent_categories+=("")
     fi
     # Don't run the while loop in a subshell.
   done <<<"$(find "$MUSIC_DIRECTORY" -maxdepth 1 -type d)"
   local -a args
-  for ((INDEX = 0; INDEX < ${#CATEGORIES[@]}; ++INDEX)); do
-    args+=(FALSE "${CATEGORIES[INDEX]}")
-    if [[ "${PARENT_CATEGORIES[INDEX]}" ]]; then
-      args+=("${PARENT_CATEGORIES[INDEX]}")
+  for ((index = 0; index < ${#categories[@]}; ++index)); do
+    args+=(FALSE "${categories[index]}")
+    if [[ "${parent_categories[index]}" ]]; then
+      args+=("${parent_categories[index]}")
     else
       args+=(" ")
     fi
@@ -86,31 +86,31 @@ function select_music_directory() {
   local new_category=false
   while true; do
     # TODO: escape &s
-    local -r CATEGORY_INPUT=$(zenity --width 1000 --height 500 \
+    local -r category_input=$(zenity --width 1000 --height 500 \
       --list --radiolist \
       --title "Select a Category" \
       --text "Select a category from the list below for the song \"$1\"." \
       --column "" --column "Category Name" --column "Parent Category Name" \
       --print-column 2,3 \
       TRUE "Make a new category" " " "${args[@]}")
-    local -r CATEGORY_NAME=$(echo "$CATEGORY_INPUT" | cut -d'|' -f1)
-    local -r CATEGORY_NAME_VALID=$(validate_input "$CATEGORY_NAME")
-    local -r PARENT_CATEGORY_NAME=$(echo "$CATEGORY_INPUT" | cut -d'|' -f2)
-    local -r PARENT_CATEGORY_NAME_VALID=$(validate_input "$PARENT_CATEGORY_NAME")
-    # debug "Category name: \"$CATEGORY_NAME\". Parent category name: \"$PARENT_CATEGORY_NAME\""
+    local -r category_name=$(echo "$category_input" | cut -d'|' -f1)
+    local -r category_name_valid=$(validate_input "$category_name")
+    local -r parent_category_name=$(echo "$category_input" | cut -d'|' -f2)
+    local -r parent_category_name_valid=$(validate_input "$parent_category_name")
+    # debug "Category name: \"$category_name\". Parent category name: \"$parent_category_name\""
     # If the user wants to make a new category.
-    if [[ "$CATEGORY_NAME" = "Make a new category" ]]; then
+    if [[ "$category_name" = "Make a new category" ]]; then
       debug "New category selected."
       new_category=true
       break
     # If there's a category without a parent.
-    elif [[ $CATEGORY_NAME_VALID -eq 1 ]] && [[ $PARENT_CATEGORY_NAME_VALID -eq 1 ]]; then
+    elif [[ $category_name_valid -eq 1 ]] && [[ $parent_category_name_valid -eq 1 ]]; then
       debug "Category and parent selected."
-      local -r CATEGORY_PATH=$MUSIC_DIRECTORY$PARENT_CATEGORY_NAME/$CATEGORY_NAME
+      local -r category_path=$MUSIC_DIRECTORY$parent_category_name/$category_name
       break
-    elif [[ $CATEGORY_NAME_VALID -eq 1 ]] && [[ $PARENT_CATEGORY_NAME_VALID -eq 0 ]]; then
+    elif [[ $category_name_valid -eq 1 ]] && [[ $parent_category_name_valid -eq 0 ]]; then
       debug "Category selected, not parent."
-      local -r CATEGORY_PATH=$MUSIC_DIRECTORY$CATEGORY_NAME
+      local -r category_path=$MUSIC_DIRECTORY$category_name
       break
     # If, nothing was checked, or cancel was clicked.
     else
@@ -128,26 +128,26 @@ function select_music_directory() {
   done
 
   if $new_category; then
-    debug "Making new category \"$CATEGORY_NAME\""
+    debug "Making new category \"$category_name\""
     while true; do
-      local -ra NEW_CATEGORY_INPUT=$(zenity --width 1000 --height 500 \
+      local -ra new_category_input=$(zenity --width 1000 --height 500 \
         --forms \
         --title "Add a Category" \
         --text "Enter information for the category to put \"$1\" in.". \
         --add-entry "Category Name" \
         --add-entry "Parent Category (Optional)")
-      local -r CATEGORY_NAME=$(echo "$NEW_CATEGORY_INPUT" | cut -d'|' -f1)
-      local -r CATEGORY_NAME_VALID=$(validate_input "$CATEGORY_NAME")
-      local -r PARENT_CATEGORY_NAME=$(echo "$NEW_CATEGORY_INPUT" | cut -d'|' -f2)
-      local -r PARENT_CATEGORY_NAME_VALID=$(validate_input "$PARENT_CATEGORY_NAME")
-      debug "Category name: \"$CATEGORY_NAME\"$CATEGORY_NAME_VALID. Parent category name: \"$PARENT_CATEGORY_NAME\""
-      if [[ $CATEGORY_NAME_VALID -eq 1 ]] && [[ $PARENT_CATEGORY_NAME_VALID -eq 1 ]]; then
+      local -r category_name=$(echo "$new_category_input" | cut -d'|' -f1)
+      local -r category_name_valid=$(validate_input "$category_name")
+      local -r parent_category_name=$(echo "$new_category_input" | cut -d'|' -f2)
+      local -r parent_category_name_valid=$(validate_input "$parent_category_name")
+      debug "Category name: \"$category_name\"$category_name_valid. Parent category name: \"$parent_category_name\""
+      if [[ $category_name_valid -eq 1 ]] && [[ $parent_category_name_valid -eq 1 ]]; then
         # debug "Category and parent exist."
-        local -r CATEGORY_PATH=$MUSIC_DIRECTORY$PARENT_CATEGORY_NAME/$CATEGORY_NAME
+        local -r category_path=$MUSIC_DIRECTORY$parent_category_name/$category_name
         break
-      elif [[ $CATEGORY_NAME_VALID -eq 1 ]] && [[ $PARENT_CATEGORY_NAME_VALID -eq 0 ]]; then
+      elif [[ $category_name_valid -eq 1 ]] && [[ $parent_category_name_valid -eq 0 ]]; then
         # debug "Category exists, no parent."
-        local -r CATEGORY_PATH=$MUSIC_DIRECTORY$CATEGORY_NAME
+        local -r category_path=$MUSIC_DIRECTORY$category_name
         break
       else
         # Prompt for exit.
@@ -161,17 +161,17 @@ function select_music_directory() {
         fi
       fi
     done
-    mkdir "$CATEGORY_PATH"
+    mkdir "$category_path"
   fi
 
-  if [[ -z "$CATEGORY_PATH" ]]; then
+  if [[ -z "$category_path" ]]; then
     echo "Category path not set."
     return 1
   fi
-  debug "Category path: \"$CATEGORY_PATH\"."
-  if [[ ! -d "$CATEGORY_PATH" ]]; then
+  debug "Category path: \"$category_path\"."
+  if [[ ! -d "$category_path" ]]; then
     echo "Category path not found."
     return 1
   fi
-  echo "$CATEGORY_PATH"
+  echo "$category_path"
 }

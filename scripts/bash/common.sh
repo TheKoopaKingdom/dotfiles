@@ -53,22 +53,22 @@ function info() {
 # Outputs:
 #   - The configuration prompt.
 function config_bool() {
-  local -r QUESTION=$1
-  local -r VARIABLE_NAME=$2
-  local -r ANSWER=$3
+  local -r question=$1
+  local -r variable_name=$2
+  local -r answer=$3
 
-  MESSAGE="[${CYAN}Config${NORMAL} ] $QUESTION"
+  local message="[${CYAN}Config${NORMAL} ] $question"
 
-  if [[ -n "$ANSWER" ]]; then
-    printf "%s %s\n" "$MESSAGE" "$ANSWER"
+  if [[ -n "$answer" ]]; then
+    printf "%s %s\n" "$message" "$answer"
   else
-    read -rp "$MESSAGE " PROMPT
+    read -rp "$message " PROMPT
   fi
 
-  if [[ $PROMPT = "y" || $ANSWER = "y" ]]; then
-    export "$VARIABLE_NAME"=true
+  if [[ $PROMPT = "y" || $answer = "y" ]]; then
+    export "$variable_name"=true
   else
-    export "$VARIABLE_NAME"=false
+    export "$variable_name"=false
   fi
 }
 
@@ -82,19 +82,19 @@ function config_bool() {
 # Outputs:
 #   - The configuration prompt.
 function config_str() {
-  local -r QUESTION=$1
-  local -r VARIABLE_NAME=$2
-  local answer=$3
+  local -r question=$1
+  local -r variable_name=$2
+  local -r answer=$3
 
-  MESSAGE="[${CYAN}Config${NORMAL} ] $QUESTION"
+  local message="[${CYAN}Config${NORMAL} ] $question"
 
   if [[ -n "$answer" ]]; then
-    printf "%s %s\n" "$MESSAGE" "$answer"
+    printf "%s %s\n" "$message" "$answer"
   else
-    read -rp "$MESSAGE " answer
+    read -rp "$message " answer
   fi
 
-  export "$VARIABLE_NAME"="$answer"
+  export "$variable_name"="$answer"
 }
 
 # Prints a debug message.
@@ -140,16 +140,16 @@ function error() {
 # Arguments:
 #   - Whether to require root.
 function check_user() {
-  local -r REQUIRE_ROOT=$1
+  local -r require_root=$1
 
   if [[ $DRY_RUN = false ]]; then
     if [[ $EUID -eq 0 ]]; then
-      if [[ $REQUIRE_ROOT = false ]]; then
+      if [[ $require_root = false ]]; then
         error "This script cannot be run as root."
         exit 1
       fi
     else
-      if [[ $REQUIRE_ROOT = true ]]; then
+      if [[ $require_root = true ]]; then
         error "This script must be run as root."
         exit 1
       fi

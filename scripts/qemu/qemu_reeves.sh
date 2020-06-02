@@ -29,19 +29,19 @@ Launches QEMU with an image. Please see the source of this script for possible o
 #   - (Optional) An image to mount to the CD drive.
 function launch_qemu() {
   # Use arguments.
-  local -r MAIN_IMG="$1"
-  if [[ $MAIN_IMG = *"Win*" || $MAIN_IMG = *"w10"* ]]; then
-    local -r WINDOWS=true
+  local -r main_img="$1"
+  if [[ $main_img = *"Win*" || $main_img = *"w10"* ]]; then
+    local -r windows=true
   else
-    local -r WINDOWS=false
+    local -r windows=false
   fi
-  local -r QEMU_VIDEO_DRIVER="$2"
-  local -r QEMU_VIEWER="$3"
+  local -r qemu_video_driver="$2"
+  local -r qemu_viewer="$3"
   if [[ -n $4 ]]; then
-    local -r INSTALLER_IMG="$4"
+    local -r installer_img="$4"
   fi
   if [[ -n $4 ]]; then
-    local -r DRIVER_IMG="$5"
+    local -r driver_img="$5"
   fi
 
   # Define constants.
@@ -49,7 +49,7 @@ function launch_qemu() {
 
   # Define options.
   local -a qemu_opts
-  case ${QEMU_VIDEO_DRIVER,,} in
+  case ${qemu_video_driver,,} in
   *qxl*)
     info "Using QXL video driver."
     local -r QXL=true
@@ -66,7 +66,7 @@ function launch_qemu() {
     local -r VIDEO_DRIVER_STR="Standard"
     ;;
   esac
-  case ${QEMU_VIEWER,,} in
+  case ${qemu_viewer,,} in
   *spice*)
     info "Using SPICE viewer."
     local -r SPICE=true
@@ -83,11 +83,11 @@ function launch_qemu() {
     local -r VIEWER_STR="QEMU-GTK"
     ;;
   esac
-  if [[ -n $INSTALLER_IMG ]]; then
-    info "Using installer image \"$INSTALLER_IMG\"."
+  if [[ -n $installer_img ]]; then
+    info "Using installer image \"$installer_img\"."
   fi
-  if [[ -n $DRIVER_IMG ]]; then
-    info "Using driver image \"$DRIVER_IMG\"."
+  if [[ -n $driver_img ]]; then
+    info "Using driver image \"$driver_img\"."
   fi
 
   # Standard Options
@@ -99,7 +99,7 @@ function launch_qemu() {
   # "kernel: Decoding supported only on Scalable MCA processors."
   # Disabling the mca or mce flags doesn't seem to help this.
   #
-  if [[ $WINDOWS = true ]]; then
+  if [[ $windows = true ]]; then
     # Workaround: For Windows, core2duo is needed to avoid a BSOD on boot..
     qemu_opts+=" -cpu core2duo"
   else
@@ -125,14 +125,14 @@ function launch_qemu() {
 
   # Block Device Options
 
-  if [[ $MAIN_IMG != "none" ]]; then
+  if [[ $main_img != "none" ]]; then
     # Use the disk image as vda, through virtio.
-    qemu_opts+=" -drive file=$MAIN_IMG,if=virtio,index=0,media=disk"
+    qemu_opts+=" -drive file=$main_img,if=virtio,index=0,media=disk"
   fi
   # Use an installer ISO as a CD-ROM image, if specified.
-  qemu_opts+=${INSTALLER_IMG+" -drive file=$INSTALLER_IMG,index=1,media=cdrom"}
+  qemu_opts+=${installer_img+" -drive file=$installer_img,index=1,media=cdrom"}
   # Use a drive ISO as a CD-ROM image, if specified. This is meant for an image with virtio drivers.
-  qemu_opts+=${DRIVER_IMG+" -drive file=$DRIVER_IMG,index=2,media=cdrom"}
+  qemu_opts+=${driver_img+" -drive file=$driver_img,index=2,media=cdrom"}
   # Use the OVMF binary as the bios file.
   qemu_opts+=" -bios /usr/share/edk2-ovmf/x64/OVMF.fd"
   # Add a virtual filesystem for a directory shared with the host.
