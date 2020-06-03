@@ -370,8 +370,6 @@ nx-udev
 ns-usbloader
 # GfxTablet, for using an Android tablet as a drawing tablet.
 gfxtablet-git
-# PixyMon, for PixyCam support.
-pixymon-git
 
 # Package Management
 
