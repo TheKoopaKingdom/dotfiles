@@ -35,7 +35,8 @@ alias lt='ls --tree'
 
 # Customize the prompt.
 
-declare -ra QUOTES=(
+# This can't be readonly because this script can be ran more than once in the same environment.
+declare -a QUOTES=(
   # Neon Genesis Evangelion.
   "Understanding 100% of everything is impossible. That’s why we spend all our lives trying to \
 understand the thinking of others. That’s what makes life so interesting."

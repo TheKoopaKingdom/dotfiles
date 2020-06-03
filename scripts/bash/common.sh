@@ -55,7 +55,7 @@ function info() {
 function config_bool() {
   local -r question=$1
   local -r variable_name=$2
-  local -r answer=$3
+  local answer=$3
 
   local message="[${CYAN}Config${NORMAL} ] $question"
 
@@ -84,7 +84,7 @@ function config_bool() {
 function config_str() {
   local -r question=$1
   local -r variable_name=$2
-  local -r answer=$3
+  local answer=$3
 
   local message="[${CYAN}Config${NORMAL} ] $question"
 
