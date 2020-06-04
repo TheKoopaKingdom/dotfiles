@@ -22,8 +22,7 @@ function create_swap() {
   else
     info "Creating swapfile."
     if [[ $DRY_RUN = false ]]; then
-      truncate -s 0 /swapfile
-      fallocate -l "${gigabytes}"G /swapfile
+      dd if=/dev/zero of=/swapfile bs=1M count="$gigabytes"GB status=progress iflag=count_bytes
       chmod 600 /swapfile
       mkswap /swapfile
       swapon /swapfile
