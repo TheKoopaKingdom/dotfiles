@@ -13,7 +13,7 @@ PARTUUID=91fb9373-d9b2-4e6d-a376-0388afe85bf0 /                   ext4  defaults
 
 # Shared document partition on another SSD.
 # See [2].
-PARTUUID=14ef1c12-bb79-4ed7-358b-97b9321b97ed /home/kyle/Terrace  ntfs  defaults,noatime,nodev,umask=0022,uid=1000,gid=1000,noauto,x-systemd.automount  0 2
+PARTUUID=f8580bac-b38a-d949-8248-dd244234bdda /home/kyle/Terrace  ntfs  defaults,noatime,nodev,umask=0022,uid=1000,gid=1000,noauto,x-systemd.automount  0 2
 
 # Game partition on another SSD.
 # See [2].
