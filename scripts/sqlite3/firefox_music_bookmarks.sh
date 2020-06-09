@@ -4,7 +4,7 @@
 # Licensed under GPLv3.
 # Refer to License.txt file included.
 
-declare -r FIREFOX_PLACES_DATABASE="$HOME"/.mozilla/firefox/default/places.sqlite
+declare -r FIREFOX_PLACES_DATABASE=$HOME/.mozilla/firefox/default/places.sqlite
 
 # Gets the ID of a Firefox folder.
 # Arguments:

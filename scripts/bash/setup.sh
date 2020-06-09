@@ -50,21 +50,21 @@ function export_constants() {
   INSTALL_HOME=$(eval echo "~$INSTALL_USER")
   export INSTALL_HOME
 
-  export CO="$INSTALL_HOME/Documents/Projects/Bash/comet-observatory"
+  export CO=$INSTALL_HOME/Documents/Projects/Bash/comet-observatory
   if [[ ! -d $CO ]]; then
     error "Comet Observatory directory \"$CO\" not found."
     exit 1
   fi
 
-  export SYNCED_DOCUMENTS_DIR="$INSTALL_HOME/Documents"
-  export SYNCED_GTK3_DIR="$SYNCED_DOCUMENTS_DIR/Program Configurations/GTK 3.0"
-  export TERRACE_DOWNLOADS_DIR="$INSTALL_HOME/Terrace/Downloads"
-  export TERRACE_VIDEOS_DIR="$INSTALL_HOME/Terrace/Videos"
-  export TERRACE_MUSIC_DIR="$INSTALL_HOME/Terrace/Music"
-  export ABS_DIR="$INSTALL_HOME/Documents/ABS"
-  export AUR_DIR="$INSTALL_HOME/Documents/AUR"
-  export GPG_DIR="$INSTALL_HOME/.gnupg"
-  export SSH_DIR="$INSTALL_HOME/.ssh"
+  export SYNCED_DOCUMENTS_DIR=$INSTALL_HOME/Documents
+  export SYNCED_GTK3_DIR=$SYNCED_DOCUMENTS_DIR/Program Configurations/GTK 3.0
+  export TERRACE_DOWNLOADS_DIR=$INSTALL_HOME/Terrace/Downloads
+  export TERRACE_VIDEOS_DIR=$INSTALL_HOME/Terrace/Videos
+  export TERRACE_MUSIC_DIR=$INSTALL_HOME/Terrace/Music
+  export ABS_DIR=$INSTALL_HOME/Documents/ABS
+  export AUR_DIR=$INSTALL_HOME/Documents/AUR
+  export GPG_DIR=$INSTALL_HOME/.gnupg
+  export SSH_DIR=$INSTALL_HOME/.ssh
 
   export PACMAN_ARGS=(--noconfirm --needed --noprogressbar)
 }

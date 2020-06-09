@@ -7,7 +7,7 @@
 # shellcheck source=scripts/bash/common.sh
 source "$CO"/scripts/bash/common.sh
 
-declare -r MUSIC_DIRECTORY="$HOME"/Music
+declare -r MUSIC_DIRECTORY=$HOME/Music
 
 # Fixes youtube-dl default filenames.
 # Outputs:

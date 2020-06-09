@@ -30,7 +30,7 @@ function export-env() {
 #   - The URL.
 #   - The name of the video.
 function d() {
-  local -r MP4="$HOME"/Videos/MP4s/"$2".mp4
+  local -r MP4=$HOME/Videos/MP4s/$2.mp4
   if [ -f "$MP4" ]; then
     echo "already exists lol"
   else

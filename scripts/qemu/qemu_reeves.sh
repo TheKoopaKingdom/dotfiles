@@ -29,19 +29,19 @@ Launches QEMU with an image. Please see the source of this script for possible o
 #   - (Optional) An image to mount to the CD drive.
 function launch_qemu() {
   # Use arguments.
-  local -r main_img="$1"
+  local -r main_img=$1
   if [[ $main_img = *"Win*" || $main_img = *"w10"* ]]; then
     local -r windows=true
   else
     local -r windows=false
   fi
-  local -r qemu_video_driver="$2"
-  local -r qemu_viewer="$3"
+  local -r qemu_video_driver=$2
+  local -r qemu_viewer=$3
   if [[ -n $4 ]]; then
-    local -r installer_img="$4"
+    local -r installer_img=$4
   fi
   if [[ -n $4 ]]; then
-    local -r driver_img="$5"
+    local -r driver_img=$5
   fi
 
   # Define constants.
@@ -53,34 +53,34 @@ function launch_qemu() {
   *qxl*)
     info "Using QXL video driver."
     local -r QXL=true
-    local -r VIDEO_DRIVER_STR="QXL"
+    local -r VIDEO_DRIVER_STR=QXL
     ;;
   *virtio*)
     info "Using Virtio video driver."
     local -r VIRTIO=true
-    local -r VIDEO_DRIVER_STR="Virtio"
+    local -r VIDEO_DRIVER_STR=Virtio
     ;;
   *)
     info "Using standard video driver."
     local -r STD=true
-    local -r VIDEO_DRIVER_STR="Standard"
+    local -r VIDEO_DRIVER_STR=Standard
     ;;
   esac
   case ${qemu_viewer,,} in
   *spice*)
     info "Using SPICE viewer."
     local -r SPICE=true
-    local -r VIEWER_STR="SPICE"
+    local -r VIEWER_STR=SPICE
     ;;
   *qemu-sdl)
     info "Using QEMU SDL viewer."
     local -r QEMUSDL=true
-    local -r VIEWER_STR="QEMU-SDL"
+    local -r VIEWER_STR=QEMU-SDL
     ;;
   *)
     info "Using QEMU GTK viewer."
     local -r QEMUGTK=true
-    local -r VIEWER_STR="QEMU-GTK"
+    local -r VIEWER_STR=QEMU-GTK
     ;;
   esac
   if [[ -n $installer_img ]]; then
@@ -201,12 +201,12 @@ mount_tag=share,security_model=none"
 # Outputs:
 #   Output of QEMU.
 function qemu_reeves() {
-  local -r ACTION="${1-run}"
-  local -r IMAGE_NAME="$2"
+  local -r ACTION=${1-run}
+  local -r IMAGE_NAME=$2
   local -r VIDEO_DRIVER=${3-qxl}
   local -r VIEWER=${4-spice}
-  local -r INSTALLER_IMAGE="$5"
-  local -r DRIVER_IMAGE="$6"
+  local -r INSTALLER_IMAGE=$5
+  local -r DRIVER_IMAGE=$6
 
   while getopts "h" opt; do
     case $opt in
@@ -223,7 +223,7 @@ function qemu_reeves() {
   info "https://gitlab.com/CodingKoopa/comet-observatory"
 
   if [[ $ACTION = "run" || $ACTION = "install" ]]; then
-    local image="$HOME"/Terrace/Documents/Virtualization/"$IMAGE_NAME".img
+    local image=$HOME/Terrace/Documents/Virtualization/$IMAGE_NAME.img
 
     if [[ ! -f "$image" ]]; then
       # Make the file array empty if there aren't matches.
