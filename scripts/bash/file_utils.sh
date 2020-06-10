@@ -27,7 +27,7 @@ safe_cp() {
   if cmp "$source" "$destination" >/dev/null 2>&1; then
     verbose "$destination is already copied."
   else
-    info "Copying file $source => $destination."
+    info "Copying file $source to $destination."
     if [[ $DRY_RUN = false ]]; then
       PARENT=$(dirname "$destination")
       if [[ ! -d $PARENT ]]; then
@@ -120,6 +120,7 @@ function safe_ln() {
 #   - 1 if an error occurred.
 function safe_cd() {
   d=$1
+  debug "$(pwd) -> $1"
   if ! cd "$d"; then
     error "Unable to enter directory \"$d\"."
     exit 1

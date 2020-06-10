@@ -35,7 +35,7 @@ function fix_music_file_names() {
     if [[ $file_name =~ -[-|0-9|A-Z|_|a-z]{11}\.(mp3|wav)$ ]]; then
       # The 16 here is made up of: 1 char dash + 11 char video ID + 3 char extention + 1 char dot.
       local -r new_file_name=${file_name:0:${#file_name}-16}${file_name: -4}
-      info "$file_name -> $new_file_name"
+      info "Fixing \"$file_name\" to \"$new_file_name\"."
       mv "$file_directory"/"$file_name" "$file_directory"/"$new_file_name"
     fi
   done
