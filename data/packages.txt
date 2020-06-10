@@ -140,8 +140,6 @@ p7zip
 unrar
 # ncdu, for cleaning large files.
 ncdu
-# MEGASync, for managing files with MEGA.
-megasync
 # Dropbox, for managing files with Dropbox
 dropbox
 
@@ -377,6 +375,11 @@ gfxtablet-git
 pikaur
 # libappimage, for previewing AppImage applications.
 libappimage
+
+# File Managers
+
+# MEGASync, for managing files with MEGA.
+megasync
 
 # Resources
 
