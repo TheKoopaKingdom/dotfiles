@@ -110,3 +110,18 @@ function safe_ln() {
     fi
   fi
 }
+
+# Enters a directory, erroring and exiting if anything goes wrong.
+# Arguments:
+#   - The directory to change to.
+# Outputs:
+#   - Change directory feedback.
+# Returns:
+#   - 1 if an error occurred.
+function safe_cd() {
+  d=$1
+  if ! cd "$d"; then
+    error "Unable to enter directory \"$d\"."
+    exit 1
+  fi
+}
