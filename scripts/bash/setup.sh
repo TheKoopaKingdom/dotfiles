@@ -40,7 +40,7 @@ function export_constants() {
   fi
 
   export SYNCED_DOCUMENTS_DIR=$INSTALL_HOME/Documents
-  export SYNCED_GTK3_DIR=$SYNCED_DOCUMENTS_DIR/Program Configurations/GTK 3.0
+  export SYNCED_GTK3_DIR="$SYNCED_DOCUMENTS_DIR/Program Configurations/GTK 3.0"
   export TERRACE_DOWNLOADS_DIR=$INSTALL_HOME/Terrace/Downloads
   export TERRACE_VIDEOS_DIR=$INSTALL_HOME/Terrace/Videos
   export TERRACE_MUSIC_DIR=$INSTALL_HOME/Terrace/Music
