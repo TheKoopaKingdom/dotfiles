@@ -14,8 +14,8 @@ print_help() {
   # Keep the help string in its own variable because a single quote in a heredoc messes up syntax
   # highlighting.
   HELP_STRING="
-Usage: $PROGRAM_NAME [-h] {run | install | create | uefi} [image [video-driver [viewer [
-install-image [driver-image]]]]]
+Usage: $PROGRAM_NAME [-h] { run | install | create | uefi } [ image [ video-driver [ viewer [
+install-image [ driver-image ]]]]]
 Launches QEMU with an image. Please see the source of this script for possible options."
   echo "$HELP_STRING"
   exit 0
