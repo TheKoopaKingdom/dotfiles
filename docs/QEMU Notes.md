@@ -44,6 +44,10 @@ UUID=a9501a38-5326-46ef-b427-3b811581df27 none              swap    sw          
 # started without the Plan 9 folder sharing being properly setup on the host.
 share                                     /home/koopa/Share 9p      noauto,x-systemd.automount,nofail,x-systemd.mount-timeout=1 0 0
 ```
+Installing guest drivers:
+```
+sudo apt install qemu-guest-agent xserver-xorg-video-qxl spice-vdagent
+```
 `build-essential` install:
 ```
 The following additional packages will be installed:
