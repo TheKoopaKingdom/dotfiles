@@ -103,10 +103,6 @@ breeze-gtk
 gnome-icon-theme
 # GNOME themes, for when applications ask about it (this seems to provide Adwaita).
 gnome-themes-extra
-# Hardcoded Icon Fixer, for fixing application icons.
-hardcode-fixer-git
-# Hardcode-Tray, for fixing application tray icons.
-hardcode-tray
 # RSIBreak, for taking breaks.
 rsibreak
 # Plasma PulseAudio, for managing audio, integrating with Plasma.
