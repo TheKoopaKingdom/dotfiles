@@ -36,17 +36,17 @@ safe_cp() {
       fi
       cp "$source" "$destination"
     fi
-  fi
-  if [[ -n $owner ]]; then
-    info "Setting owner of $destination to $owner."
-    if [[ $DRY_RUN = false ]]; then
-      chown "$owner" "$destination"
+    if [[ -n $owner ]]; then
+      info "Setting owner of $destination to $owner."
+      if [[ $DRY_RUN = false ]]; then
+        chown "$owner" "$destination"
+      fi
     fi
-  fi
-  if [[ -n $permission ]]; then
-    info "Setting permissions of $destination to $permission."
-    if [[ $DRY_RUN = false ]]; then
-      chmod "$permission" "$destination"
+    if [[ -n $permission ]]; then
+      info "Setting permissions of $destination to $permission."
+      if [[ $DRY_RUN = false ]]; then
+        chmod "$permission" "$destination"
+      fi
     fi
   fi
 }
