@@ -9,16 +9,6 @@ amd-ucode
 linux
 # Linux kernel headers, for compiling kernel modules.
 linux-headers
-# Nvidia DKMS drivers, for GPU support.
-nvidia-dkms
-# Nvidia utilities, for more GPU support.
-nvidia-utils
-# Nvidia utilities, for more GPU support in 32-bit programs.
-lib32-nvidia-utils
-# Nvidia settings, for configuring the GPU.
-nvidia-settings
-# Nvidia OpenCL implementation, for GPU processing with SVP.
-opencl-nvidia
 # VDPAU backend for VA-API, for more GPU support.
 libva-vdpau-driver
 # xinput, for enhancing tablet support.
