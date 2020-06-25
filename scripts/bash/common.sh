@@ -26,16 +26,21 @@ export RED
 
 # Printing Utilities
 
-# Prints an info section message.
+# Prints a section message.
 # Arguments:
 #   - Name of the section.
 # Outputs:
 #   - The section message.
-function info_section() {
+function section() {
   printf "[${WHITE}Section${RESET}] ${BOLD}%s${RESET}\n" "$*"
 }
 
-function info_subsect() {
+# Prints a subsection message.
+# Arguments:
+#   - Name of the subsection.
+# Outputs:
+#   - The subsection message.
+function subsect() {
   printf "[${MAGENTA}SubSect${RESET}] ${MAGENTA}${BOLD}%s${RESET}\n" "$*"
 }
 

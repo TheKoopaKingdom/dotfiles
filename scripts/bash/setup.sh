@@ -68,7 +68,7 @@ function setup_system() {
   print_header "System Setup"
 
   # Customize the setup.
-  info_section "Initializing Setup"
+  section "Initializing Setup"
 
   info "Configuring setup."
   # Dry runs should print messages when action is about to be taken, but must not execute the
@@ -88,7 +88,7 @@ function setup_system() {
   export_constants
 
   # Package Management
-  info_section "Setting Up Packages"
+  section "Setting Up Packages"
 
   info "Configuring pacman."
   configure_pacman
@@ -105,7 +105,7 @@ function setup_system() {
   fi
 
   # Kernel & Hardware
-  info_section "Setting Up Kernel & Hardware"
+  section "Setting Up Kernel & Hardware"
 
   info "Configuring initial ramdisk."
   safe_cp "$CO"/config/mkinitcpio.conf /etc/mkinitcpio.conf
@@ -129,7 +129,7 @@ function setup_system() {
   create_swap 8
 
   # System Services
-  info_section "Setting Up System Services"
+  section "Setting Up System Services"
 
   info "Configuring system systemd services."
   configure_system_units
@@ -170,7 +170,7 @@ function setup_user() {
   print_header "User Setup"
 
   # Customize the setup.
-  info_section "Initializing Setup"
+  section "Initializing Setup"
 
   info "Configuring setup."
   # See above.
@@ -189,7 +189,7 @@ function setup_user() {
   export_constants
 
   # File Structure
-  info_section "Setting Up File Structure"
+  section "Setting Up File Structure"
 
   info "Creating new directories."
   create_directories
@@ -198,7 +198,7 @@ function setup_user() {
   link_directories
 
   # User Services
-  info_section "Setting Up User Services"
+  section "Setting Up User Services"
 
   info "Configuring user systemd services."
   configure_user_units
@@ -207,7 +207,7 @@ function setup_user() {
   enable_user_units
 
   # User Services
-  info_section "Setting Up User Programs"
+  section "Setting Up User Programs"
 
   info "Silencing login message."
   if [[ $DRY_RUN = false ]]; then
@@ -217,7 +217,7 @@ function setup_user() {
   info "Configuring GPG."
   configure_gpg
 
-  info_section "Setting Up Pikaur"
+  section "Setting Up Pikaur"
   install_pikaur
 
   info "Setup complete!"
