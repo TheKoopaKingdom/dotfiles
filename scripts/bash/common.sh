@@ -128,7 +128,7 @@ function debug() {
 # Outputs:
 #   - The verbose message.
 function verbose() {
-  if [[ $VERBOSE = true ]]; then
+  if [[ $DEBUG = true || $VERBOSE = true ]]; then
     printf "[${MAGENTA}Verbose${NORMAL}] %s\n" "$*"
   fi
 }
