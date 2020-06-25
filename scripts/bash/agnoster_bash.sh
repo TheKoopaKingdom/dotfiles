@@ -56,7 +56,8 @@
 # write the left. This is problematic for the following reasons:
 # - Doesn't properly resize dynamically when you resize the terminal
 # - Changes to the prompt (like clearing and re-typing, super common) deletes the prompt
-# - Getting the right alignment via columns / tput cols is pretty problematic (and is a bug in this version)
+# - Getting the right alignment via columns / tput cols is pretty problematic (and is a bug in this
+# version)
 # - Bash prompt escapes (like \h or \w) don't get interpolated
 #
 # all in all, if you really, really want right-side prompts without a
@@ -255,7 +256,8 @@ prompt_git() {
   local ref dirty
   if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     dirty=$(git_status_dirty)
-    ref=$(git symbolic-ref HEAD 2>/dev/null) || ref="➦ $(git show-ref --head -s --abbrev | head -n1 2>/dev/null)"
+    ref=$(git symbolic-ref HEAD 2>/dev/null) || ref="➦ $(git show-ref --head -s --abbrev |
+      head -n1 2>/dev/null)"
     if [[ -n $dirty ]]; then
       # !!! Comet Observatory: Change prompt from yellow to green.
       prompt_segment purple black
