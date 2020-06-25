@@ -113,17 +113,13 @@ function pause() {
 "
 }
 
-# Prints a debug message.
-# Globals Read:
-#   - (Optional) DEBUG: Whether to print debug info, out of true or false. Default false.
+# Prints an error message.
 # Arguments:
-#   - Debug info to be printed.
+#   - Error to be printed.
 # Outputs:
-#   - The debug message.
-function debug() {
-  if [[ $DEBUG = true ]]; then
-    printf "[${BLUE}Debug${RESET}  ] %s\n" "$*"
-  fi
+#   - The error message.
+function error() {
+  printf "[${RED}Error${RESET}  ] %s\n" "$*"
 }
 
 # Prints a verbose message.
@@ -139,13 +135,17 @@ function verbose() {
   fi
 }
 
-# Prints an error message.
+# Prints a debug message.
+# Globals Read:
+#   - (Optional) DEBUG: Whether to print debug info, out of true or false. Default false.
 # Arguments:
-#   - Error to be printed.
+#   - Debug info to be printed.
 # Outputs:
-#   - The error message.
-function error() {
-  printf "[${RED}Error${RESET}  ] %s\n" "$*"
+#   - The debug message.
+function debug() {
+  if [[ $DEBUG = true ]]; then
+    printf "[${BLUE}Debug${RESET}  ] %s\n" "$*"
+  fi
 }
 
 # Other Utilities
