@@ -49,8 +49,8 @@ setup-user n y
 ### QEMU Reeves
 [QEMU Reeves](bin/qemu-reeves) is a launcher for [QEMU](https://www.qemu.org/), tuned for Debian 10 and Windows 10. It supports switching between images, video drivers and interfaces, and directly invokes QEMU. It also has modes for creating disk images, and running installers. The only part of the `libvirt` stack used is the Remote Viewer, for when SPICE is used.
 
-![QEMU Reeves Screenshot](docs/qemu-reeves-deb.png)
-![QEMU Reeves Screenshot](docs/qemu-reeves-win.png)
+![QEMU Reeves Debian 10 Screenshot](docs/qemu-reeves-deb.png)
+![QEMU Reeves Windows 10 Screenshot](docs/qemu-reeves-win.png)
 
 ### UEFI Updater
 The [UEFI updater](bin/update-efi) updates the [UEFI](https://uefi.org/) boot entries for a system using [EFISTUB](https://wiki.archlinux.org/index.php/EFISTUB) booting. It adds an entry for the vanilla kernel, and [Tk-Glitch's kernel](https://github.com/Tk-Glitch/PKGBUILDS). The [kernel parameters](https://wiki.archlinux.org/index.php/kernel_parameters) used depend on the preset used, defaulting to a [silent boot](https://wiki.archlinux.org/index.php/Silent_boot) configuration. Presets can be specified via a parameter to the script: `silent` (default), `debug`, `rescue-fallback`, and `rescue`. Finally, it sets the TkG kernel as the default.
