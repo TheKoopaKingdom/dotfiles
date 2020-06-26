@@ -297,13 +297,13 @@ doxygen
 # Libraries
 
 # SDL2 32-bit, for OpenLoco.
-lib32-sdl2
+# lib32-sdl2
 # SDL2 mixer 32-bit, for OpenLoco.
-lib32-sdl2_mixer
+# lib32-sdl2_mixer
 # yaml-cpp 32-bit, for OpenLoco.
-lib32-yaml-cpp
+# lib32-yaml-cpp
 # Bullet, for physics.
-bullet
+# bullet
 
 # Hacking
 
