@@ -76,7 +76,7 @@ function update() {
   fi
 
   # Ask for the sudo password now so that the rest of the process can proceed without it.
-  sudo echo
+  sudo echo >/dev/null
 
   if [[ $update_custom = true ]]; then
     section "Updating Custom Package Sources"
