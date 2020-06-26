@@ -46,6 +46,15 @@ setup-user n y
 ```
 - Log levels. Although these are supported throughout the Comet Observatory, they are particularly relevant here. Enabling more logging can be done by setting `DEBUG` or `VERBOSE` to true. These two options are two different levels; however, contrary to traditional logging systems, setting `DEBUG` does not automatically set `VERBOSE`, and vice versa.
 
+### Update Script
+[`update`](bin/update) is a script which handles updating the system and a selection of routine maintenence tasks. It can update the system and AUR packages, build the latest [Frogging-Family](https://github.com/Frogging-Family) packages, and run [fstrim](https://jlk.fjfi.cvut.cz/arch/manpages/man/fstrim.8). I use fstrim here, rather than a timer running on boot, because one of my SSDs takes a long time to process the TRIM command.
+
+Updating prebuilt and AUR packages:
+![update -p](docs/update_p.png)
+
+Updating custom packages:
+![update -c](docs/update_c.png)
+
 ### QEMU Reeves
 [QEMU Reeves](bin/qemu-reeves) is a launcher for [QEMU](https://www.qemu.org/), tuned for Debian 10 and Windows 10. It supports switching between images, video drivers and interfaces, and directly invokes QEMU. It also has modes for creating disk images, and running installers. The only part of the `libvirt` stack used is the Remote Viewer, for when SPICE is used.
 
