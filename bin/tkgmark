@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Copyright 2020 Comet Observatory
+# Licensed under GPLv3.
+# Refer to License.txt file included.
+
+# shellcheck source=scripts/makepkg/tkgmark.sh
+source "$CO"/scripts/makepkg/tkgmark.sh
+tkgmark
