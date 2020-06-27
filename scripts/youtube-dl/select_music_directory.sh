@@ -32,6 +32,8 @@ function validate_input() {
 # Outputs:
 #   - Selection progress.
 function select_music_directory() {
+  local -r song_title=$(sanitize_zenity "$1")
+
   if [[ ! -d "$MUSIC_DIRECTORY" ]]; then
     error "Music directory \"$MUSIC_DIRECTORY\" not found."
     return 1
@@ -85,11 +87,10 @@ function select_music_directory() {
   done
   local new_category=false
   while true; do
-    # TODO: escape &s
     local -r category_input=$(zenity --width 1000 --height 500 \
       --list --radiolist \
       --title "Select a Category" \
-      --text "Select a category from the list below for the song \"$1\"." \
+      --text "Select a category from the list below for the song \"$song_title\"." \
       --column "" --column "Category Name" --column "Parent Category Name" \
       --print-column 2,3 \
       TRUE "Make a new category" " " "${args[@]}")
@@ -133,7 +134,7 @@ function select_music_directory() {
       local -ra new_category_input=$(zenity --width 1000 --height 500 \
         --forms \
         --title "Add a Category" \
-        --text "Enter information for the category to put \"$1\" in.". \
+        --text "Enter information for the category to put \"$song_title\" in.". \
         --add-entry "Category Name" \
         --add-entry "Parent Category (Optional)")
       local -r category_name=$(echo "$new_category_input" | cut -d'|' -f1)

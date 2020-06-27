@@ -196,3 +196,13 @@ function prompt_exit() {
   zenity --question --text "The list dialog was closed, or cancel was clicked. Exit?"
   echo $?
 }
+
+# Sanitizes a string so that it may be displayed in Zenity without any problems. sed expression from
+# https://unix.stackexchange.com/a/37663.
+# Arguments:
+#   - The input string.
+# Outputs:
+#   - The sanitized string.
+function sanitize_zenity() {
+  echo "$1" | sed -e 's/\\/\\\\/g' -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g'
+}

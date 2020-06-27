@@ -30,7 +30,7 @@ function tag_mp3() {
   local -r METADATA_INPUT=$(zenity --width 1000 --height 500 \
     --forms \
     --title "$window_title" \
-    --text "Enter metadata for \"$1\". Blank fields will not be added." \
+    --text "Enter metadata for \"$(sanitize_zenity "$mp3")\". Blank fields will not be added." \
     --add-entry "Title (%b will be substituted for the MP3 basename)" \
     --add-entry "Artist(s)" \
     --add-entry "Album")
