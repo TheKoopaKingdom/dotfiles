@@ -63,14 +63,12 @@ function select_music_directory() {
       elif [[ $subcategory_directory_path =~ Disc\ *[0-9]+ ]]; then
         continue
       fi
-      debug "Subcategory $subcategory_directory_path."
       local categories+=("$(basename "$subcategory_directory_path")")
       local parent_categories+=("$(basename "$category_directory_path")")
       has_subdirectories=true
       # Don't run the while loop in a subshell.
     done <<<"$(find "$category_directory_path" -maxdepth 1 -type d)"
     if [[ $has_subdirectories = false ]]; then
-      debug "Category $category_directory_path."
       local categories+=("$(basename "$category_directory_path")")
       local parent_categories+=("")
     fi
@@ -98,19 +96,14 @@ function select_music_directory() {
     local -r category_name_valid=$(validate_input "$category_name")
     local -r parent_category_name=$(echo "$category_input" | cut -d'|' -f2)
     local -r parent_category_name_valid=$(validate_input "$parent_category_name")
-    # debug "Category name: \"$category_name\". Parent category name: \"$parent_category_name\""
-    # If the user wants to make a new category.
     if [[ "$category_name" = "Make a new category" ]]; then
-      debug "New category selected."
       new_category=true
       break
     # If there's a category without a parent.
     elif [[ $category_name_valid -eq 1 ]] && [[ $parent_category_name_valid -eq 1 ]]; then
-      debug "Category and parent selected."
       local -r category_path=$MUSIC_DIRECTORY$parent_category_name/$category_name
       break
     elif [[ $category_name_valid -eq 1 ]] && [[ $parent_category_name_valid -eq 0 ]]; then
-      debug "Category selected, not parent."
       local -r category_path=$MUSIC_DIRECTORY$category_name
       break
     # If, nothing was checked, or cancel was clicked.
@@ -129,7 +122,6 @@ function select_music_directory() {
   done
 
   if $new_category; then
-    debug "Making new category \"$category_name\""
     while true; do
       local -ra new_category_input=$(zenity --width 1000 --height 500 \
         --forms \
@@ -141,14 +133,10 @@ function select_music_directory() {
       local -r category_name_valid=$(validate_input "$category_name")
       local -r parent_category_name=$(echo "$new_category_input" | cut -d'|' -f2)
       local -r parent_category_name_valid=$(validate_input "$parent_category_name")
-      debug "Category name: \"$category_name\"$category_name_valid. Parent category name: \
-\"$parent_category_name\""
       if [[ $category_name_valid -eq 1 ]] && [[ $parent_category_name_valid -eq 1 ]]; then
-        # debug "Category and parent exist."
         local -r category_path=$MUSIC_DIRECTORY$parent_category_name/$category_name
         break
       elif [[ $category_name_valid -eq 1 ]] && [[ $parent_category_name_valid -eq 0 ]]; then
-        # debug "Category exists, no parent."
         local -r category_path=$MUSIC_DIRECTORY$category_name
         break
       else
