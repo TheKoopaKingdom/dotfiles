@@ -159,6 +159,8 @@ kgpg
 
 # xdotool, for automation.
 xdotool
+# xclip, for clipboard support for tag_mp3.sh.
+xclip
 # xkill, for forcibly killing programs.
 xorg-xkill
 # Flameshot, for taking screenshots.
