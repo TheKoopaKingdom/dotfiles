@@ -50,9 +50,9 @@ function tag_mp3() {
     eyeD3 -QA "$album_input" "$mp3"
   fi
   if [[ -n "$title_input" ]]; then
-    title_input=${title_input//%b/$TITLE}
+    title_input=${title_input//%b/$title}
     eyeD3 -Qt "$title_input" "$mp3"
-    rename "$TITLE" "$title_input" "$mp3"
+    rename "$title" "$title_input" "$mp3"
   fi
   return 0
 }
