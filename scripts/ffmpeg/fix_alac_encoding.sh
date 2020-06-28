@@ -22,7 +22,8 @@ function fix_alac_encoding() {
 
   find "$MUSIC_DIRECTORY/" -type f -name '*.m4a' | while read -r file_path; do
     info "Processing $file_path."
-    new_file_path=$(dirname "$file_path")/$(basename "$file_path" .m4a).flac
+    local new_file_path
+    new_file_path=${file_path%.*}.flac
     ffmpeg -nostdin -i "$file_path" -acodec flac "$new_file_path"
     rm "$file_path"
   done
