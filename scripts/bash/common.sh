@@ -189,12 +189,16 @@ function print_header() {
   debug "Running in debug mode."
 }
 
+function ask() {
+  zenity --width 300 --question --text "$1"
+  echo $?
+}
+
 # Asks if the directory selection process should be canceled or not.
 # Outputs:
 #   - 1 if the user wants to exit, else 0.
 function prompt_exit() {
-  zenity --question --text "The list dialog was closed, or cancel was clicked. Exit?"
-  echo $?
+  ask "The list dialog was closed, or cancel was clicked. Exit?"
 }
 
 # Sanitizes a string so that it may be displayed in Zenity without any problems. sed expression from
