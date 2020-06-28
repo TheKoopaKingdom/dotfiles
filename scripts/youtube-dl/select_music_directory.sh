@@ -172,7 +172,7 @@ function select_music_directory() {
         fi
       fi
     done
-    mkdir "$category_path"
+    mkdir -p "$category_path"
   elif $skip; then
     echo "SKIP"
     return 0
