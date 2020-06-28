@@ -68,11 +68,14 @@ Firefox profile to \"$(dirname "$FIREFOX_PLACES_DATABASE")\" if necessary."
     return 1
   fi
 
-  info "Removing bookmark \"$URL\"."
   local -r url_id=$(sqlite3 "$FIREFOX_PLACES_DATABASE" "SELECT id FROM 'moz_places' \
 WHERE url='$url'")
   local -r music_id=$(get_firefox_folder_id "$folder")
-  debug "URL ID: $url_id. Music folder ID: $music_id"
-  sqlite3 "$FIREFOX_PLACES_DATABASE" "DELETE FROM 'moz_bookmarks' WHERE fk=$url_id AND \
+  if [[ -n $url_id ]] && [[ -n $music_id ]]; then
+    sqlite3 "$FIREFOX_PLACES_DATABASE" "DELETE FROM 'moz_bookmarks' WHERE fk=$url_id AND \
 parent='$music_id'"
+  else
+    echo "Not found ($url_id, $music_id)."
+    return 1
+  fi
 }
