@@ -106,10 +106,10 @@ function select_music_directory() {
     parent_category_name=$(echo "$category_input" | cut -d'|' -f2)
     local parent_category_name_valid
     parent_category_name_valid=$(validate_input "$parent_category_name")
-    if [[ "$category_name" = "Make a new category" ]]; then
+    if [[ "$category_name" == "Make a new category" ]]; then
       new_category=true
       break
-    elif [[ "$category_name" = "Skip this song" ]]; then
+    elif [[ "$category_name" == "Skip this song" ]]; then
       skip=true
       break
     # If there's a category without a parent.
@@ -134,7 +134,7 @@ function select_music_directory() {
     fi
   done
 
-  if $new_category; then
+  if [[ $new_category = true ]]; then
     printf "%s" "Music Artists" | xsel -i -b
     while true; do
       # shellcheck disable=2155
@@ -173,7 +173,7 @@ function select_music_directory() {
       fi
     done
     mkdir -p "$category_path"
-  elif $skip; then
+  elif [[ $skip = true ]]; then
     echo "SKIP"
     return 0
   fi
