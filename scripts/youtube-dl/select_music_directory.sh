@@ -132,6 +132,7 @@ function select_music_directory() {
   done
 
   if $new_category; then
+    printf "Music Artists" | xclip -selection clipboard
     while true; do
       # shellcheck disable=2155
       local -a new_category_input
