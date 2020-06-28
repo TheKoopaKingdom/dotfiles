@@ -29,11 +29,15 @@ function download_music() {
   info "Downloading music from Firefox music bookmark folder."
   if local -r urls=$(get_bookmark_urls "Listening List"); then
     for url in $urls; do
+      local title
+      title=$(youtube-dl --get-title "$url")
+      info "Downloading \"$title\"".
+
       verbose "Opening \"$url\"."
       firefox -P Alternate "$url" &
 
       verbose "Getting info about \"$url\" and selecting music directory."
-      if ! download_dir=$(select_music_directory "$(youtube-dl --get-title "$url")"); then
+      if ! download_dir=$(select_music_directory "$title"); then
         error "Music directory selection failed: $download_dir"
         return 1
       fi
