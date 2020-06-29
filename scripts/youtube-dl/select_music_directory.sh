@@ -50,9 +50,8 @@ function select_music_directory() {
     # Find will first output the starting point.
     if [[ "$category_directory_path" = "$MUSIC_DIRECTORY" ]]; then
       continue
-    # Ignore directories left by file synchronization.
-    # .debris   MEGA
-    elif [[ $category_directory_path == *".debris"* ]]; then
+    # Ignore undesireable directories to download to.
+    elif [[ $category_directory_path =~ .*(Anime Music|Video Game Music|\.debris).* ]]; then
       continue
     fi
     local has_subdirectories=false
