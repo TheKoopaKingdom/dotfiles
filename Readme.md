@@ -9,7 +9,7 @@
 - The Arch and Windows [Operating System](https://en.wikipedia.org/wiki/Operating_system) partitions, respectively `Arch Engine Room` and `Windows Engine Room`, are named after the [Engine Room](https://www.mariowiki.com/Engine_Room).
 - The shared document partition is named after the [Terrace](https://www.mariowiki.com/Terrace_(Super_Mario_Galaxy)).
 - The game partition is named after the [Fountain](https://www.mariowiki.com/Fountain).
-- ~~The storage partition is named after the [Library](https://www.mariowiki.com/Library_(Super_Mario_Galaxy)).~~~ R.I.P. 2TB Seagate HDD.
+- ~~The storage partition is named after the [Library](https://www.mariowiki.com/Library_(Super_Mario_Galaxy)).~~ R.I.P. 2TB Seagate HDD.
 - The phone (connected via [KDE Connect](https://community.kde.org/KDEConnect)) is named after the [Gateway Galaxy](https://www.mariowiki.com/Gateway_Galaxy) (also see the [Gate](https://www.mariowiki.com/Gate_(Super_Mario_Galaxy))).
 
 ## Usage
