@@ -9,6 +9,6 @@ xset -dpms
 # Disable screen blanking.
 xset s off
 
-# Add identities to ssh-agent. Since prepare-for-desktop has configured ksshaskpass as the SSH
+# Add identities to ssh-agent. Since pam-environment has configured ksshaskpass as the SSH
 # agent, the passwords for these identities will be sourced from KWallet. See gnupg.md.
 ssh-add -q ~/.ssh/id_rsa ~/.ssh/aur ~/.ssh/do </dev/null
