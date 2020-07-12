@@ -48,6 +48,7 @@ alias lt='ls --tree'
 
 alias g=git
 alias p=phoronix-test-suite
+alias play='DISPLAY= mpv --really-quiet -vo caca'
 
 # Customize the prompt.
 
