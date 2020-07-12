@@ -123,8 +123,6 @@ function link_directories() {
 
     # Link Dolphin configuration from documents to user configuration.
     ["$SYNCED_DOCUMENTS_DIR/Program Configurations/KDE/Dolphin.conf"]="$INSTALL_HOME/.config/dolphinrc"
-    # Link ROM properties files from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/rom-properties"]="$INSTALL_HOME/.config/rom-properties"
     # Link MEGAsync configuration from documents to user data.
     ["$SYNCED_DOCUMENTS_DIR/Program Configurations/MEGAsync.cfg"]="$INSTALL_HOME/.local/share/data/Mega Limited/MEGAsync/MEGAsync.cfg"
 
