@@ -178,8 +178,6 @@ mount_tag=share,security_model=none"
   # Linux/Multiboot Boot Options
 
   # Debug/Expert Options
-  # Enable full KVM virtualization, for performance.
-  qemu_opts+=" -enable-kvm"
   # Daemonize QEMU, to manually run the SPICE client.
   # qemu_opts+=" -daemonize"
 
