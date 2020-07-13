@@ -107,10 +107,13 @@ function launch_qemu() {
   fi
   # Allow the VM more RAM.
   qemu_opts+=" -m 16G"
-  # Add Intel HD Audio.
-  qemu_opts+=" -soundhw hda"
-  # For QXL, add QXL paravirtual graphics card, for performance. Doing this from here allows us to
-  # allocate more video memory, for supporting multiple heads if needed.
+  if [[ $main_img == *"temple"* ]]; then
+    # For TempleOS, add a basic PC speaker.
+    qemu_opts+=" -soundhw pcspk "
+  else
+    # Add Intel HD Audio.
+    qemu_opts+=" -soundhw hda"
+  fi
   # Workaround: max_outputs is required to avoid a low-resolution issue with QXL video.
   qemu_opts+=${QXL+" -device qxl-vga,max_outputs=1,vgamem_mb=64"}
   # For Virtio graphics, add Virtio graphics card, for performance. Doing this from here seems to
@@ -133,8 +136,10 @@ function launch_qemu() {
   qemu_opts+=${installer_img+" -drive file=$installer_img,index=1,media=cdrom"}
   # Use a drive ISO as a CD-ROM image, if specified. This is meant for an image with virtio drivers.
   qemu_opts+=${driver_img+" -drive file=$driver_img,index=2,media=cdrom"}
-  # Use the OVMF binary as the bios file.
-  qemu_opts+=" -bios /usr/share/edk2-ovmf/x64/OVMF.fd"
+  if [[ $main_img != *"bios"* ]]; then
+    # Use the OVMF binary as the bios file, for UEFI based images.
+    qemu_opts+=" -bios /usr/share/edk2-ovmf/x64/OVMF.fd"
+  fi
   # Add a virtual filesystem for a directory shared with the host.
   qemu_opts+=" -virtfs local,path=${QR_SHARE-/home/kyle/Terrace/Documents/Virtualization/Share},\
 mount_tag=share,security_model=none"
