@@ -55,7 +55,7 @@ alias play='DISPLAY= mpv --really-quiet -vo caca'
 # This can't be readonly because this script can be ran more than once in the same environment.
 declare -a QUOTES=(
   # Neon Genesis Evangelion.
-  #   "Understanding 100% of everything is impossible. That’s why we spend all our lives trying to \
+  #   "Understanding 100% of everything is impossible. That’s why we spend all our lives trying to
   # understand the thinking of others. That’s what makes life so interesting."
   "Sometimes you need a little wishful thinking just to keep on living."
   "Part of growing up means finding a way to interact with others while distancing pain."
