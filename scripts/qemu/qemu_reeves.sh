@@ -94,17 +94,25 @@ function launch_qemu() {
   # Emulate a PC with KVM acceleration. KVM is the best hypervisor currently, requiring the least
   # setup, and with good results.
   qemu_opts+="-machine pc,accel=kvm"
-  # Pass through CPU attributes so that specific optimizations can be applied. This will result in
-  # the following warning being printed:
-  # "kernel: Decoding supported only on Scalable MCA processors."
-  # Disabling the mca or mce flags doesn't seem to help this.
-  #
-  if [[ $windows = true ]]; then
-    # Workaround: For Windows, core2duo is needed to avoid a BSOD on boot.
-    qemu_opts+=" -cpu core2duo"
+  if [[ $main_img =~ win || $main_img =~ w10 ]]; then
+    # Workaround: For Windows, core2duo is sometimes needed to avoid a BSOD on boot.
+    # qemu_opts+=" -cpu core2duo"
+    # This and the above workaround are mutually exclusive!
+    qemu_opts+=" -cpu host"
   else
+    # Pass through CPU attributes so that specific optimizations can be applied. An issue with this
+    # is that it results in the following warning being printed:
+    #
+    # kernel: Decoding supported only on Scalable MCA processors.
+    #
+    # Disabling the mca or mce flags doesn't seem to help this.
     qemu_opts+=" -cpu host"
   fi
+  # Enable Hyper-V enlightenments. More info:
+  # https://blog.wikichoon.com/2014/07/enabling-hyper-v-enlightenments-with-kvm.html
+  qemu_opts+=",hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time"
+  # Use multiple CPU cores.
+  qemu_opts+=" -smp 4"
   # Allow the VM more RAM.
   qemu_opts+=" -m 16G"
   if [[ $main_img == *"temple"* ]]; then
