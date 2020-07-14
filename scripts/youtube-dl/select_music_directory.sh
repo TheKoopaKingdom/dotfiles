@@ -93,7 +93,7 @@ function select_music_directory() {
     category_input="$(zenity --width 1500 --height 1200 \
       --list --radiolist \
       --title "Select a Category" \
-      --text "Select a category from the list below for the song \"$song_title\"." \
+      --text "Select a category from the list below for the song(s) \"$song_title\"." \
       --column "" --column "Category Name" --column "Parent Category Name" \
       --print-column 2,3 \
       TRUE "Make a new category" " " FALSE "Skip this song" " " "${args[@]}")"

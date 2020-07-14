@@ -53,21 +53,24 @@ function download_music() {
         fi
 
         # Force MP3 here because otherwise it might return video formats, for YouTube videos.
-        local file_path
-        file_path=$(youtube-dl -o "$download_dir/%(title)s.mp3" --get-filename "$url")
-        verbose "Cropping + trimming."
-        if [[ $url == *"soundcloud"* ]]; then
-          local crop=false
-        else
-          local crop=true
-        fi
-        if ! trim_err=$(trim "$file_path" "$crop"); then
-          error "An error occurred while cropping/trimming the file: $trim_err"
-        fi
+        local file_paths
+        file_paths=$(youtube-dl -o "$download_dir/%(title)s.mp3" --get-filename "$url")
+        # In the case of a playlist, there will be newlines in "file_paths". Iterate over them.
+        while IFS= read -r file_path; do
+          verbose "Cropping + trimming."
+          if [[ $url == *"soundcloud"* ]]; then
+            local crop=false
+          else
+            local crop=true
+          fi
+          if ! trim_err=$(trim "$file_path" "$crop"); then
+            error "An error occurred while cropping/trimming the file: $trim_err"
+          fi
 
-        if ! tag_err=$(tag_mp3 "$file_path"); then
-          error "An error occurred while tagging the file: $tag_err"
-        fi
+          if ! tag_err=$(tag_mp3 "$file_path"); then
+            error "An error occurred while tagging the file: $tag_err"
+          fi
+        done <<<"$file_paths"
       fi
 
       verbose "Removing bookmark."
