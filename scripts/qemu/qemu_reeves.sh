@@ -26,7 +26,7 @@ Launches QEMU with an image. Please see the source of this script for possible o
 # Launches a QEMU image with the best options.
 # Arguments:
 #   - The name of the image to launch.
-#   - (Optional) Video driver to use, out of "qxl", "virtio", and "std". Default "std".
+#   - (Optional) Video driver to use, out of "qxl", "virgil", and "std". Default "std".
 #   - (Optional) Viewer to use, out of "spice", "qemu-std", and "qemu-gtk". Default "qemu-gtk".
 #   - (Optional) An image to mount to the CD drive.
 function launch_qemu() {
@@ -46,10 +46,10 @@ function launch_qemu() {
     local -r video_driver_qxl=true
     local -r video_driver_str=QXL
     ;;
-  *virtio*)
-    info "Using Virtio video driver."
-    local -r video_driver_virtio=true
-    local -r video_driver_str=Virtio
+  *virgil*)
+    info "Using Virgil video driver."
+    local -r video_driver_virgil=true
+    local -r video_driver_str=Virgil
     ;;
   *)
     info "Using standard video driver."
@@ -129,7 +129,7 @@ function launch_qemu() {
   # For Virtio graphics, add Virtio graphics card, for performance. Doing this from here seems to
   # work better.
   # This and "-vga virtio" are mutually exclusive!
-  qemu_opts+=${video_driver_virtio+" -device virtio-vga"}
+  qemu_opts+=${video_driver_virgil+" -device virtio-vga"}
   # Add a virtio serial port PCI device, to integrate with SPICE.
   qemu_opts+=${viewer_spice+" -device virtio-serial-pci"}
   # Add a virtio serial port input device, that the guest spice-vdagent can access.
@@ -164,7 +164,7 @@ function launch_qemu() {
   qemu_opts+=${viewer_qemu_gtk+" -display gtk"}
   # For QEMU SDL, enable the respective UI.
   # For virgl, enable OpenGL.
-  qemu_opts+=${viewer_qemu_sdl+" -display sdl"${video_driver_virtio+",gl=on"}}
+  qemu_opts+=${viewer_qemu_sdl+" -display sdl"${video_driver_virgil+",gl=on"}}
   # For Spice, enable the respective UI.
   # I have no idea how one would go about changing the app here. There doesn't seem to be a SPICE
   # mime type, and xdg-open just beelines for remote-viewer. perl-file-mimeinfo has no idea what
@@ -181,13 +181,13 @@ function launch_qemu() {
   qemu_opts+=${video_driver_qxl+" -vga qxl"}
   # For virgl, enable the virtio video driver.
   # This and "-device virtio-vga" are mutually exclusive!
-  # qemu_opts+=${video_driver_virtio+" -vga virtio"}
+  # qemu_opts+=${video_driver_virgil+" -vga virtio"}
   # Enable SPICE, using a Unix socket, without authentication. Specifying a Unix socket path is not
   # necessary, because we are using the Spice applicationas the display. To make full use of SPICE,
   # Debian packages "spice-vdagent xserver-xorg-video-qxl" should be installed. See:
   # https://wiki.archlinux.org/index.php/QEMU#SPICE_support_on_the_guest
   # For virgl, enable OpenGL.
-  qemu_opts+=${viewer_spice+" -spice unix,disable-ticketing${video_driver_virtio+",gl=on"}"}
+  qemu_opts+=${viewer_spice+" -spice unix,disable-ticketing${video_driver_virgil+",gl=on"}"}
 
   # i386 Target Options
 
@@ -225,7 +225,7 @@ function launch_qemu() {
 # Calls launch-qemu(), prompting the user with a dialog to select a QEMU image if needed.
 # Arguments:
 #   - (Optional) Name of the image to launch. Defaults to user selection.
-#   - (Optional) Video driver to use, out of "qxl", "virtio", and "std". Default "qxl".
+#   - (Optional) Video driver to use, out of "qxl", "virgil", and "std". Default "qxl".
 #   - (Optional) Viewer to use, out of "spice", "qemu-sdl", and "qemu-gtk". Default "spice".
 # Outputs:
 #   Output of QEMU.
