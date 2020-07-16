@@ -192,11 +192,9 @@ function launch_qemu() {
   # i386 Target Options
 
   # Network Options
-  # Create a NIC card, for use with the SMB network share.
-  qemu_opts+=" -net nic"
   # Add an SMB share.
   # This and the virtfs share are mutually exclusive!
-  qemu_opts+=" -net user,smb=${QR_SHARE-/home/kyle/Terrace/Documents/Virtualization/Share}"
+  qemu_opts+=" -nic user,smb=${QR_SHARE-/home/kyle/Terrace/Documents/Virtualization/Share}"
 
   # Character Device Options
   # Add a Spice VM Channel character device, for cut/paste support, that spice-vdagent can access.
