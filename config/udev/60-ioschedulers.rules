@@ -1,6 +1,5 @@
-# Use the bfq scheduler for SSD and eMMC devices, for performance.
-# See: http://algogroup.unimore.it/people/paolo/disk_sched/results.php
-ACTION=="add|change", KERNEL=="sd[a-z]|mmcblk[0-9]*|nvme[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="bfq"
+# Use no IO scheduler for SSD devices, for performance.
+ACTION=="add|change", KERNEL=="sd[a-z]|mmcblk[0-9]*|nvme[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="none"
 
-# Use the bfq scheduler for rotational devices, for performance.
-ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq"
+# Use no IO scheduler for NVMe SSD devices, for performance.
+ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="none"
