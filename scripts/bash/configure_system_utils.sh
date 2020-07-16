@@ -85,8 +85,6 @@ function enable_system_units() {
     "org.cups.cupsd.service"
     # Enable the NetworkManager daemon.
     "NetworkManager.service"
-    # Enable Apache.
-    "httpd.service"
   )
 
   for unit in "${units[@]}"; do
