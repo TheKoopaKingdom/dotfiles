@@ -130,10 +130,13 @@ function launch_qemu() {
   # work better.
   # This and "-vga virtio" are mutually exclusive!
   qemu_opts+=${video_driver_virgil+" -device virtio-vga"}
-  # Add a virtio serial port PCI device, to integrate with SPICE.
-  qemu_opts+=${viewer_spice+" -device virtio-serial-pci"}
-  # Add a virtio serial port input device, that the guest spice-vdagent can access.
-  qemu_opts+=${viewer_spice+" -device virtserialport,chardev=spicechannel0,name=com.redhat.spice.0"}
+  # For SPICE, add a virtio serial device.
+  qemu_opts+=${viewer_spice+" -device virtio-serial"}
+  # For SPICE, add a virtio serial port input device, for vdagent. This is used to propagate changes in the
+  # monitor configuration, and clipboard.
+  # This is dependent on the vdagentchannel "-chardev"!
+  qemu_opts+=${viewer_spice+" -device virtserialport,chardev=vdagentchannel,\
+name=com.redhat.spice.0"}
   # Set the name of the VM.
   qemu_opts+=" -name $(basename "$main_img" .img).$video_driver_str.$viewer_str"
 
@@ -197,8 +200,8 @@ function launch_qemu() {
   qemu_opts+=" -nic user,smb=${QR_SHARE-/home/kyle/Terrace/Documents/Virtualization/Share}"
 
   # Character Device Options
-  # Add a Spice VM Channel character device, for cut/paste support, that spice-vdagent can access.
-  qemu_opts+=${viewer_spice+" -chardev spicevmc,id=spicechannel0,name=vdagent"}
+  # Add a spicevmc channel for vdagent.
+  qemu_opts+=${viewer_spice+" -chardev spicevmc,id=vdagentchannel,name=vdagent"}
 
   # Bluetooth Options
 
