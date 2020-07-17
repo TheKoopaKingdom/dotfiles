@@ -132,13 +132,14 @@ function launch_qemu() {
   qemu_opts+=${video_driver_virgil+" -device virtio-vga"}
   # For SPICE, add a virtio serial device.
   qemu_opts+=${viewer_spice+" -device virtio-serial"}
-  # For SPICE, add a virtio serial port input device, for vdagent. This is used to propagate changes in the
-  # monitor configuration, and clipboard.
+  # For SPICE, add a virtio serial port input device, for vdagent. This is used to propagate changes
+  # in the monitor configuration, and clipboard.
   # This is dependent on the vdagentchannel "-chardev"!
   qemu_opts+=${viewer_spice+" -device virtserialport,chardev=vdagentchannel,\
 name=com.redhat.spice.0"}
   # For SPICE, add a virtio serial port input device, for webdav. This is used for folder sharing.
-  qemu_opts+=${viewer_spice+" -device virtserialport,chardev=webdavport,name=org.spice-space.webdav.0"}
+  qemu_opts+=${viewer_spice+" -device virtserialport,chardev=webdavport,\
+name=org.spice-space.webdav.0"}
   # Set the name of the VM.
   qemu_opts+=" -name $(basename "$main_img" .img).$video_driver_str.$viewer_str"
 
@@ -192,7 +193,8 @@ name=com.redhat.spice.0"}
   # Debian packages "spice-vdagent xserver-xorg-video-qxl" should be installed. See:
   # https://wiki.archlinux.org/index.php/QEMU#SPICE_support_on_the_guest
   # For virgl, enable OpenGL.
-  qemu_opts+=${viewer_spice+" -spice unix,addr=/tmp/vm_spice.socket,disable-ticketing${video_driver_virgil+",gl=on"}"}
+  qemu_opts+=${viewer_spice+" -spice unix,addr=/tmp/vm_spice.socket,disable-ticketing\
+${video_driver_virgil+",gl=on"}"}
 
   # i386 Target Options
 
