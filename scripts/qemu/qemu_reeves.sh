@@ -137,6 +137,8 @@ function launch_qemu() {
   # This is dependent on the vdagentchannel "-chardev"!
   qemu_opts+=${viewer_spice+" -device virtserialport,chardev=vdagentchannel,\
 name=com.redhat.spice.0"}
+  # For SPICE, add a virtio serial port input device, for webdav. This is used for folder sharing.
+  qemu_opts+=${viewer_spice+" -device virtserialport,chardev=webdavport,name=org.spice-space.webdav.0"}
   # Set the name of the VM.
   qemu_opts+=" -name $(basename "$main_img" .img).$video_driver_str.$viewer_str"
 
@@ -202,6 +204,8 @@ name=com.redhat.spice.0"}
   # Character Device Options
   # Add a spicevmc channel for vdagent.
   qemu_opts+=${viewer_spice+" -chardev spicevmc,id=vdagentchannel,name=vdagent"}
+  # Add a SPICE port for webdav.
+  qemu_opts+=${viewer_spice+" -chardev spiceport,id=webdavport,name=org.spice-space.webdav.0"}
 
   # Bluetooth Options
 
