@@ -182,7 +182,7 @@ name=org.spice-space.webdav.0"}
   # mime type, and xdg-open just beelines for remote-viewer. perl-file-mimeinfo has no idea what
   # it's even looking at.
   # OpenGL support does not seem to work properly here.
-  qemu_opts+=${viewer_spice+" -display spice-app"}
+  # qemu_opts+=${viewer_spice+" -display spice-app"}
   # For standard, enable the standard video driver.
   qemu_opts+=${video_driver_std+" -vga std"}
   # For certain QXL configurations, disable the VGA card because we will have a separate QXL device.
@@ -225,8 +225,10 @@ ${video_driver_virgil+",gl=on"}"}
   # Linux/Multiboot Boot Options
 
   # Debug/Expert Options
-  # Daemonize QEMU, to manually run the SPICE client.
-  # qemu_opts+=" -daemonize"
+  if [[ -n $viewer_spice ]]; then
+    # Daemonize QEMU, to manually run the SPICE client.
+    qemu_opts+=" -daemonize"
+  fi
   # Don't create default devices, so that there aren't extreneous CD and floppy drive.
   qemu_opts+=" -nodefaults"
 
@@ -239,10 +241,10 @@ ${video_driver_virgil+",gl=on"}"}
   # shellcheck disable=SC2086
   "$qemu_exe" $qemu_opts
 
-  # if [[ -n $viewer_spice ]]; then
-  #   # Start spicy manually.
-  #   spicy --uri="spice+unix:///tmp/vm_spice.socket" --spice-shared-dir="$HOME" -f
-  # fi
+  if [[ -n $viewer_spice ]]; then
+    # Start spicy manually.
+    spicy --uri="spice+unix:///tmp/vm_spice.socket" --spice-shared-dir="$HOME" -f
+  fi
 }
 
 # Calls launch-qemu(), prompting the user with a dialog to select a QEMU image if needed.
