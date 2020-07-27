@@ -150,9 +150,15 @@ name=org.spice-space.webdav.0"}
   fi
   # Use an installer ISO as a CD-ROM image, if specified.
   qemu_opts+=${installer_img+" -drive file=$installer_img,index=1,media=cdrom"}
-  # Use a drive ISO as a CD-ROM image, if specified. This is meant for an image with virtio drivers.
-  qemu_opts+=${driver_img+" -drive file=$driver_img,index=2,media=cdrom"}
-  if [[ $main_img != *"bios"* ]]; then
+  if [[ $main_img != *"wxp"* ]]; then
+    # Use a drive ISO as a CD-ROM image, if specified. This is meant for an image with virtio drivers.
+    qemu_opts+=${driver_img+" -drive file=$driver_img,index=2,media=cdrom"}
+  else
+    # For Windows XP, use a floppy disk device. Enable the boot menu so that QEMU doesn't boot the
+    # floppy.
+    qemu_opts+=${driver_img+" -fdb $driver_img -boot menu=on"}
+  fi
+  if [[ $main_img != *"bios"* && $main_img != *"wxp"* ]]; then
     # For images that use UEFI (the default, for images without "bios" in them), use the OVMF binary
     # as the bios file.
     qemu_opts+=" -bios /usr/share/edk2-ovmf/x64/OVMF.fd"
