@@ -39,7 +39,7 @@ canon-pixma-mx920-complete
 # GfxTablet, for using an Android tablet as a drawing tablet.
 gfxtablet-git
 
-# Disc Drive Emulation (Disabled)
+# Disc Drive Emulation
 
 # VHBA module, for disk drive support.
 # vhba-module-dkms
@@ -308,6 +308,12 @@ gulp
 hugo
 # Doxygen, for building documentation.
 doxygen
+# TeX Live core, for building LaTeX documents.
+# texlive-core
+# Packages necessary for using latex-indent. Workaround for: https://bugs.archlinux.org/task/60210.
+# texlive-latexindent-meta
+# TeX Live science, for the siunitx package.
+# texlive-science
 
 # Programming Libraries
 
