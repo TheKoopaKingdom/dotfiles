@@ -116,9 +116,6 @@ function launch_qemu() {
   if [[ $main_img == *"temple"* ]]; then
     # For TempleOS, add a basic PC speaker.
     qemu_opts+=" -soundhw pcspk "
-  elif [[ $main_img == *"wxp"* ]]; then
-    # For Windows XP, add its supported Intel 82801AA AC97 audio.
-    qemu_opts+=" -soundhw ac97"
   else
     # Add Intel HD Audio.
     qemu_opts+=" -soundhw hda"
@@ -160,7 +157,7 @@ name=org.spice-space.webdav.0"}
   else
     # For Windows XP, use a floppy disk device. Enable the boot menu so that QEMU doesn't boot the
     # floppy.
-    qemu_opts+=${driver_img+" -fdb $driver_img -boot menu=on"}
+    qemu_opts+=${driver_img+" -drive file=$driver_img,index=0,if=floppy,format=raw -boot menu=on"}
   fi
   if [[ $main_img != *"bios"* && $main_img != *"wxp"* ]]; then
     # For images that use UEFI (the default, for images without "bios" in them), use the OVMF binary
