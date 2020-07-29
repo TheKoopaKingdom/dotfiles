@@ -123,6 +123,7 @@ function update() {
       --ignore proton-tkg-git --ignore vkd3d-tkg-git
   fi
   if [[ $run_fstrim = true ]]; then
+    section "Running fstrim"
     fstrim --fstab --verbose
   fi
 }
