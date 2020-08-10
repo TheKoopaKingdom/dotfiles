@@ -1,6 +1,8 @@
 # QEMU Notes
 This document has some useful commands and explanations that I have written while studying QEMU, and developed QEMU Reeves.
-`notes.sh`
+
+## General Setup Commands
+Before I wrote the QEMU Reeves script, I kept track of some of the different commands I used to setup a Debian VM. These aren't optimal (the commands produced by QEMU Reeves pretty much are, for my setup, though), but I keep these here for historical purposes. The one thing that is here that is absent from that script is the nonfunctional networking portion.
 ```sh
 # This command creates a new disk to install to:
 qemu-img create -f qcow2 debian-base.img 15G
@@ -29,9 +31,7 @@ qemu-img create -f qcow2 -b debian-base.img debian-main.img 15G
 nmcli c add type bridge ifname br0 con-name "QEMU Bridge" stp no
 nmcli c add type bridge-slave ifname wlp37s0 con-name "Main Wireless Slave" master br0
 ```
-`
-fstab
-`
+This is the `fstab` from my Debian installation, setup for a Plan folder share, which I no longer use in favor of some more portable solutions like SMB shares and SPICE folder shares.
 ```
 # This is a filesystem table that I ripped from my Debian 10 QEMU installation. The main thing of
 # interest is the shared folder.
@@ -44,11 +44,11 @@ UUID=a9501a38-5326-46ef-b427-3b811581df27 none              swap    sw          
 # started without the Plan 9 folder sharing being properly setup on the host.
 share                                     /home/koopa/Share 9p      noauto,x-systemd.automount,nofail,x-systemd.mount-timeout=1 0 0
 ```
-Installing guest drivers:
+This is the command used for installing necessary guest software on Debian.
 ```
 sudo apt install qemu-guest-agent xserver-xorg-video-qxl spice-vdagent
 ```
-`build-essential` install:
+These are the Debian `build-essential` packages. I honestly kind of forget why this is here. I think it was because I wanted to see what each package does.
 ```
 The following additional packages will be installed:
   binutils binutils-common binutils-x86-64-linux-gnu dpkg-dev fakeroot g++ g++-8 gcc gcc-8 libalgorithm-diff-perl libalgorithm-diff-xs-perl libalgorithm-merge-perl libasan5 libbinutils libc-dev-bin libc6-dev
