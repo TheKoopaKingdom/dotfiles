@@ -76,12 +76,21 @@
   },
   // Turn off JavaScript suggestions. See: https://github.com/microsoft/vscode/issues/47299.
   "javascript.suggestionActions.enabled": false,
+  // Disable the Python start page.
+  "python.showStartPage": false,
   // Format when saving.
   "editor.formatOnSave": true,
   "csscomb.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
+  // We only want Python syntax highlighting, don't lint these as Python files.
+  "python.linting.ignorePatterns": [
+    ".vscode/*.py", // Default.
+    "**/site-packages/**/*.py", // Also a default.
+    "**/*.in",
+    "**/*.tpcs"
+  ],
   // Contribute dictionary additions to the system.
   "spellright.addToSystemDictionary": true,
   // Use English for spell checking.
@@ -104,6 +113,8 @@
   "shellcheck.useWorkspaceRootAsCwd": true,
   // Disable builtin JS formatting since ESLint fixing is enabled.
   "javascript.format.enable": false,
+  // Enable Python linting with flake8.
+  "python.linting.flake8Enabled": true,
   // Default to the C++17 standard when formatting.
   "C_Cpp.default.cppStandard": "c++17",
   // Default to the C11 standardn when formatting.
