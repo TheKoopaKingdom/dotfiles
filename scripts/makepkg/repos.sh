@@ -9,7 +9,7 @@ source "$CO"/scripts/bash/common.sh
 # shellcheck source=scripts/bash/file_utils.sh
 source "$CO"/scripts/bash/file_utils.sh
 
-declare -r AUR_DIR=$HOME/Documents/AUR
+declare AUR_DIR=$HOME/Documents/AUR
 declare -r COM_PATCH_DIR=$AUR_DIR/community-patches
 declare -r KERNEL_VER=57
 declare -rA REPOS=(
