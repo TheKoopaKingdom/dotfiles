@@ -64,8 +64,8 @@ Need to get 38.9 MB of archives.
 After this operation, 155 MB of additional disk space will be used.
 ```
 
-## Using Windows XP in 2020
-There are some adversities to using Windows XP in 2020, but it is totally doable, and [there is a community behind it](https://xpforever.miraheze.org/). These are the loose steps I used for setting up my VM:
+## Windows XP
+There are some adversities to using Windows XP today, but it is totally doable, and [there is a community behind it](https://xpforever.miraheze.org/). These are the loose steps I used for setting up my VM:
 - Obtain a Windows XP VM installation disc, preferably SP3.
 - Install the virtual system, [with virtio drivers](https://wiki.archlinux.org/index.php/QEMU#Preparing_a_Windows_guest) if you are using a virtio disk.
 - Wait, and allow the VM to download Windows Updates. I don't know of any better way to monitor this, but when it happens, there will be a Windows Update icon in the tray.
