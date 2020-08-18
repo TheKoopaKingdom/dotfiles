@@ -77,8 +77,6 @@ function configure_system_units() {
 #   - Installation progress.
 function enable_system_units() {
   local -ra units=(
-    # Enable periodic TRIM.
-    "fstrim.timer"
     # Enable bluetooth.
     "bluetooth.service"
     # Enable CUPS.
