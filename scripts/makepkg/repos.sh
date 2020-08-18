@@ -118,17 +118,23 @@ function update_repo() {
 #   - AUR_DIR: See update_repo().
 # Arguments:
 #   - The repository to enter, relative to AUR_DIR.
+#   - (Optional) Whether to install the build. Defaults to true.
 # Outputs:
 #   - makepkg output.
 function build_repo() {
   local -r repo=$1
+  local -r install=${2+true}
+  install_arg=""
+  if [[ $install = true ]]; then
+    install_arg="i"
+  fi
 
   safe_cd "$AUR_DIR/$repo"
 
   verbose "Cleaning old packages and build logs."
   rm -f ./*.pkg.* ./*.log
   verbose "Building."
-  makepkg -si --noconfirm
+  makepkg -s$install_arg --noconfirm
 
   safe_cd -
 }
