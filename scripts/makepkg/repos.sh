@@ -126,7 +126,7 @@ function build_repo() {
   safe_cd "$AUR_DIR/$repo"
 
   verbose "Cleaning old packages and build logs."
-  rm -f ./*.xz ./*.pkg.* ./*.log
+  rm -f ./*.pkg.* ./*.log
   verbose "Building."
   makepkg -si --noconfirm
 
