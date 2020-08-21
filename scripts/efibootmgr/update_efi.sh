@@ -68,7 +68,7 @@ function add_entry() {
 
 # Updates Arch Linux UEFI boot entries.
 # Arguments:
-#   The type of entries to generate, out of "normal", "quiet", "debug", "rescue", and
+#   The type of entries to generate, out of "normal", "silent", "debug", "rescue", and
 # "fallback-rescue".
 # Outputs:
 #   Changes being made to EFI boot entries.
@@ -135,8 +135,8 @@ $fallback_kernel_initrd_str $CMDLINE_STR $CMDLINE_DEBUG_STR $CMDLINE_RESCUE_STR"
       add_entry "$1 (Rescue)" "$vmlinuz_path" "$MICROCODE_INITRD_STR $kernel_initrd_str \
 $CMDLINE_STR $CMDLINE_DEBUG_STR $CMDLINE_RESCUE_STR"
       ;;
-    *quiet*)
-      info "Updating $1 quiet UEFI boot entry ($vmlinuz_path)."
+    *silent*)
+      info "Updating $1 silent UEFI boot entry ($vmlinuz_path)."
       add_entry "$1 (Silent)" "$vmlinuz_path" "$MICROCODE_INITRD_STR $kernel_initrd_str \
 $CMDLINE_STR $CMDLINE_SILENT_STR"
       ;;
