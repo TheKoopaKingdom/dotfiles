@@ -68,12 +68,16 @@ function add_entry() {
 
 # Updates Arch Linux UEFI boot entries.
 # Arguments:
-#   The type of entries to generate, out of "normal", "silent", "debug", "rescue", and
+#   - The type of entries to generate, out of "normal", "silent", "debug", "rescue", and
 # "fallback-rescue".
+#   - Any boot parameters to append.
 # Outputs:
 #   Changes being made to EFI boot entries.
 function update_efi() {
   local -r type=$1
+  if [[ -n $type ]]; then
+    shift
+  fi
 
   figlet -k -f slant update-efi | lolcat -f -s 100 -p 1
   info "Comet Observatory UEFI Boot Entry Updater Script"
@@ -115,35 +119,37 @@ systemd.log_level=debug systemd.log_target=kmsg printk.devkmsg=on"
   # Outputs:
   #   Entry addition progress.
   function add_entry_decide_configuration() {
+    local -r kernel=$1
     local -r vmlinuz_path=/vmlinuz-linux${2}
     local -r kernel_initrd_str=initrd=initramfs-linux${2}.img
     local -r fallback_kernel_initrd_str=initrd=initramfs-linux${2}.img
+    shift 2
 
     case $type in
     *debug*)
-      info "Updating $1 debug UEFI boot entry ($vmlinuz_path)."
-      add_entry "$1 (Debug)" "$vmlinuz_path" "$MICROCODE_INITRD_STR $kernel_initrd_str \
-$CMDLINE_STR $CMDLINE_DEBUG_STR"
+      info "Updating $kernel debug UEFI boot entry ($vmlinuz_path)."
+      add_entry "$kernel (Debug)" "$vmlinuz_path" "$MICROCODE_INITRD_STR $kernel_initrd_str \
+$CMDLINE_STR $CMDLINE_DEBUG_STR $*"
       ;;
     *rescue-fallback*)
-      info "Updating $1 fallback rescue UEFI boot entry ($vmlinuz_path)."
-      add_entry "$1 (Fallback Rescue)" "$vmlinuz_path" "$MICROCODE_INITRD_STR \
-$fallback_kernel_initrd_str $CMDLINE_STR $CMDLINE_DEBUG_STR $CMDLINE_RESCUE_STR"
+      info "Updating $kernel fallback rescue UEFI boot entry ($vmlinuz_path)."
+      add_entry "$kernel (Fallback Rescue)" "$vmlinuz_path" "$MICROCODE_INITRD_STR \
+$fallback_kernel_initrd_str $CMDLINE_STR $CMDLINE_DEBUG_STR $CMDLINE_RESCUE_STR $*"
       ;;
     *rescue*)
-      info "Updating $1 rescue UEFI boot entry ($vmlinuz_path)."
-      add_entry "$1 (Rescue)" "$vmlinuz_path" "$MICROCODE_INITRD_STR $kernel_initrd_str \
-$CMDLINE_STR $CMDLINE_DEBUG_STR $CMDLINE_RESCUE_STR"
+      info "Updating $kernel rescue UEFI boot entry ($vmlinuz_path)."
+      add_entry "$kernel (Rescue)" "$vmlinuz_path" "$MICROCODE_INITRD_STR $kernel_initrd_str \
+$CMDLINE_STR $CMDLINE_DEBUG_STR $CMDLINE_RESCUE_STR $*"
       ;;
     *silent*)
-      info "Updating $1 silent UEFI boot entry ($vmlinuz_path)."
-      add_entry "$1 (Silent)" "$vmlinuz_path" "$MICROCODE_INITRD_STR $kernel_initrd_str \
-$CMDLINE_STR $CMDLINE_SILENT_STR"
+      info "Updating $kernel silent UEFI boot entry ($vmlinuz_path)."
+      add_entry "$kernel (Silent)" "$vmlinuz_path" "$MICROCODE_INITRD_STR $kernel_initrd_str \
+$CMDLINE_STR $CMDLINE_SILENT_STR $*"
       ;;
     *)
-      info "Updating $1 normal UEFI boot entry ($vmlinuz_path)."
-      add_entry "$1 (Normal)" "$vmlinuz_path" "$MICROCODE_INITRD_STR $kernel_initrd_str \
-$CMDLINE_STR"
+      info "Updating $kernel normal UEFI boot entry ($vmlinuz_path)."
+      add_entry "$kernel (Normal)" "$vmlinuz_path" "$MICROCODE_INITRD_STR $kernel_initrd_str \
+$CMDLINE_STR $*"
       ;;
     esac
   }
@@ -180,7 +186,7 @@ $CMDLINE_STR"
 
   info "Adding new boot entries."
   for kernel in "${!kernel_suffixes[@]}"; do
-    add_entry_decide_configuration "Arch Linux ($kernel)" "${kernel_suffixes[${kernel}]}"
+    add_entry_decide_configuration "Arch Linux ($kernel)" "${kernel_suffixes[${kernel}]}" "$@"
   done
 
   local -r default_entry="Arch Linux ($latest_tkg_name) (Normal)"
