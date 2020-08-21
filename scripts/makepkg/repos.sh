@@ -134,7 +134,7 @@ function build_repo() {
   verbose "Cleaning old packages and build logs."
   rm -f ./*.pkg.* ./*.log
   verbose "Building."
-  makepkg -s$install_arg --noconfirm
+  makepkg -sf$install_arg --noconfirm
 
   safe_cd -
 }
