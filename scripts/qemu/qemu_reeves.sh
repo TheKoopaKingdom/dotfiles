@@ -28,7 +28,8 @@ Launches QEMU with an image. Please see the source of this script for possible o
 #   - The name of the image to launch.
 #   - (Optional) Video driver to use, out of "qxl", "virgil", and "std". Default "std".
 #   - (Optional) Viewer to use, out of "spice", "qemu-std", and "qemu-gtk". Default "qemu-gtk".
-#   - (Optional) An image to mount to the CD drive.
+#   - (Optional) An installer image to mount to the CD drive.
+#   - (Optional) A driver image to mount to another CD drive.
 function launch_qemu() {
   # Use arguments.
   local -r main_img=$1
@@ -254,11 +255,18 @@ ${video_driver_virgil+",gl=on"}"}
   fi
 }
 
-# Calls launch-qemu(), prompting the user with a dialog to select a QEMU image if needed.
+# Calls launch_qemu(), handling defaults for unspecified options.
 # Arguments:
+#   - The subcommand to run, one of:
+#     - "help", to print the usage message.
+#     - "run", to run a virtualized operating system.
+#     - "install", to install a virtualized operating system. This is identical to "run", but adds
+# block devices for the installer and driver image.
 #   - (Optional) Name of the image to launch. Defaults to user selection.
-#   - (Optional) Video driver to use, out of "qxl", "virgil", and "std". Default "qxl".
-#   - (Optional) Viewer to use, out of "spice", "qemu-sdl", and "qemu-gtk". Default "spice".
+#   - (Optional) Video driver to use, out of "qxl", "virgil", and "std". Defaults to QXL.
+#   - (Optional) Viewer to use, out of "spice", "qemu-sdl", and "qemu-gtk". Defaults to SPICE.
+#   - (Required for "install") Path to the installer image.
+#   - (Optional for "install") Path to the driver image. Omitted by default.
 # Outputs:
 #   Output of QEMU.
 function qemu_reeves() {
