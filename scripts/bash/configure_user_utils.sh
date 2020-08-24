@@ -8,6 +8,8 @@
 source "$CO"/scripts/bash/common.sh
 # shellcheck source=scripts/bash/file_utils.sh
 source "$CO"/scripts/bash/file_utils.sh
+# shellcheck source=scripts/makepkg/repos.sh
+source "$CO"/scripts/makepkg/repos.sh
 
 # Creates new directories, and sets them up with proper permissions if necessary.
 # Globals Read:
@@ -197,7 +199,7 @@ function link_directories() {
     # Frogging Family
 
     # Link TKG Kernel configuration from CO to user configuration.
-    ["$CO/config/tkg/linux57-tkg.cfg"]="$INSTALL_HOME/.config/frogminer/linux57-tkg.cfg"
+    ["$CO/config/tkg/linux$KERNEL_VER-tkg.cfg"]="$INSTALL_HOME/.config/frogminer/linux$KERNEL_VER-tkg.cfg"
     # Link TKG Nvidia configuration from CO to user configuration.
     ["$CO/config/tkg/nvidia-all.cfg"]="$INSTALL_HOME/.config/frogminer/nvidia-all.cfg"
     # Link TKG DXVK configuration from CO to user configuration.
