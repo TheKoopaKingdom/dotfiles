@@ -11,6 +11,11 @@ source "$CO"/scripts/bash/common.sh
 # shellcheck source=scripts/makepkg/repos.sh
 source "$CO"/scripts/makepkg/repos.sh
 
+# shellcheck disable=2054
+PACKAGE_IGNORE_ARGS=(--ignore linux"$KERNEL_VER"-tkg-pds,linux"$KERNEL_VER"-tkg-pds-headers
+  --ignore nvidia-dkms-tkg,nvidia-utils-tkg,lib32-nvidia-utils-tkg,nvidia-settings-tkg
+  --ignore proton-tkg-git --ignore vkd3d-proton-tkg-git)
+
 # Prints the usage info for this script.
 # Outputs:
 #   - The help message.
