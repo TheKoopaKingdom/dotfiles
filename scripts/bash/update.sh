@@ -120,12 +120,7 @@ function update() {
     section "Updating Prebuilt Packages"
 
     subsect "Syncing official and Chaotic AUR packages."
-    pikaur -Syu --noconfirm --ignore linux$KERNEL_VER-tkg-pds,linux$KERNEL_VER-tkg-pds-headers \
-      --ignore nvidia-dev-dkms-tkg,nvidia-dev-utils-tkg,lib32-nvidia-dev-utils-tkg \
-      --ignore nvidia-dev-settings-tkg,nvidia-dev-egl-wayland-tkg \
-      --ignore opencl-nvidia-dev-tkg,lib32-opencl-nvidia-dev-tkg \
-      --ignore mingw-w64-binutils --ignore mingw-w64-binutils \
-      --ignore proton-tkg-git --ignore vkd3d-tkg-git
+    pikaur -Syu --noconfirm "${PACKAGE_IGNORE_ARGS[@]}"
   fi
   if [[ $run_fstrim = true ]]; then
     section "Running fstrim"
