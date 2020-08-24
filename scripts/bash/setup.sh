@@ -200,6 +200,10 @@ function setup_user() {
   info "Linking directories."
   link_directories
 
+  info "Adding link for deprecated mimeapps.list location."
+  safe_ln "$INSTALL_HOME"/.config/mimeapps.list \
+    "$INSTALL_HOME"/.local/share/applications/mimeapps.list
+
   # User Services
   section "Setting Up User Services"
 
