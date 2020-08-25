@@ -314,6 +314,8 @@ hugo
 doxygen
 # TeX Live core, for building LaTeX documents.
 # texlive-core
+# TeX Live LaTeX extras.
+# texlive-latexextra
 # Packages necessary for using latex-indent. Workaround for: https://bugs.archlinux.org/task/60210.
 # texlive-latexindent-meta
 # TeX Live science, for the siunitx package.
