@@ -61,7 +61,7 @@ safe_cp() {
 #   - Link feedback.
 function safe_ln() {
   local -r target=$1
-  local -r link_name=$2
+  local -r link_name=${2%/}
 
   if [[ -L "$link_name" ]] && cmp "$target" "$link_name" >/dev/null 2>&1; then
     verbose "$link_name is already updated."
