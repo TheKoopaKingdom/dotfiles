@@ -180,8 +180,10 @@ function link_directories() {
     ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Yuzu"]="$INSTALL_HOME/.config/yuzu"
     # Link Yuzu data from documents to user data.
     ["$SYNCED_DOCUMENTS_DIR/Program Data/Yuzu"]="$INSTALL_HOME/.local/share/yuzu"
-    # Link The Simpsons: Hit & Run data from documents to user data.
+    # Link Lucas' Simpsons Hit & Run Mod Launcher data from documents to user data.
     ["$SYNCED_DOCUMENTS_DIR/Program Data/Lucas' Simpsons Hit & Run Mod Launcher"]="$INSTALL_HOME/Documents/My Games/Lucas' Simpsons Hit & Run Mod Launcher/"
+    # Link The Simpsons: Hit & Run data from Fountain to user data.
+    ["$INSTALL_HOME/Fountain/Games/PC/IndependentWindows/The Simpsons Hit & Run/"]="$INSTALL_HOME/.local/share/the-simpsons-hit-and-run"
 
     # Programming
 
