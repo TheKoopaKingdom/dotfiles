@@ -291,6 +291,8 @@ yuzu-mainline-git
 git
 # Visual Studio Code, for editing code.
 code
+# Eclipse common files.
+# eclipse-common
 # Eclipse IDE for Java Developers, for developing Java applications.
 # eclipse-java
 # OpenJDK JDK docs, for writing Java applications.
