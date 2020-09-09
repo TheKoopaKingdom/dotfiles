@@ -287,6 +287,8 @@ yuzu-mainline-git
 
 # Visual Studio Code, for editing code.
 code
+# Eclipse IDE for Java Developers, for developing Java applications.
+# eclipse-java
 # Android Studio, for developing Android applications, and for adb.
 android-studio
 # Git, for version control.
