@@ -88,6 +88,8 @@ wine-mono
 wine-gecko
 # Winetricks, for managing Wine.
 winetricks
+# OpenJDK JRE, for running Java applications.
+openjdk-jre
 # QEMU, for virtualization.
 qemu
 # virt-viewer, for viewing virtual machines.
@@ -291,6 +293,8 @@ git
 code
 # Eclipse IDE for Java Developers, for developing Java applications.
 # eclipse-java
+# OpenJDK JDK docs, for writing Java applications.
+# openjdk-docs
 # Android Studio, for developing Android applications, and for adb.
 android-studio
 # ShellCheck, for Bash linting. This is the statically compiled version without the Haskell
@@ -308,6 +312,8 @@ gradle
 gulp
 # Hugo, for building websites.
 hugo
+# OpenJDK JDK, for compiling Java applications.
+# openjdk-jdk
 # ccache, for compiling code faster.
 ccache
 # GDB, for debugging code.
