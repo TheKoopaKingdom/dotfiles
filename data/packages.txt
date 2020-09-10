@@ -62,6 +62,8 @@ antimicro
 ns-usbloader
 # print-manager, for managing printers.
 print-manager
+# system-config-printer, for automatically detecting printer drivers.
+system-config-printer
 # Bluedevil, for managing bluetooth.
 bluedevil
 
