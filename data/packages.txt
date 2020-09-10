@@ -34,8 +34,8 @@ nx-udev
 bluez
 # CUPS, for printing support.
 cups
-# Canon Pixma MX920 series drivers, for printer support.
-canon-pixma-mx920-complete
+# Canon Pixma TR7500 series drivers, for printer support.
+canon-pixma-lt7500-complete
 # GfxTablet, for using an Android tablet as a drawing tablet.
 gfxtablet-git
 
