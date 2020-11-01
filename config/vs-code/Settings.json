@@ -84,6 +84,10 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
+  // Enable linting with flake8.
+  "python.linting.flake8Enabled": true,
+  // Disable linting with pylint.
+  "python.linting.pylintEnabled": false,
   // We only want Python syntax highlighting, don't lint these as Python files.
   "python.linting.ignorePatterns": [
     ".vscode/*.py", // Default.
@@ -113,8 +117,6 @@
   "shellcheck.useWorkspaceRootAsCwd": true,
   // Disable builtin JS formatting since ESLint fixing is enabled.
   "javascript.format.enable": false,
-  // Enable Python linting with flake8.
-  "python.linting.flake8Enabled": true,
   // Default to the C++17 standard when formatting.
   "C_Cpp.default.cppStandard": "c++17",
   // Default to the C11 standard when formatting.
