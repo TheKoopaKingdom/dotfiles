@@ -6,4 +6,4 @@
 
 # shellcheck source=scripts/makepkg/tkgmatrix.sh
 source "$CO"/scripts/makepkg/tkgmatrix.sh
-tkgmatrix
+tkgmatrix "$@"
