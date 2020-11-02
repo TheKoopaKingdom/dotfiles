@@ -2,10 +2,10 @@
   "exclude": [
     "scripts/bash/agnoster_bash\\.sh",
     "scripts/bash/configure_user_utils\\.sh",
-    "config/gpg\\.conf",
-    "config/pacman\\.conf",
-    "config/httpd\\.conf",
     "config/default.pa",
+    "config/gpg\\.conf",
+    "config/httpd\\.conf",
+    "config/pacman\\.conf",
     "config/vs-code/Settings\\.json",
     "data/*",
     "License\\.txt"
