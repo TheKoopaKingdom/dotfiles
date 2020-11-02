@@ -44,6 +44,12 @@ function download_music() {
       # Remove any trailing slashes.
       download_dir=${download_dir%/}
 
+      local is_album=false
+      if [[ $download_dir =~ ^.+Music\ Artists/.+/.+$ ]]; then
+        info "This looks like an album, won't ask about trimming."
+        is_album=true
+      fi
+
       if [[ $download_dir != "SKIP" ]]; then
         verbose "Downloading to \"$download_dir\"."
         local output_str="$download_dir/%(title)s.%(ext)s"
@@ -74,8 +80,9 @@ function download_music() {
             return 1
           fi
 
-          if ! tag_err=$(tag_mp3 "$file_path"); then
+          if ! tag_err=$(tag_mp3 "$file_path" "$is_album"); then
             error "An error occurred while tagging the file: $tag_err"
+            return 1
           fi
         done <<<"$file_paths"
       fi
