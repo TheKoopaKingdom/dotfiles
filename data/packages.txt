@@ -251,8 +251,8 @@ blender
 firefox
 # Google Chrome, for browsing the internet.
 google-chrome
-# Discord, for messaging.
-discord
+# Discord with native Electron, for messaging.
+discord_arch_electron
 # HexChat, for messaging.
 hexchat
 # OpenSSH, for connecting to other computers.
