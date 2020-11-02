@@ -118,9 +118,5 @@
     "key": "f5",
     "command": "cmake.debugTarget",
     "when": "cmake:enableFullFeatureSet && inCMakeProject && !cmake:hideDebugCommand && !inDebugMode"
-  },
-  {
-    "key": "escape escape",
-    "command": "macros.stopDebuggingAndKillTerminal"
   }
 ]
