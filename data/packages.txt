@@ -58,8 +58,6 @@ plasma-pa
 partitionmanager
 # Plasma NetworkManager, for managing network connections.
 plasma-nm
-# Antimicro, for remapping inputs.
-antimicro
 # Nintendo Switch USB loader, for managing game and NAND backups.
 ns-usbloader
 # print-manager, for managing printers.
