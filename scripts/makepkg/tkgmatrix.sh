@@ -345,8 +345,8 @@ at \"$bench_dir\". Continue? [y/n] " -n 1 -r overwrite_prompt
                   fi
                 fi
 
-                info "Benchmarking ${upper_variable_name} = $upper_variable_value &\
- ${lower_variable_name} = $lower_variable_value."
+                info "Benchmarking ${upper_variable_name} = $upper_variable_value & \
+${lower_variable_name} = $lower_variable_value."
                 mkdir -p "$bench_dir"
                 # For MangoHud, we have to resolve the full path to the output directory.
                 # Additionally, the program process is not a child of this process, because Steam,
