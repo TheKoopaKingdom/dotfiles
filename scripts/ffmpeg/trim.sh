@@ -16,6 +16,8 @@ function quit_mpv() {
 # Crops the thumbnail for an audio file, and optional trim the beginning and end.
 # Arguments:
 #   - The path to the audio file.
+#   - Whether to crop the album art.
+#   - Whether to prompt to trim the audio.
 # Outputs:
 #   - Any ffmpeg/ImageMagick output.
 # Returns:
@@ -25,6 +27,7 @@ function trim() {
   local -r audio=$1
   local -r audio_extensionless=${audio%.*}
   local -r crop=$2
+  local -r trim=$3
   local -r song_name=$(sanitize_zenity "${audio_extensionless##*/}")
   local -r thumbnail=$audio_extensionless.jpg
   local -r audio_tmp=/tmp/trim-$(basename "$audio")
@@ -44,21 +47,22 @@ function trim() {
   fi
 
   while true; do
-    # Preview the original audio. Within the context of download_music, we already have it open in
-    # firefox, so this isn't really needed here.
-    # mpv "${MPV_OPTS[@]}" "$audio" &
-    if [[ $(ask "Move the beginning of the song ($song_name)?") -eq 0 ]]; then
-      local beginning
-      beginning=$(zenity --width 300 --entry \
-        --title="Song Beginning" \
-        --text="Where does the song begin?" \
-        --entry-text="0:00")
-    fi
-    if [[ $(ask "Move the end of the song ($song_name)?") -eq 0 ]]; then
-      local end
-      end=$(zenity --width 300 --entry \
-        --title="Song Ending" \
-        --text="Where does the song end?")
+    if [[ $trim = true ]]; then
+      # Preview the original audio. Within the context of download_music, we already have it open in
+      # firefox, so this isn't really needed here.
+      if [[ $(ask "Move the beginning of the song ($song_name)?") -eq 0 ]]; then
+        local beginning
+        beginning=$(zenity --width 300 --entry \
+          --title="Song Beginning" \
+          --text="Where does the song begin?" \
+          --entry-text="0:00")
+      fi
+      if [[ $(ask "Move the end of the song ($song_name)?") -eq 0 ]]; then
+        local end
+        end=$(zenity --width 300 --entry \
+          --title="Song Ending" \
+          --text="Where does the song end?")
+      fi
     fi
     if [[ -z $beginning ]] && [[ -z $end ]]; then
       break

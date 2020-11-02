@@ -63,8 +63,15 @@ function download_music() {
           else
             local crop=true
           fi
-          if ! trim_err=$(trim "$file_path" "$crop"); then
+          # Music in an album shouldn't need to be trimmed.
+          if [[ $is_album == true ]]; then
+            local trim=false
+          else
+            local trim=true
+          fi
+          if ! trim_err=$(trim "$file_path" "$crop" "$trim"); then
             error "An error occurred while cropping/trimming the file: $trim_err"
+            return 1
           fi
 
           if ! tag_err=$(tag_mp3 "$file_path"); then
