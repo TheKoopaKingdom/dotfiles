@@ -1,0 +1,1 @@
+../../scripts/plasma/plasma_rc.sh
