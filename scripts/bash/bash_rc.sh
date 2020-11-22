@@ -58,6 +58,18 @@ function retag() {
   done <<<"$tags"
 }
 
+function wnea() {
+  echo who needs eclipse anyways
+
+  # build.
+  javac -d Build Source/**/*.java
+
+  # run.
+  local -r main_class_file=$(grep "public static void main" . -rl | head -1)
+  local -r main_class=$(basename "$main_class_file" | cut -d. -f1)
+  java -cp Build "apcs/$main_class"
+}
+
 alias lss='/usr/bin/ls --color=auto'
 # Replace ls with LSDeluxe.
 alias ls='lsd'
