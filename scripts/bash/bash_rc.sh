@@ -127,8 +127,10 @@ But I, I'm with you"
 )
 echo "${QUOTES[$RANDOM % ${#QUOTES[@]}]}" | lolcat -F 0.01
 
+# TODO: Reenable a prompt here.
+
 # Don't use Agnoster for login shells, because VTYs lack ligature font support by default.
-if [[ $- == *i* ]]; then
-  # shellcheck source=scripts/bash/agnoster_bash.sh
-  source "$CO"/scripts/bash/agnoster_bash.sh
-fi
+#if [[ $- == *i* ]]; then
+# shellcheck source=scripts/bash/agnoster_bash.sh
+#source "$CO"/scripts/bash/agnoster_bash.sh
+#fi
