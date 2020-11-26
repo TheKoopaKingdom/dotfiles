@@ -23,7 +23,6 @@ source "$CO"/scripts/bash/configure_user_utils.sh
 #   - INSTALL_HOME: Location of the home directory of the current install user.
 #   - CO: Location of this Comet Observatory repository.
 #   - SYNCED_DOCUMENTS_DIR: Location of the synced documents directory of the current install user.
-#   - SYNCED_GTK3_DIR: Location of the GTK 3.0 configuration directory of the current install user.
 #   - ABS_DIR: Location of the Arch Build System directory.
 #   - AUR_DIR: Location of the Arch User Repository directory.
 #   - GPG_DIR: Location of the GnuPG home directory of the current install user.
@@ -55,6 +54,7 @@ function export_constants() {
 
 # Sets up the system components of the system.
 # Globals Read:
+#   - INSTALL_HOME: See export_constants().
 #   - CO: See export_constants().
 #   - PACMAN_ARGS: See export_constants().
 #   - SYNCED_GTK_DIR: See export_constants().
@@ -147,7 +147,7 @@ function setup_system() {
 
   info "Setting up root GTK."
   # Apply the GTK configuration to root, to make applications like Gparted look nice.
-  safe_ln "$SYNCED_GTK3_DIR" /root/.config/gtk-3.0
+  safe_ln "$INSTALL_HOME/.config/gtk-3.0" /root/.config/gtk-3.0
 
   info "Setup complete!"
 }
