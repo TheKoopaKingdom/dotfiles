@@ -70,7 +70,7 @@ function configure_system_units() {
     ["getty@tty1.service"]="getty-autologin.conf"
   )
   for unit in "${!unit_overrides[@]}"; do
-    local -r destination=/etc/systemd/system/$unit.d/override.conf
+    local destination=/etc/systemd/system/$unit.d/override.conf
     safe_cp "$CO"/config/systemd-overrides/"${unit_overrides[${unit}]}" "$destination"
     if [[ $DRY_RUN = false ]]; then
       chmod -x "$destination"
