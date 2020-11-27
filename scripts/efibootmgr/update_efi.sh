@@ -199,7 +199,7 @@ $CMDLINE_STR $CMDLINE_SILENT_STR $*"
   fi
 
   info "Boot entries:"
-  efibootmgr -v | tr -d "."
+  efibootmgr | tr -d "."
 }
 
 # Sets the UEFI next boot parameter to that of the Windows Boot Manager, and reboots.
