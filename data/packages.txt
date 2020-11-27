@@ -275,17 +275,17 @@ multimc5
 # Lucas' Simpsons Hit & Run Mod Launcher, for playing mods.
 lucas-simpsons-hit-and-run-mod-launcher
 # xdelta3, for patching games.
-xdelta3
+# xdelta3
 # mGBA, for playing GBA games.
-mgba-qt
+# mgba-qt
 # melonds, for playing DS games.
-melonds-git
+# melonds-git
 # Dolphin, for playing Wii and Gamecube games.
-dolphin-emu
+# dolphin-emu
 # Citra, for playing 3DS games.
-citra-canary-git
+# citra-canary-git
 # yuzu, for playing Switch games.
-yuzu-mainline-git
+# yuzu-mainline-git
 
 # Programming (Editors/IDEs, Compilers/Interpreters, Linters, Build Systems, Libraries)
 
