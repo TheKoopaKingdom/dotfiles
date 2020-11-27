@@ -358,3 +358,5 @@ okteta
 # ctrtool-git
 # firmtool, for managing 3DS firmware.
 # firmtool-git
+# hactool, for managing Switch ROMs.
+# hactool
