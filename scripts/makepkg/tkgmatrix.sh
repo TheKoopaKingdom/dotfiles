@@ -87,7 +87,7 @@ function tkgmatrix() {
   tkgmatrix_dir="$AUR_DIR"/tkgmatrix
   mkdir -p "$tkgmatrix_dir" && safe_cd "$tkgmatrix_dir"
 
-  local -r frogminer_cfg_file=$HOME/.config/frogminer/linux${KERNEL_VER}-tkg.cfg
+  local -r frogminer_cfg_file=$HOME/.config/frogminer/linux-tkg.cfg
   if [[ ! -f "$frogminer_cfg_file" ]]; then
     error "linux-tkg configuration \"$frogminer_cfg_file\" not found."
     return 1
