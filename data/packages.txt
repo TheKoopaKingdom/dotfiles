@@ -356,5 +356,5 @@ okteta
 # 3dstool
 # ctrtool, for managing 3DS ROMs.
 # ctrtool-git
-# firmtool, for managine 3DS firmware.
+# firmtool, for managing 3DS firmware.
 # firmtool-git
