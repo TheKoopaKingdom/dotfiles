@@ -94,7 +94,7 @@ function update() {
     update_repo linux-tkg customization.cfg
     subsect "Updating Nvidia drivers."
     update_repo nvidia-all customization.cfg
-    subsect "Building TkG Proton."
+    subsect "Updating TkG Proton."
     update_repo wine-tkg-git/proton-tkg proton-tkg.cfg \
       proton-tkg-profiles/advanced-customization.cfg
 
