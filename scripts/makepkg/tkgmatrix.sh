@@ -56,7 +56,7 @@ export KERNEL_VER=57
 function tkgmatrix() {
   local -r subcommand=$1
 
-  if [[ -z $subcommand || $subcommand = "-h" || $subcommand = "--help" ||
+  if [[ -z $subcommand || $subcommand = "-h" || $subcommand = "--help" || \
     $subcommand = "help" ]]; then
     info "Usage: tkgmatrix { help | print | build | bench }"
     if [[ -z $subcommand ]]; then
@@ -198,8 +198,8 @@ $(echo "$release" | cut -d '-' -f 3)-$(echo "$release" | cut -d '-' -f 4)/custom
       fi
 
       for lower_variable_name in "${!TIER_2[@]}"; do
-        if [[ $upper_variable_value != "MuQSS" ]] && [[ $lower_variable_name = "_irq_threading" ||
-          $lower_variable_name = "_runqueue_sharing" ]]; then
+        if [[ $upper_variable_value != "MuQSS" ]] && [[ $lower_variable_name = "_irq_threading" || \
+        $lower_variable_name = "_runqueue_sharing" ]]; then
           continue
         fi
 
