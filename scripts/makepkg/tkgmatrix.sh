@@ -199,7 +199,7 @@ $(echo "$release" | cut -d '-' -f 3)-$(echo "$release" | cut -d '-' -f 4)/custom
 
       for lower_variable_name in "${!TIER_2[@]}"; do
         if [[ $upper_variable_value != "MuQSS" ]] && [[ $lower_variable_name = "_irq_threading" ||
-        $lower_variable_name = "_runqueue_sharing" ]]; then
+          $lower_variable_name = "_runqueue_sharing" ]]; then
           continue
         fi
 
