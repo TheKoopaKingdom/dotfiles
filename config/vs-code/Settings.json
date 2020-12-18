@@ -6,7 +6,7 @@
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
   // Set the zoom level of the window.
-  "window.zoomLevel": 0,
+  "window.zoomLevel": -1,
   // Restore all windows.
   "window.restoreWindows": "all",
   // Use the custom tile bar style. I think it's pretty.
