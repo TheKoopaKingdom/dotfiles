@@ -62,7 +62,7 @@ function wnea() {
   echo who needs eclipse anyways
 
   # build.
-  javac -d Build Source/**/*.java
+  javac -d Build Source/**/*.java || return 1
 
   # run.
   local -r main_class_file=$(grep "public static void main" . -rl | head -1)
