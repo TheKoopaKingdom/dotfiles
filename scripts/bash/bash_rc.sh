@@ -132,7 +132,7 @@ Won't you take me by the hand?"
   "I don't know who you are
 But I, I'm with you"
 )
-echo "${QUOTES[$RANDOM % ${#QUOTES[@]}]}" | lolcat -F 0.01
+echo "${QUOTES[$RANDOM % ${#QUOTES[@]}]}" | lolcat -iF 0.01
 
 # TODO: Reenable a prompt here.
 
