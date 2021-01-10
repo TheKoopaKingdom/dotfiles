@@ -70,6 +70,13 @@ function wnea() {
   java -cp Build "apcs/$main_class"
 }
 
+function testpulse() {
+  systemctl --user stop pulseaudio.{socket,service}
+  pulseaudio -vvv
+  pulseaudio -k
+  systemctl --user start pulseaudio.{socket,service}
+}
+
 alias lss='/usr/bin/ls --color=auto'
 # Replace ls with LSDeluxe.
 alias ls='lsd'
