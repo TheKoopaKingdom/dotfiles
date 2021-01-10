@@ -53,6 +53,7 @@ function info() {
 }
 
 # Prompts for a boolean configuration value.
+# TODO: "[y/n]", allow "yes"
 # Arguments:
 #   - Question to ask.
 #   - Name of the variable to put the answer in.
