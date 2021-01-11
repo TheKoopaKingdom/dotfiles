@@ -206,7 +206,7 @@ prompt_status() {
   [[ $UID -eq 0 ]] && symbols+=("$(ansi_single "$(fg_color yellow)")⚡")
   [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+=("$(ansi_single "$(fg_color cyan)")⚙")
 
-  [[ -n "${symbols[*]}" ]] && prompt_segment transwhite white "${symbols[@]} "
+  [[ -n "${symbols[*]}" ]] && prompt_segment transwhite white "${symbols[*]} "
 }
 
 # Context: user@hostname (who am I and where am I)
