@@ -122,8 +122,8 @@ bg_color() {
   darkerblue) echo '48;5;27' ;;
   purple) echo '48;5;99' ;;
   # Color Set 2:
-  transblue) echo '48;5;45' ;;
-  transpink) echo '48;5;218' ;;
+  transblue) echo '48;2;85;205;252' ;;
+  transpink) echo '48;2;247;168;184' ;;
   transwhite) echo '48;5;254' ;;
   esac
 }
