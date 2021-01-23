@@ -34,6 +34,8 @@ dosfstools
 sshfs
 # ncdu, for managing disk usage.
 ncdu
+# Plasma Disks, for montoring drive health.
+plasma-disks
 # f3, for error checking filesystems.
 #f3
 # xboxdrv, for ninja360. TODO: make an AUR package for that, and get this out of here!
