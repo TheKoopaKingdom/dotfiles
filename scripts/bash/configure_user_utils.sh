@@ -166,21 +166,21 @@ function link_directories() {
     # Link GameMode configuration from CO to user configuration.
     ["$CO/config/gamemode.ini"]="$INSTALL_HOME/.config/gamemode.ini"
     # Link MultiMC data from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Data/MultiMC"]="$INSTALL_HOME/.local/share/multimc"
+    ["$SYNCED_DOCUMENTS_DIR/ProgramData/MultiMC"]="$INSTALL_HOME/.local/share/multimc"
     # Link Citra configuration from documents to user configuration.
     ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Citra"]="$INSTALL_HOME/.config/citra-emu"
     # Link Citra data from documents to user data.
-    ["$SYNCED_DOCUMENTS_DIR/Program Data/Citra"]="$INSTALL_HOME/.local/share/citra-emu"
+    ["$SYNCED_DOCUMENTS_DIR/ProgramData/Citra"]="$INSTALL_HOME/.local/share/citra-emu"
     # Link Dolphin configuration from documents to user configuration.
     ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Dolphin"]="$INSTALL_HOME/.config/dolphin-emu"
     # Link Dolphin data from documents to user data.
-    ["$SYNCED_DOCUMENTS_DIR/Program Data/Dolphin"]="$INSTALL_HOME/.local/share/dolphin-emu"
+    ["$SYNCED_DOCUMENTS_DIR/ProgramData/Dolphin"]="$INSTALL_HOME/.local/share/dolphin-emu"
     # Link Yuzu configuration from documents to user configuration.
     ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Yuzu"]="$INSTALL_HOME/.config/yuzu"
     # Link Yuzu data from documents to user data.
-    ["$SYNCED_DOCUMENTS_DIR/Program Data/Yuzu"]="$INSTALL_HOME/.local/share/yuzu"
+    ["$SYNCED_DOCUMENTS_DIR/ProgramData/Yuzu"]="$INSTALL_HOME/.local/share/yuzu"
     # Link Lucas' Simpsons Hit & Run Mod Launcher data from documents to user data.
-    ["$SYNCED_DOCUMENTS_DIR/Program Data/Lucas' Simpsons Hit & Run Mod Launcher"]="$INSTALL_HOME/Documents/My Games/Lucas' Simpsons Hit & Run Mod Launcher/"
+    ["$SYNCED_DOCUMENTS_DIR/ProgramData/Lucas' Simpsons Hit & Run Mod Launcher"]="$INSTALL_HOME/Documents/My Games/Lucas' Simpsons Hit & Run Mod Launcher/"
     # Link The Simpsons: Hit & Run data from Fountain to user data.
     ["$INSTALL_HOME/Fountain/Games/PC/IndependentWindows/The Simpsons Hit & Run/"]="$INSTALL_HOME/.local/share/the-simpsons-hit-and-run"
 
@@ -193,7 +193,7 @@ function link_directories() {
     # Link VSCode snippets from documents to user configuration.
     ["$CO/config/vs-code/Snippets/"]="$INSTALL_HOME/.config/Code - OSS/User/snippets"
     # Link VSCode extensions from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Data/VSCode/Extensions/"]="$INSTALL_HOME/.vscode-oss/extensions"
+    ["$SYNCED_DOCUMENTS_DIR/ProgramData/VSCode/Extensions/"]="$INSTALL_HOME/.vscode-oss/extensions"
 
     # Frogging Family
 
