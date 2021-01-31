@@ -98,9 +98,9 @@ function link_directories() {
     # Tools
 
     # Link top configuration from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Top Configuration"]="$INSTALL_HOME/.config/procps/toprc"
+    ["$SYNCED_DOCUMENTS_DIR/ProgramConfigurations/Top Configuration"]="$INSTALL_HOME/.config/procps/toprc"
     # Link Git configuration from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Git Configuration"]="$INSTALL_HOME/.gitconfig"
+    ["$SYNCED_DOCUMENTS_DIR/ProgramConfigurations/Git Configuration"]="$INSTALL_HOME/.gitconfig"
     # Link GPG configuration file from CO to home directory.
     ["$CO/config/gpg.conf"]="$INSTALL_HOME/.gnupg/gpg.conf"
     # Link GPG configuration file from CO to home directory.
@@ -108,33 +108,31 @@ function link_directories() {
     # Link Pikaur configuration file from CO to home directory.
     ["$CO/config/pikaur.conf"]="$INSTALL_HOME/.config/pikaur.conf"
     # Link KeePassX configuration from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/KeePassXC.ini"]="$INSTALL_HOME/.config/keepassxc/keepassxc.ini"
+    ["$SYNCED_DOCUMENTS_DIR/ProgramConfigurations/KeePassXC.ini"]="$INSTALL_HOME/.config/keepassxc/keepassxc.ini"
 
     # Media
 
     # Link mpv configuration from CO to user configuration.
     ["$CO/config/mpv.conf"]="$INSTALL_HOME/.config/mpv/mpv.conf"
     # Link OBS Studio configuration from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/OBS Studio"]="$INSTALL_HOME/.config/obs-studio"
+    ["$SYNCED_DOCUMENTS_DIR/ProgramConfigurations/OBS Studio"]="$INSTALL_HOME/.config/obs-studio"
     # Link Blender files from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Blender"]="$INSTALL_HOME/.config/blender"
+    ["$SYNCED_DOCUMENTS_DIR/ProgramConfigurations/Blender"]="$INSTALL_HOME/.config/blender"
 
     # Gaming
 
     # Link GameMode configuration from CO to user configuration.
     ["$CO/config/gamemode.ini"]="$INSTALL_HOME/.config/gamemode.ini"
-    # Link MultiMC data from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/ProgramData/MultiMC"]="$INSTALL_HOME/.local/share/multimc"
     # Link Citra configuration from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Citra"]="$INSTALL_HOME/.config/citra-emu"
+    ["$SYNCED_DOCUMENTS_DIR/ProgramConfigurations/Citra"]="$INSTALL_HOME/.config/citra-emu"
     # Link Citra data from documents to user data.
     ["$SYNCED_DOCUMENTS_DIR/ProgramData/Citra"]="$INSTALL_HOME/.local/share/citra-emu"
     # Link Dolphin configuration from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Dolphin"]="$INSTALL_HOME/.config/dolphin-emu"
+    ["$SYNCED_DOCUMENTS_DIR/ProgramConfigurations/Dolphin"]="$INSTALL_HOME/.config/dolphin-emu"
     # Link Dolphin data from documents to user data.
     ["$SYNCED_DOCUMENTS_DIR/ProgramData/Dolphin"]="$INSTALL_HOME/.local/share/dolphin-emu"
     # Link Yuzu configuration from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Yuzu"]="$INSTALL_HOME/.config/yuzu"
+    ["$SYNCED_DOCUMENTS_DIR/ProgramConfigurations/Yuzu"]="$INSTALL_HOME/.config/yuzu"
     # Link Yuzu data from documents to user data.
     ["$SYNCED_DOCUMENTS_DIR/ProgramData/Yuzu"]="$INSTALL_HOME/.local/share/yuzu"
     # Link Lucas' Simpsons Hit & Run Mod Launcher data from documents to user data.
