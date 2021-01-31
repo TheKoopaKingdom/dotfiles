@@ -91,6 +91,11 @@ function setup_system() {
   # Package Management
   section "Setting Up Packages"
 
+  # We reference the Chaotic-AUR mirrorlist in our pacman.conf, so we have to install the mirrorlist
+  # package first, so that parsing pacman.conf doesn't result in an error.
+  info "Configuring Chaotic-AUR"
+  sudo -u "$INSTALL_USER" pikaur -S "${PACMAN_ARGS[@]}" chaotic-keyring chaotic-mirrorlist
+
   info "Configuring pacman."
   configure_pacman
 

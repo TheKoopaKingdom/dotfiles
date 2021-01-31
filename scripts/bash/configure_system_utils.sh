@@ -17,14 +17,6 @@ source "$CO"/scripts/bash/file_utils.sh
 function configure_pacman() {
   safe_cp "$CO"/config/pacman.conf /etc/pacman.conf
   safe_cp "$CO"/config/makepkg.conf /etc/makepkg.conf
-
-  if [[ $DRY_RUN = false ]]; then
-    info "Importing Chaotic AUR keys into pacman."
-    sudo pacman-key --keyserver hkp://p80.pool.sks-keyservers.net:80 -r 3056513887B78AEB \
-      8A9E14A07010F7E3 >/dev/null
-    sudo pacman-key --lsign-key 3056513887B78AEB >/dev/null
-    sudo pacman-key --lsign-key 8A9E14A07010F7E3 >/dev/null
-  fi
 }
 
 # Creates a swap file. See: https://wiki.archlinux.org/index.php/Swap#Manually
