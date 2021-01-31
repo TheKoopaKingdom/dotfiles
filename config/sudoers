@@ -68,6 +68,8 @@
 # Defaults!/usr/bin/sudoreplay !log_output
 # Defaults!/usr/local/bin/sudoreplay !log_output
 # Defaults!REBOOT !log_output
+# Disable password timeout.
+Defaults passwd_timeout=0
 
 ##
 ## Runas alias specification
