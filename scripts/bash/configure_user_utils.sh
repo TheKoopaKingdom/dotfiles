@@ -85,27 +85,6 @@ function link_directories() {
     ["$CO/config/user-dirs.dirs"]="$INSTALL_HOME/.config/user-dirs.dirs"
     # Link PulseAudio startup script from CO to user configuration.
     ["$CO/config/default.pa"]="$INSTALL_HOME/.config/pulse/default.pa"
-    # Link KDE global configuration from documents to user configuration, including standard
-    # shortcuts among other settings
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/KDE/Common.conf"]="$INSTALL_HOME/.config/kdeglobals"
-    # Link KDE global shortcuts from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/KDE/Global Shortcuts.conf"]="$INSTALL_HOME/.config/kglobalshortcutsrc"
-    # Link KDE custom shortcuts from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/KDE/Custom Shortcuts.conf"]="$INSTALL_HOME/.config/khotkeysrc"
-    # Link KDED configuration from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/KDE/KDED.conf"]="$INSTALL_HOME/.config/kded5rc"
-    # Link Baloo configuration from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/KDE/Baloo.conf"]="$INSTALL_HOME/.config/baloofilerc"
-    # Link KWin configuration from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/KDE/KWin.conf"]="$INSTALL_HOME/.config/kwinrc"
-    # Link Plasma configuration from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/KDE/Plasma.conf"]="$INSTALL_HOME/.config/plasmarc"
-    # Link Plasma Shell configuration from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/KDE/Plasma Shell.conf"]="$INSTALL_HOME/.config/plasmashellrc"
-    # Link Plasma Desktop configuration from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/KDE/Plasma Desktop.conf"]="$INSTALL_HOME/.config/plasma-org.kde.plasma.desktop-appletsrc"
-    # Link Plasma Notification configuration from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/KDE/Plasma Notifications.conf"]="$INSTALL_HOME/.config/plasmanotifyrc"
 
     # KDE Accessories
 
@@ -113,19 +92,8 @@ function link_directories() {
     ["$SYNCED_DOCUMENTS_DIR/LinuxAutostartPrograms"]="$INSTALL_HOME/.config/autostart"
     # Link autostart scripts from CO to user configuration.
     ["$CO/config/autostart/"]="$INSTALL_HOME/.config/autostart-scripts"
-    # Link Konsole configuration from documents to user data.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/KDE/Konsole Profile.profile"]="$INSTALL_HOME/.local/share/konsole/Garage.profile"
-    # Link RSIBreak configuration from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/KDE/RSIBreak.conf"]="$INSTALL_HOME/.config/rsibreakrc"
-    # Link KDE Connect files from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/KDE/KDE Connect"]="$INSTALL_HOME/.config/kdeconnect"
 
     # File Managers
-
-    # Link Dolphin configuration from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/KDE/Dolphin.conf"]="$INSTALL_HOME/.config/dolphinrc"
-    # Link MEGAsync configuration from documents to user data.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/MEGAsync.cfg"]="$INSTALL_HOME/.local/share/data/Mega Limited/MEGAsync/MEGAsync.cfg"
 
     # Tools
 
@@ -144,13 +112,8 @@ function link_directories() {
 
     # Media
 
-    # Link Clementine configuration from documents to user configuration. Only link the
-    # configuration, because other files in the directory are subject to change.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/Clementine.conf"]="$INSTALL_HOME/.config/Clementine/Clementine.conf"
     # Link mpv configuration from CO to user configuration.
     ["$CO/config/mpv.conf"]="$INSTALL_HOME/.config/mpv/mpv.conf"
-    # Link SVP configuration from documents to user configuration.
-    ["$SYNCED_DOCUMENTS_DIR/Program Configurations/SVP"]="$INSTALL_HOME/.local/share/SVP4/settings"
     # Link OBS Studio configuration from documents to user configuration.
     ["$SYNCED_DOCUMENTS_DIR/Program Configurations/OBS Studio"]="$INSTALL_HOME/.config/obs-studio"
     # Link Blender files from documents to user configuration.
