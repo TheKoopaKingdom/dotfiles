@@ -69,9 +69,10 @@ function configure_system_units() {
     fi
   done
 
-  safe_cp "$CO"/config/httpd.conf /etc/httpd/conf/httpd.conf
   safe_cp "$CO"/config/journald.conf /etc/systemd/journald.conf
+  safe_cp "$CO"/config/reflector.conf /etc/xdg/reflector/reflector.conf
   safe_cp "$CO"/config/pulse-daemon.conf /etc/pulse/daemon.conf
+  safe_cp "$CO"/config/httpd.conf /etc/httpd/conf/httpd.conf
 }
 
 # Enables systemwide systemd units.
@@ -81,6 +82,8 @@ function configure_system_units() {
 #   - Installation progress.
 function enable_system_units() {
   local -ra units=(
+    # Enable reflector.
+    "reflector.timer"
     # Enable bluetooth.
     "bluetooth.service"
     # Enable CUPS.
