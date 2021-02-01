@@ -82,6 +82,8 @@ function configure_system_units() {
 #   - Installation progress.
 function enable_system_units() {
   local -ra units=(
+    # Enable periodic TRIM.
+    "fstrim.timer"
     # Enable reflector.
     "reflector.timer"
     # Enable bluetooth.
@@ -97,7 +99,7 @@ function enable_system_units() {
       verbose "$unit is already enabled."
     else
       if [[ $DRY_RUN = false ]]; then
-        info "Enabling systemd unit $unit"
+        info "Enabling systemd unit $unit."
         systemctl -q enable --now "$unit"
       fi
     fi
