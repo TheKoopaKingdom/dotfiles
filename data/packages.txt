@@ -85,6 +85,10 @@ bluedevil
 
 # pikaur, for managing AUR packages.
 pikaur
+# Chaotic-AUR keyring, for using Chaotic-AUR.
+chaotic-keyring
+# Chaotic-AUR mirrorlist, for using Chaotic-AUR.
+chaotic-mirrorlist
 # Pacman contributed scripts, for paccache, for cleaning the package cache.
 pacman-contrib
 # Reflector, for updating pacman mirrors.
