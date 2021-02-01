@@ -301,7 +301,7 @@ lucas-simpsons-hit-and-run-mod-launcher
 # mGBA, for playing GBA games.
 mgba-qt
 # melonds, for playing DS games.
-melonds-git
+melonds
 # Dolphin, for playing Wii and Gamecube games.
 dolphin-emu
 # Citra, for playing 3DS games.
