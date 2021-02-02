@@ -68,7 +68,7 @@
 # Defaults!/usr/bin/sudoreplay !log_output
 # Defaults!/usr/local/bin/sudoreplay !log_output
 # Defaults!REBOOT !log_output
-# Disable password timeout.
+# Disable password prompt timeout.
 Defaults passwd_timeout=0
 # Extend password timeout to 1 hour, for update.
 Defaults timestamp_timeout=60
