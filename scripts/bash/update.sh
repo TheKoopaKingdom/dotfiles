@@ -23,7 +23,7 @@ Updates the system, including official prebuilt packages, AUR packages, and, and
 Family packages. Also handles some routine maintenance tasks.
 
   -h    Show this help message and exit.
-  -a    Do everything.
+  -a    Do everything. This is the default behavior.
   -c    Update custom packages. This pulls the latest Git repos, reviews changes, and builds the
 packages.
   -p    Update prebuilt packages. This essentially runs pacman -Syu for official and AUR packages.
@@ -45,33 +45,35 @@ function update() {
   local update_custom=false
   local run_fstrim=false
 
-  while getopts "hpcfa" opt; do
-    case $opt in
-    h)
-      print_help
-      ;;
-    a)
-      update_prebuilt=true
-      update_custom=true
-      run_fstrim=true
-      ;;
-    c)
-      update_custom=true
-      ;;
-    p)
-      update_prebuilt=true
-      ;;
-    f)
-      run_fstrim=true
-      ;;
-    *)
-      print_help
-      ;;
-    esac
-  done
   if [[ $# -eq 0 ]]; then
-    error "No operations specified."
-    print_help
+    update_prebuilt=true
+    update_custom=true
+    run_fstrim=true
+  else
+    while getopts "hpcfa" opt; do
+      case $opt in
+      h)
+        print_help
+        ;;
+      a)
+        update_prebuilt=true
+        update_custom=true
+        run_fstrim=true
+        ;;
+      c)
+        update_custom=true
+        ;;
+      p)
+        update_prebuilt=true
+        ;;
+      f)
+        run_fstrim=true
+        ;;
+      *)
+        print_help
+        ;;
+      esac
+    done
   fi
 
   # Ask for the sudo password now so that the rest of the process can proceed without it.
