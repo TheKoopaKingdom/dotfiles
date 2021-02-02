@@ -96,10 +96,8 @@ function update_repo() {
 
   if [[ ${#diff_files[@]} -ne 0 ]]; then
     # Only view the configuration and configuration diff if there has been a change to it, or if
-    # there has been a change to the community patches. In the case of nvidia-all, one may want to
-    # update the version, but new versions do not necessarily cause version diffs, so force it.
-    if [[ -n $(git diff "@{1}.." "${diff_files[@]}") || -n "$community_patch_changes" ||
-    $repo = "nvidia-all" ]]; then
+    # there has been a change to the community patches.
+    if [[ -n $(git diff "@{1}.." "${diff_files[@]}") || -n "$community_patch_changes" ]]; then
       local cfg_name=$repo_base
       if [[ $repo == "dxvk-tools" ]]; then
         cfg_name="updxvk"
