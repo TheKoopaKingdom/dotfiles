@@ -13,15 +13,21 @@ declare -r MUSIC_DIRECTORY=$HOME/Music/
 # Outputs:
 #   - Fixing progress.
 function fix_music_file_names() {
+  directory=$1
+
   info "Checking music file names for Youtube video IDs."
 
-  if [[ ! -d "$MUSIC_DIRECTORY" ]]; then
-    error "Music directory \"$MUSIC_DIRECTORY\" not found."
-    return 1
+  if [[ -z $directory ]]; then
+    if [[ -d "$MUSIC_DIRECTORY" ]]; then
+      directory=$MUSIC_DIRECTORY
+    else
+      error "Music directory \"$MUSIC_DIRECTORY\" not found."
+      return 1
+    fi
   fi
 
   # TODO: soundcloud downloads
-  find "$MUSIC_DIRECTORY/" -type f -name '*.mp3' -o -name '*.wav' | while read -r file_path; do
+  find "$directory/" -type f -name '*.mp3' -o -name '*.wav' | while read -r file_path; do
     local file_name
     file_name=$(basename "$file_path")
     local file_directory

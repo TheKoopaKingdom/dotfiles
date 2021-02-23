@@ -6,4 +6,4 @@
 
 # shellcheck source=scripts/youtube-dl/fix_music_file_names.sh
 source "$CO"/scripts/youtube-dl/fix_music_file_names.sh
-fix_music_file_names
+fix_music_file_names "$@"
