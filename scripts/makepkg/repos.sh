@@ -75,6 +75,10 @@ function update_repo() {
       source "$HOME"/.config/frogminer/linux-tkg.cfg
       # Adjust the community patch dir to look for this kernel version. Strip the '.'(s).
       com_patch_repo_dir=${com_patch_repo_dir//$repo_base/linux"${_version//./}"-tkg}
+    # Adjust for proton-tkg.
+    elif [[ $repo_base = proton-tkg ]]; then
+      # Use the wine-tkg-git directory.
+      com_patch_repo_dir=${com_patch_repo_dir//$repo_base/wine-tkg-git}
     # Adjust for dxvk-tools.
     elif [[ $repo_base = dxvk-tools ]]; then
       # Strip the "-tools".
