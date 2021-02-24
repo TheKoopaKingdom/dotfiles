@@ -198,6 +198,8 @@ $CMDLINE_STR $CMDLINE_SILENT_STR $*"
     info "Setting $default_entry as default entry."
     efibootmgr -q -O
     efibootmgr -q -o "$default_entry_num"
+  else
+    info "Default entry doesn't seem to be present."
   fi
 
   info "Boot entries:"
