@@ -251,7 +251,7 @@ gst-plugins-ugly
 gstreamer-vaapi
 # mpv Git, for playing media. Building this from Git is necessary to have a build with Vapoursynth
 # support enabled.
-mpv-git
+aur/mpv-git
 # Vapoursynth, for MPV post processing effects with SVP.
 vapoursynth
 # SVP, for processing smooth video.
